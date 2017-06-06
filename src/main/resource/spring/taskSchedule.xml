@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:task="http://www.springframework.org/schema/task" 
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context-3.0.xsd
+            http://www.springframework.org/schema/mvc
+            http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+            http://www.springframework.org/schema/task  
+			http://www.springframework.org/schema/task/spring-task-3.1.xsd">
+
+    <!-- 定时器开关 开始 -->
+    <task:annotation-driven/>
+    <!-- 定时器开关 结束 -->
+    <!-- 计划任务每天凌晨三点更新缓存  0/5* * * * * -->
+    <bean id="taskImpl" class="com.st.service.impl.TaskImpl"/>
+    <task:scheduled-tasks> 
+        <task:scheduled ref="taskImpl" method="updateInstance" cron="0 0 3 * * * "/> 
+	</task:scheduled-tasks>
+	<context:component-scan base-package="com.st.service.impl" />
+	
+	<!-- 计划任务每隔两个小时去更新用户数量  0 0 0/2 * * *
+	<bean id="userNumTask" class="com.st.service.impl.TaskImpl"/>
+	<task:scheduled-tasks> 
+        <task:scheduled ref="userNumTask" method="updateUserNum" cron="0 0 0/2 * * * "/> 
+	</task:scheduled-tasks>
+	<context:component-scan base-package="com.st.service.impl" />-->
+</beans>
