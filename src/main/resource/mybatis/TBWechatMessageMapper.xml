@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.st.ktv.mapper.TBWechatMessageMapper">
+  <resultMap id="BaseResultMap" type="com.st.ktv.entity.TBWechatMessage">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="respContent" jdbcType="VARCHAR" property="respContent" />
+    <result column="msgtype" jdbcType="VARCHAR" property="msgType" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="furl" jdbcType="VARCHAR" property="firstUrl" />
+    <result column="surl" jdbcType="VARCHAR" property="secondUrl" />
+    <result column="thumb" jdbcType="VARCHAR" property="thumb" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id,msgtype,title,content,respContent,furl,surl,thumb
+  </sql>
+    <select id="getMessageList"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_wechat_message
+    where enable=1
+    and endtime>unix_timestamp()
+  </select>
+
+  <select id="getMessageListByKey" parameterType="java.lang.String"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_wechat_message
+    where content=#{keyStr}
+    and enable=1
+    and endtime>unix_timestamp()
+  </select>
+
+  <select id="getMessageListByKeyLike" parameterType="java.lang.String"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_wechat_message
+    WHERE
+    content LIKE #{keyStr}
+    AND ENABLE = 1
+    AND endtime > unix_timestamp();
+  </select>
+  <select id="getMessageListByType" parameterType="java.lang.String"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_wechat_message
+    WHERE
+    msgtype=#{keyStr}
+    AND ENABLE = 1
+    AND endtime > unix_timestamp();
+  </select>
+</mapper>
+
+

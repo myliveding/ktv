@@ -1,6 +1,6 @@
 package com.st.core;
 
-import com.st.javabean.PageModel;
+import com.st.framework.PageModel;
 import org.springframework.ui.Model;
 
 import java.util.List;

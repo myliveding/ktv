@@ -36,21 +36,21 @@
 		</javaTypeResolver>
 
 
-		<javaModelGenerator targetPackage="com.st.javabean.pojo.wxtour"
+		<javaModelGenerator targetPackage="com.st.framework.pojo.wxtour"
 			targetProject="src/main/java">
 			<property name="enableSubPackages" value="true" />
 			<property name="trimStrings" value="true" />
 		</javaModelGenerator>
 
 
-		<sqlMapGenerator targetPackage="com.st.mapper.wxtour"
+		<sqlMapGenerator targetPackage="com.st.ktv.mapper.wxtour"
 			targetProject="src/main/java">
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
 
 
 		<javaClientGenerator type="XMLMAPPER"
-			targetPackage="com.st.mapper.wxtour" targetProject="src/main/java">
+                             targetPackage="com.st.ktv.mapper.wxtour" targetProject="src/main/java">
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
             

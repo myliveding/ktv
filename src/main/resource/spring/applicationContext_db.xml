@@ -36,8 +36,8 @@
 	  <!-- 配置Mybatis集成  sqlsessionfactory-->
   <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"> 
 	<property name="dataSource" ref="dataSource" /> 
-	<property name="typeAliasesPackage" value="com.st.javabean"/>
-	<property name="mapperLocations" value="classpath:com/st/mapper/*.xml" />
+	<property name="typeAliasesPackage" value="com.st.framework"/>
+	<property name="mapperLocations" value="classpath:com/st/ktv/mapper/*.xml" />
  </bean> 
  
  <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
@@ -46,7 +46,7 @@
 	
  
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.st.mapper" />
+		<property name="basePackage" value="com.st.ktv.mapper" />
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 	</bean>
 

@@ -18,10 +18,10 @@
     <task:annotation-driven/>
     <!-- 定时器开关 结束 -->
     <!-- 计划任务每天凌晨三点更新缓存  0/5* * * * * -->
-    <bean id="taskImpl" class="com.st.service.impl.TaskImpl"/>
+    <bean id="taskImpl" class="com.st.ktv.service.impl.TaskImpl"/>
     <task:scheduled-tasks> 
         <task:scheduled ref="taskImpl" method="updateInstance" cron="0 0 3 * * * "/> 
 	</task:scheduled-tasks>
-	<context:component-scan base-package="com.st.service.impl" />
+	<context:component-scan base-package="com.st.ktv.service.impl" />
 	
 </beans>

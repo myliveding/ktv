@@ -35,7 +35,7 @@ public class LoginFilter implements Filter {
 			uri=uri.substring(0,uri.indexOf("weixin/getWeixintoIndex.do"));
 		}
 		String backUrl=httpServletRequest.getParameter("backUrl");
-		if (com.st.utils.text.StringUtils.isNotEmpty(backUrl)){
+		if (com.st.utils.StringUtils.isNotEmpty(backUrl)){
 			session.setAttribute("backUrl",backUrl);
 		}
 		logger.info("正常拦截器中,项目访问路径getServletPath：" + uri);

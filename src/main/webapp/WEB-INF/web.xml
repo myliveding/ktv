@@ -80,7 +80,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>CoreAction</servlet-name>
-    <servlet-class>com.st.controller.CoreAction</servlet-class>
+    <servlet-class>com.st.ktv.controller.CoreAction</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>CoreAction</servlet-name>

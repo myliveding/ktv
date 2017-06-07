@@ -54,13 +54,13 @@ public class XssFilter implements Filter {
 			uri=uri.substring(0,uri.indexOf("weixin/getWeixintoIndex.do"));
 		}
 		String wybSource=httpServletRequest.getParameter("wybSource");
-		if (com.st.utils.text.StringUtils.isNotEmpty(wybSource)){
+		if (com.st.utils.StringUtils.isNotEmpty(wybSource)){
 			if (CheckUtil.isWord(wybSource)){
 				session.setAttribute("wybSource",wybSource);
 			}
 		}
 		String invitCode=httpServletRequest.getParameter("invitCode");
-		if (com.st.utils.text.StringUtils.isNotEmpty(invitCode)){
+		if (com.st.utils.StringUtils.isNotEmpty(invitCode)){
 			if (CheckUtil.isWord(invitCode)){
 				session.setAttribute("regInvitCode",invitCode);
 			}
