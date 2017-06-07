@@ -1,4 +1,4 @@
-<%@page import="com.st.core.util.iputil.IPUtil"%>
+<%@page import="com.st.utils.IPUtil"%>
 <%
 /* *
  功能：支付宝服务器异步通知页面
@@ -17,7 +17,7 @@
  * */
 %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="com.st.controller.alipay.config.AlipayConfig"%>
+<%@ page import="com.st.ktv.controller.alipay.config.AlipayConfig"%>
 <%@ page import="java.util.*"%>
 <%@ page import="net.sf.json.JSONObject"%>
 <%@ page import="com.st.utils.JoYoUtil"%>
@@ -75,7 +75,7 @@
 			String mystr = "orderNo=" + out_trade_no + "&payType=alipay&serialNo=" + trade_no + "&thirdPayAmt=" + total_amount;
 			Logger.getLogger(this.getClass()).info("notifyUrl mystr=" + mystr);
 			try {
-				resultStr = JSONObject.fromObject(JoYoUtil.sendPost(JoYoUtil.JAVA_ORDER_CONFIRM, mystr));
+				resultStr = JSONObject.fromObject(JoYoUtil.sendPost(JoYoUtil.ORDER_CONFIRM, mystr));
 			} catch (Exception e) {
 				Logger.getLogger(this.getClass()).error("获取数据出错:" + e.getMessage(), e);
 			}

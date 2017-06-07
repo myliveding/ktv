@@ -1,0 +1,193 @@
+<%@ page language="java" import="com.st.utils.Constant" pageEncoding="utf-8"%>
+<%@ taglib prefix="fn" uri="/WEB-INF/tld/fn.tld"%>
+<%@ taglib prefix="c" uri="/WEB-INF/tld/c.tld"%>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta name="author" content="linx" />
+     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple fullscreen -->
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <title>ktv</title> 
+    <link rel="stylesheet" href="jsp/resources/css/reset.css">
+    <link rel="stylesheet" href="jsp/resources/css/pullToRefresh.css">
+    <link rel="stylesheet" href="jsp/resources/css/main.css">
+</head>
+<body>  
+    <div class="main" style="padding-top: 0;">
+        <div id="bg"></div>
+        <div id="nav">
+            <ul>
+                <li>
+                    <a href="orderselect.html">
+                        <div class="nav-item nav-item1">
+                            <img src="jsp/resources/img/s1.png">
+                        </div>
+                        <span>在线预定</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="shopnowing.html">
+                        <div class="nav-item nav-item2">
+                            <img src="jsp/resources/img/s2.png">
+                        </div>
+                        <span>在线超市</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="exchangescore.html">
+                        <div class="nav-item nav-item3">
+                            <img src="jsp/resources/img/s3.png">
+                        </div>
+                        <span>积分兑换</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="recruit.html">
+                        <div class="nav-item nav-item4">
+                            <img src="jsp/resources/img/s4.png">
+                        </div>
+                        <span>盛世招聘</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="discount.html">
+                        <div class="nav-item nav-item5">
+                            <img src="jsp/resources/img/s5.png">
+                        </div>
+                        <span>优惠活动</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <div class="nav-item nav-item6">
+                            <img src="jsp/resources/img/s6.png">
+                        </div>
+                        <span>盛世会员</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="select.html">
+                        <div class="nav-item nav-item7">
+                            <img src="jsp/resources/img/s7.png">
+                        </div>
+                        <span>电话</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="about.html">
+                        <div class="nav-item nav-item8">
+                            <img src="jsp/resources/img/s8.png">
+                        </div>
+                        <span>关于盛世</span>
+                    </a>
+                </li>
+                <div class="clear"></div>
+            </ul>
+        </div>
+         <div class="shop-list" id="wrapper">
+            <ul>
+            <h2>距离我最近↓</h2>
+                <c:forEach var = "data" items ="${storeList}">
+                    <li>
+                        <a href="roominfo.html">
+                            <img src="jsp/resources/img/1.png">
+                            <div class="shop-info">
+                                <h3>${data.name}</h3>
+                                <p>
+                                    <span>【剩余小包】${data.smallNum}个</span>
+                                    <span>【剩余VIP包】${data.vipNum}个</span>
+                                </p>
+                                <p>
+                                    <span>【剩余中包】${data.mediumNum}个</span>
+                                    <span>【剩余大包】${data.bigNum}个</span>
+                                </p>
+                            </div>
+                            <div class="recent">距离我${data.distance}KM</div>
+                            <em>进入预定</em>
+                        </a>
+                    </li>
+                </c:forEach>
+            </ul>
+
+        </div>
+    </div>
+   
+    <div class="footer">
+        <ul>
+            <li>
+                <a href="" class="footer-now">
+                    <img src="jsp/resources/img/h1.png">
+                    <span>在线定包</span>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <img src="jsp/resources/img/h2.png">
+                    <span>关于盛世</span>
+                </a>
+            </li>
+            <li>
+                <a href="integralmall.html">
+                    <img src="jsp/resources/img/h3.png">
+                    <span>积分商城</span>
+                </a>
+            </li>
+            <li>
+                <a href="usercenter.html">
+                    <img src="jsp/resources/img/h4.png">
+                    <span>我的盛世</span>
+                </a>
+            </li>
+            <div class="clear"></div>
+        </ul>
+    </div>
+</body> 
+<script src='jsp/resources/js/rem.js'></script>
+<script src='jsp/resources/js/jquery.min.js'></script>
+<script src='jsp/resources/js/iscroll.js'></script>
+<script src='jsp/resources/js/pullToRefresh.js'></script>
+<script>
+   refresher.init({
+        id:"wrapper",//<------------------------------------------------------------------------------------┐
+        pullDownAction:Refresh,
+        pullUpAction:Load
+        });
+    function Refresh() {
+        setTimeout(function () {    // <-- Simulate network congestion, remove setTimeout from production!
+            var el, li, i;
+            el =document.querySelector("#wrapper ul");
+            //这里写你的刷新代码
+            document.getElementById("wrapper").querySelector(".pullDownIcon").style.display="none";
+            document.getElementById("wrapper").querySelector(".pullDownLabel").innerHTML="刷新成功";
+            location.reload(); 
+        }, 1000);
+    }
+     
+    var page=2;
+    function Load() {
+        setTimeout(function () { 
+            var el ;
+            el =document.querySelector("#wrapper ul");
+            $.ajax({
+                type:"POST",
+                url:"../ktv/php/index.php", 
+                success:function(data)
+                { 
+                    $("#wrapper ul").append(data);
+                    wrapper.refresh(); 
+                }, 
+            });
+        },2000);
+    } 
+</script>
+</html>

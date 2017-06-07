@@ -70,7 +70,7 @@ ul,ol{
 }
 #logo{
 	background-color: transparent;
-    background-image: url("images/new-btn-fixed.png");
+    background-image: url("jsp/resources/img/w2.png");
     border: medium none;
 	background-position:0 0;
 	width:166px;

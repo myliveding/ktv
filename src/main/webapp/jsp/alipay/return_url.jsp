@@ -21,7 +21,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="net.sf.json.JSONObject"%>
 <%@ page import="com.st.utils.JoYoUtil"%>
-<%@ page import="com.st.controller.alipay.config.AlipayConfig"%>
+<%@ page import="com.st.ktv.controller.alipay.config.AlipayConfig"%>
 <%@ page import="com.alipay.api.internal.util.AlipaySignature"%>
 <html>
   <head>
@@ -76,7 +76,7 @@
 				//如果有做过处理，不执行商户的业务程序
                 String mystr="orderNo="+out_trade_no+"&payType=alipay&serialNo="+trade_no+"&thirdPayAmt="+total_fee;
                 Logger.getLogger(this.getClass()).info("notifyUrl mystr="+mystr);
-                JSONObject.fromObject(JoYoUtil.sendPost(JoYoUtil.JAVA_ORDER_CONFIRM, mystr));
+                JSONObject.fromObject(JoYoUtil.sendPost(JoYoUtil.ORDER_CONFIRM, mystr));
 		}
 		
 		//该页面可做页面美工编辑

@@ -1,7 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
-<%@ page import="com.st.utils.JsonUtil"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.st.constant.Constant"%>
+<%@ page import="com.st.utils.Constant"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -16,8 +15,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta charset="utf-8">
     <meta name="keywords" content=""> 
     <meta name="description" content="">
-    <jsp:include page="/jsp/layouts/head.jsp" flush="true"/>
-    <link href="<%=JsonUtil.getJsonFile("css/basic.css") %>" type="text/css" rel="stylesheet" />
+    <link href="jsp/resources/css/basic.css" type="text/css" rel="stylesheet" />
   </head>
 <body class="gray" >
 <div class="statusbar-overlay"></div>
@@ -94,7 +92,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	line-height: .86rem;
 }
 .list-block .item-title {
-	background-image: url(<%=Constant.staticUrl %>/css/images/1.png);
+	background-image: url(jsp/resources/css/img/1.png);
 	background-repeat: no-repeat;
 	background-size: .38rem .44rem;
 	background-position: .56rem center;

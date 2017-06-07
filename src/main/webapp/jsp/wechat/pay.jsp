@@ -1,24 +1,21 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
-<%@ page import="com.st.utils.JsonUtil"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.st.constant.Constant"%>
+<%@ page import="com.st.utils.Constant"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 
 
-
-
 <!DOCTYPE html>
 <html>
   <head>
-    <title>无忧保</title>
+    <title>盛世</title>
     <meta charset="utf-8">
     <meta name="keywords" content=""> 
     <meta name="description" content="">
     <jsp:include page="/jsp/layouts/head.jsp" flush="true"/>
-    <link href="<%=JsonUtil.getJsonFile("css/basic.css") %>" type="text/css" rel="stylesheet" />
+    <link href="jsp/resources/css/basic.css %>" type="text/css" rel="stylesheet" />
   </head>
 <body class="jsb_add1 gray pb40">
 
@@ -43,10 +40,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<P class="mb10">订单提交时间：<em class="ddtime"></em></P>
 	</div>
 
-
-
 	
-	<script type="text/javascript" src="<%=JsonUtil.getJsonFile("js/jquery/jquery-1.8.0.js") %>" ></script>
+	<script type="text/javascript" src="jsp/recoruces/js/jquery-1.8.0.js" ></script>
 	<script type="text/javascript">
 	function jiesuan(){
 		var orderCode =${orderId};
@@ -94,10 +89,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		              //使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。 
 		           }else if(res.err_msg == "get_brand_wcpay_request:cancel"){
 		              alert("取消支付，正在跳转到订单列表");
-		              window.location.href="${pageContext.request.contextPath}/jsp/my/orderlistunpay.jsp";
+		              window.location.href="${pageContext.request.contextPath}/jsp/my/myorder.jsp";
 		           }else{
 		              alert("支付失败，正在跳转到订单列表");
-                      window.location.href="${pageContext.request.contextPath}/jsp/my/orderlistunpay.jsp";
+                      window.location.href="${pageContext.request.contextPath}/jsp/my/myorder.jsp";
 		           }
 		       }
 		   ); 

@@ -21,9 +21,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	Exception e = (Exception) request.getAttribute("exception");
 	out.print(e.getMessage());
 	%>
-  
 
-<jsp:include page="/jsp/layouts/foot.jsp" flush="true"/>
-<jsp:include page="/jsp/layouts/pv.jsp" flush="true"/>
 </body>
 </html>

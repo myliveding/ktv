@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="com.st.controller.alipay.config.AlipayConfig" %>
+<%@page import="com.st.ktv.controller.alipay.config.AlipayConfig" %>
 <%@page import="com.alipay.api.AlipayClient"%>
 <%@page import="com.alipay.api.DefaultAlipayClient"%>
 <%@page import="com.alipay.api.AlipayApiException"%>
@@ -9,7 +9,7 @@
 <%@page import="com.alipay.api.domain.AlipayTradeWapPayModel" %>
 <%@page import="com.alipay.api.domain.AlipayTradeCreateModel"%>
 <%@page import="org.apache.log4j.Logger"%>
-<%@ page import="com.st.constant.Constant"%>
+<%@ page import="com.st.utils.Constant"%>
 <%@ page import="net.sf.json.JSONObject"%>
 <%@ page import="com.st.utils.JoYoUtil"%>
 <%
@@ -29,44 +29,34 @@
     String userId=(String) request.getSession().getAttribute("userId");
     Logger.getLogger(this.getClass()).info("openId="+openId);
     String orderNo = new String(request.getParameter("orderNo").getBytes("ISO-8859-1"),"UTF-8");
-    String subject ="无忧保订单"+orderNo;// 订单名称，必填
+    String subject ="盛世KTV订单" + orderNo;// 订单名称，必填
     String totalAmount = "0";// 付款金额，必填
     String body = "";// 商品描述，可空
 
     String leftAmtStr=new String(request.getParameter("leftAmt").getBytes("ISO-8859-1"),"UTF-8");
     Logger.getLogger(this.getClass()).info("支付宝支付传入余额:"+leftAmtStr);
-    double leftAmtD=0.0;
-    if(com.st.core.util.text.StringUtils.isNotEmpty(leftAmtStr)){
-        leftAmtD=Double.parseDouble(leftAmtStr);
-        JSONObject balance = JSONObject.fromObject(JoYoUtil.sendGet(JoYoUtil.JAVA_INSURERBALANCE_BY_ORDER, "orderNo=" +orderNo));//取参保人可用余额
-        double leftAmt=balance.getJSONObject("data").getDouble("leftAmt");
-        Logger.getLogger(this.getClass()).info("支付宝支付获取余额:"+leftAmt);
-        if(leftAmtD>leftAmt){
-            out.println("余额信息有误");
-        }
-    }
 
-    String mystr="policyHolderId="+userId+"&orderNo="+orderNo;
+    String mystr="userId="+userId+"&orderNo="+orderNo;
     JSONObject resultStr = JSONObject.fromObject("{\"status\":1,\"msg\":\"\"}");
     try {
-        resultStr = JSONObject.fromObject(JoYoUtil.sendGet(JoYoUtil.JAVA_ORDER_INFO, mystr));
+        resultStr = JSONObject.fromObject(JoYoUtil.sendGet(JoYoUtil.ORDER_DETAIL, mystr));
     } catch (Exception e) {
         Logger.getLogger(this.getClass()).error("获取订单详情出错:" + e.getMessage(), e);
     }
     mystr=mystr+"&payType=alipay";
     try {
-        JSONObject.fromObject(JoYoUtil.sendPost(JoYoUtil.JAVA_ORDER_UPDATE_PAYTYPE, mystr));
+        JSONObject.fromObject(JoYoUtil.sendPost(JoYoUtil.UPDATE_ORDER_PAYTYPE, mystr));
     } catch (Exception e) {
         Logger.getLogger(this.getClass()).error("更新订单支付方式出错:" + e.getMessage(), e);
     }
     if(0 == resultStr.getInt("status")){
         JSONObject message = JSONObject.fromObject(resultStr.getString("data"));
         double orderAmt = message.getDouble("orderAmt");
-        totalAmount=new java.text.DecimalFormat("#0.00").format(orderAmt-leftAmtD);
+        totalAmount = new java.text.DecimalFormat("#0.00").format(orderAmt);
     }
-    if(Constant.ENVIROMENT.equals("test")){
-        totalAmount="0.01";
-    }
+    //测试使用
+    totalAmount="0.01";
+
     // 超时时间 可空
     String timeoutExpress="5d";
     // 销售产品码 必填

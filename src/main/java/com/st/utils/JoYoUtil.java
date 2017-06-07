@@ -13,7 +13,22 @@ import java.net.URL;
  * 创建人：wuhao 创建时间：2015-6-11
  */
 public class JoYoUtil {
+
     private static Logger logger = LoggerFactory.getLogger(JoYoUtil.class);
+
+    /**
+     * 获取订单详情
+     */
+    public static final String ORDER_DETAIL = Constant.PHP_API_URL + "";
+    /**
+     * 更新订单支付方式
+     */
+    public static final String UPDATE_ORDER_PAYTYPE = Constant.PHP_API_URL + "";
+    /**
+     * 确认订单 java
+     */
+    public static final String ORDER_CONFIRM = Constant.PHP_API_URL + "/order/payOrder";
+
     /**
      * 注册绑定URL
      */

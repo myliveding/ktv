@@ -1,6 +1,7 @@
 package com.st.ktv.controller;
 
 import com.st.core.ContextHolderUtils;
+import com.st.ktv.entity.Store;
 import com.st.utils.Constant;
 import com.st.ktv.entity.City;
 import com.st.utils.IPUtil;
@@ -22,6 +23,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/weixin")
@@ -147,71 +151,25 @@ public class WeixinController {
 
     /**
      * 直接访问域名跳转首页推送相关数据
-     *
      * @param request
      * @return object
      */
     @RequestMapping("/getWeixintoIndex")
     public String getWeixintoIndex(HttpServletRequest request) {
-        HttpSession session=ContextHolderUtils.getSession();
-        String userId = "";
-        String invitationCode="";
-        Object userIdObject=session.getAttribute("userId");
-        if (null != userIdObject && !"".equals(userIdObject)) {
-            userId = userIdObject.toString();
-        }
-        JSONObject jsonObjectBanner=articleService.bannerDemend(request,"wyb_wechat_banner");
-        JSONObject jsonObjectzk=articleService.articleDemend(request,"181",null,null,1,5,null,null,null);//社保周刊
-        JSONObject jsonObjectwt=articleService.articleDemend(request,"113",null,null,1,3,"1",null,"1");//常见问题
-        JSONObject jsonObjecttj=articleService.articleDemend(request,null,null,null,1,5,null,null,null);//推荐文章
-        JSONObject indexInfo=new JSONObject();
-        if(userIdObject!=null&&!"".equals(userIdObject)){
-            userId=userIdObject.toString();
-        }
-        try{
-            JSONObject jsonStr = JSONObject.fromObject(JoYoUtil.sendGet("", "" ));
-            if (jsonStr.getInt("status") == 0) {
-                indexInfo.put("buyList",jsonStr.getJSONArray("data"));
-            }
-        }catch (Exception e) {
-            logger.error("首页信息:" + e.getMessage(), e);
-            indexInfo= JSONObject.fromObject("{\"status\":1,\"msg\":\"出错了\"}");
-        }
-        request.setAttribute("banner",jsonObjectBanner);
-        request.setAttribute("zk",jsonObjectzk);
-        request.setAttribute("wt",jsonObjectwt);
-        request.setAttribute("tj",jsonObjecttj);
-        request.setAttribute("info",indexInfo);
 
-        String url = Constant.URL.substring(0,Constant.URL.indexOf(":"))+"://" + request.getServerName() // 服务器地址
-                + request.getContextPath() // 项目名称
-                + request.getServletPath(); // 请求页面或其他地址
-        if (DataUtil.isNotEmpty(request.getQueryString())) {
-            url = url + "?" + (request.getQueryString());//url后面的参数
+        List<Store> list = new ArrayList<Store>();
+        for(int i =1 ; i<5 ; i++){
+            Store store = new Store();
+            store.setName("test");
+            store.setBigNum(3);
+            store.setDistance(BigDecimal.TEN);
+            store.setMediumNum(7);
+            store.setSmallNum(3);
+            store.setVipNum(8);
+            list.add(store);
         }
-        String shareUrl="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+Constant.APP_ID+"&redirect_uri="+Constant.URL+"/scope/openid.do?next=personsocial/gotoindex.do"+Constant.APP_ID+"&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
-        // 分享参数
-        logger.info("JS调用时的确切路径，需要在加密时使用：" + url);// 当前网页的URL，不包含#及其后面部分
-        try{
-            Weixin weixin = weixinAPIService.getJSAPITicket(Constant.APP_ID);
-            String jsapiTicket = weixin.getJsapiTicket();
-            logger.info("jsapi_ticket:" + jsapiTicket);
-            String signature = SignUtil.getSignature(jsapiTicket,
-                    Constant.TIME_STAMP, Constant.NONCESTR, url);
-            logger.info("signature:" + signature);
-
-            request.setAttribute("signature", signature);
-            request.setAttribute("jsapi_ticket", jsapiTicket);
-        }catch (Exception e) {//出错时该功能肯定是不能使用了，所以直接跳转到首页，此时不能分享
-            logger.error("获取微信调用出错：" + e.getMessage(), e);
-            return "index/index";
-        }
-        request.setAttribute("timestamp", Constant.TIME_STAMP);
-        request.setAttribute("noncestr", Constant.NONCESTR);
-        request.setAttribute("url", url);
-        request.setAttribute("shareUrl", shareUrl);
-        request.setAttribute("appid", Constant.APP_ID);
-        return "index/index";
+        request.setAttribute("storeList",list);
+        return "index";
     }
 
 
