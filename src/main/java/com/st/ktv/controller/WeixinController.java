@@ -4,11 +4,9 @@ import com.st.core.ContextHolderUtils;
 import com.st.utils.Constant;
 import com.st.ktv.entity.City;
 import com.st.utils.IPUtil;
-import com.st.utils.StringUtils;
 import com.st.ktv.entity.wx.Weixin;
 import com.st.ktv.service.ArticleService;
-import com.st.ktv.service.WeixinAPIService;
-import com.st.ktv.service.impl.ArticleRedisHandleServiceImpl;
+import com.st.ktv.service.impl.WeixinAPIServiceImpl;
 import com.st.utils.*;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -31,11 +29,10 @@ public class WeixinController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Resource
-    private WeixinAPIService weixinAPIService;
+    private WeixinAPIServiceImpl weixinAPIService;
     @Resource
     private ArticleService articleService;
-    @Resource
-    private ArticleRedisHandleServiceImpl articleRedisHandleServiceImpl;
+
     /**
      * 获取微信js调用所需的变量
      * 
@@ -49,7 +46,7 @@ public class WeixinController {
 	    String param = request.getParameter("name");//获取跳转首个参数，该字段代表为想要跳转到的页面
         String param1 = request.getParameter("param1");//该参数不是必须参数，座位某些页面的关键字段，留待哪些页面去使用
         String invitCode=request.getParameter("invitCode");
-        if(StringUtils.isNotEmpty(invitCode)){
+        if(DataUtil.isNotEmpty(invitCode)){
             session.setAttribute("regInvitCode", invitCode);
             session.setAttribute("invitCode", invitCode);
         }
@@ -65,7 +62,7 @@ public class WeixinController {
 	    	
 	        if(userIdObject!=null&&!"".equals(userIdObject)){
 	            userId=userIdObject.toString();
-	            JSONObject userInfo = JSONObject.fromObject(JoYoUtil.sendGet(JoYoUtil.JAVA_HOLDER_INFO,"policyHolderId="+userId));
+	            JSONObject userInfo = JSONObject.fromObject(JoYoUtil.sendGet("","policyHolderId="+userId));
     	        if(userInfo.containsKey("status")){
     	            JSONArray jsonArray=userInfo.getJSONArray("data");
     	            if(jsonArray.size()>0){
@@ -80,7 +77,7 @@ public class WeixinController {
         String url = Constant.URL.substring(0,Constant.URL.indexOf(":"))+"://" + request.getServerName() // 服务器地址
                 + request.getContextPath() // 项目名称
                 + request.getServletPath(); // 请求页面或其他地址
-        if (StringUtils.isNotEmpty(request.getQueryString())) {
+        if (DataUtil.isNotEmpty(request.getQueryString())) {
             url = url + "?" + (request.getQueryString());//url后面的参数
         }
         logger.info("JS调用时的原始：" + url);// 当前网页的URL，不包含#及其后面部分
@@ -121,14 +118,14 @@ public class WeixinController {
         request.setAttribute("userId", userId);
         request.setAttribute("invCode",invitationCode);
         logger.info("获取到的跳转页面参数为：" + param);
-        if (null==param||StringUtils.isEmpty(param)||(param.indexOf("index/index")>-1)) { //参数为空时，直接跳转到首页，一般参数会有
+        if (null==param||DataUtil.isEmpty(param)||(param.indexOf("index/index")>-1)) { //参数为空时，直接跳转到首页，一般参数会有
             JSONObject jsonObjectBanner=articleService.bannerDemend(request,"wyb_wechat_banner");
             JSONObject jsonObjectzk=articleService.articleDemend(request,"181",null,null,1,5,null,null,null);//社保周刊
             JSONObject jsonObjectwt=articleService.articleDemend(request,"113",null,null,1,3,"1",null,"1");//常见问题
             JSONObject jsonObjecttj=articleService.articleDemend(request,null,null,null,1,5,null,null,null);//推荐文章
             JSONObject indexInfo=new JSONObject();
             try{
-                JSONObject jsonStr = JSONObject.fromObject(JoYoUtil.sendGet(JoYoUtil.JAVA_ORDER_INDEX, "" ));
+                JSONObject jsonStr = JSONObject.fromObject(JoYoUtil.sendGet("", "" ));
                 if (jsonStr.getInt("status") == 0) {
                     indexInfo.put("buyList",jsonStr.getJSONArray("data"));
                 }
@@ -172,7 +169,7 @@ public class WeixinController {
             userId=userIdObject.toString();
         }
         try{
-            JSONObject jsonStr = JSONObject.fromObject(JoYoUtil.sendGet(JoYoUtil.JAVA_ORDER_INDEX, "" ));
+            JSONObject jsonStr = JSONObject.fromObject(JoYoUtil.sendGet("", "" ));
             if (jsonStr.getInt("status") == 0) {
                 indexInfo.put("buyList",jsonStr.getJSONArray("data"));
             }
@@ -189,7 +186,7 @@ public class WeixinController {
         String url = Constant.URL.substring(0,Constant.URL.indexOf(":"))+"://" + request.getServerName() // 服务器地址
                 + request.getContextPath() // 项目名称
                 + request.getServletPath(); // 请求页面或其他地址
-        if (StringUtils.isNotEmpty(request.getQueryString())) {
+        if (DataUtil.isNotEmpty(request.getQueryString())) {
             url = url + "?" + (request.getQueryString());//url后面的参数
         }
         String shareUrl="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+Constant.APP_ID+"&redirect_uri="+Constant.URL+"/scope/openid.do?next=personsocial/gotoindex.do"+Constant.APP_ID+"&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
@@ -244,43 +241,7 @@ public class WeixinController {
         }
         return resultStr;
     }
-    
-    
-    /**
-     * 根据IP地址解析获取城市信息
-     * @param request
-     * @param response
-     * @return json
-     * @throws Exception
-     */
-    @RequestMapping("/cityLocation")
-    public @ResponseBody Object cityLocation(HttpServletRequest request,HttpServletResponse response) throws IOException{
-        String[] arr = null;
-        String mystr = "";
-        if(Constant.ENVIROMENT.equals("test")){
-            arr = new String[]{"city_name杭州"};
-            mystr = "city_name=杭州";
-        }
-        JSONObject resultStr = JSONObject.fromObject("{\"status\":1,\"msg\":\"出错了\"}");
-        try {
-            //城市列表查询
-            City city = IPUtil.getCityByIP(request);
-            resultStr = JSONObject.fromObject("{\"status\":0,\"cityName\":\"\"}");
-            if(city.isFlag() && StringUtils.isNotEmpty(city.getCity())){
-                logger.info("根据IP获取到的信息为country：" + city.getCountry() 
-                        + ",city：" + city.getCity() + ",province：" + city.getProvince());
-                arr = new String[]{"city_name"+ city.getCity()};
-                mystr = "city_name="+ city.getCity();
-            }
-            resultStr = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.PERSONINSURANCE_GETCITY_URL, mystr, arr));
-        } catch (Exception e) {
-            logger.error("城市列表查询出错:" + e.getMessage(), e);
-        }
-        response.setContentType("text/html; charset=utf-8");
-        PrintWriter out=response.getWriter();
-        out.println(resultStr);
-        return null;
-    }
+
 
     /**
      * 根据IP地址解析获取城市名
@@ -295,7 +256,7 @@ public class WeixinController {
         try {
             //城市列表查询
             City city = IPUtil.getCityByIP(request);
-            if(city.isFlag() && StringUtils.isNotEmpty(city.getCity())){
+            if(city.isFlag() && DataUtil.isNotEmpty(city.getCity())){
                 logger.info("根据IP获取到的信息为country：" + city.getCountry()
                         + ",city：" + city.getCity() + ",province：" + city.getProvince());
                 String address = city.getCity().replace("市", "").trim();
@@ -320,19 +281,17 @@ public class WeixinController {
      */
     @RequestMapping("/getCityNameByMobile")
     public @ResponseBody Object getCityNameByMobile(HttpServletRequest request,HttpServletResponse response) throws IOException{
-//		String[] arr = null;
-//		String mystr = "";
         String memberMobile=request.getParameter("memberMobile");
-        if (StringUtils.isEmpty(memberMobile)){
+        if (DataUtil.isEmpty(memberMobile)){
             HttpSession session = ContextHolderUtils.getSession();
             memberMobile=(String)session.getAttribute("memberMobile");
         }
         JSONObject resultStr = JSONObject.fromObject("{\"status\":1,\"msg\":\"出错了\"}");
         try {
             //城市列表查询
-            if (StringUtils.isNotEmpty(memberMobile)&&CheckUtil.isMobileNo(memberMobile)) {
+            if (DataUtil.isNotEmpty(memberMobile)&&DataUtil.isMobileNo(memberMobile)) {
                 City city = IPUtil.getCityByPhone(memberMobile);
-                if (city.isFlag() && StringUtils.isNotEmpty(city.getCity())) {
+                if (city.isFlag() && DataUtil.isNotEmpty(city.getCity())) {
                     logger.info("根据手机号获取到的信息为city：" + city.getCity());
                     String address = city.getCity().replace("市", "").trim();
 //					mystr = "city_name=" + address;
@@ -389,41 +348,15 @@ public class WeixinController {
         response.setDateHeader("Expires", 0);
         response.setContentType("image/jpeg");
         //生成随机字串
-        String verifyCode = VerifyCodeUtils.generateVerifyCode(4);
+        String verifyCode = VerificationCode.generateVerifyCode(4);
         //存入会话session
         HttpSession session = request.getSession(true);
         session.setAttribute("randCode", verifyCode);
         session.setAttribute("randCodeMust", "Y");
         //生成图片
         int w = 200, h = 80;
-        VerifyCodeUtils.outputImage(w, h, response.getOutputStream(), verifyCode);
+        VerificationCode.outputImage(w, h, response.getOutputStream(), verifyCode);
         return null;
     }
 
-    /**
-     * 校验是否需要图片验证码
-     * @param response
-     * @return json  status=1 需要
-     * @throws Exception
-     */
-    @RequestMapping("/verifyCodeCheck")
-    public @ResponseBody Object verifyCodeCheck(HttpServletResponse response) throws IOException {
-        String key="sendMsgCount";
-        Integer i=0;
-        JSONObject resultStr = articleRedisHandleServiceImpl.readVCode(key);
-        if(resultStr != null){
-            i=resultStr.getInt("count");
-            if (i>99){
-                resultStr.put("status",1);
-            }else {
-                resultStr = JSONObject.fromObject("{\"status\":0}");
-            }
-        }else {
-            resultStr = JSONObject.fromObject("{\"status\":0}");
-        }
-        response.setContentType("text/html; charset=utf-8");
-        PrintWriter out=response.getWriter();
-        out.println(resultStr);
-        return null;
-    }
 }

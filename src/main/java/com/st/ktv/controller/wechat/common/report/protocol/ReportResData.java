@@ -1,7 +1,6 @@
 package com.st.ktv.controller.wechat.common.report.protocol;
 
 /**
- * User: rizenguo
  * Date: 2014/11/12
  * Time: 17:06
  */

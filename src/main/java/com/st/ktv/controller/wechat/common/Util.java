@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import com.thoughtworks.xstream.XStream;
 
 /**
- * User: rizenguo
  * Date: 2014/10/23
  * Time: 14:59
  */

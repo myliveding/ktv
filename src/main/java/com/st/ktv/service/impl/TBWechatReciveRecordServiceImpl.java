@@ -15,6 +15,7 @@ import java.util.List;
 @Transactional
 public class TBWechatReciveRecordServiceImpl implements TBWechatReciveRecordService {
 	private static Logger logger = LoggerFactory.getLogger(TBWechatReciveRecordServiceImpl.class);
+
 	@Autowired
 	public TBWechatReciveRecordMapper tbWechatReciveRecordMapper;
 

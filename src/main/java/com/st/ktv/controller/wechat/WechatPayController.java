@@ -4,8 +4,9 @@ import com.st.utils.Constant;
 import com.st.ktv.controller.wechat.common.Configure;
 import com.st.ktv.controller.wechat.common.MD5;
 import com.st.ktv.controller.wechat.common.report.protocol.ReportReqData;
+import com.st.utils.DataUtil;
 import com.st.utils.ParseXmlUtil;
-import com.st.ktv.service.WeixinAPIService;
+import com.st.ktv.service.impl.WeixinAPIServiceImpl;
 import com.st.utils.JoYoUtil;
 import com.st.utils.wx.WeixinUtil;
 import com.thoughtworks.xstream.XStream;
@@ -36,7 +37,7 @@ public class WechatPayController {
 	
 	@SuppressWarnings("unused")
 	@Resource
-	private WeixinAPIService weixinAPIService;
+	private WeixinAPIServiceImpl weixinAPIService;
 	
 	@RequestMapping(value="/index",method=RequestMethod.GET)
 	public  String pay(HttpServletRequest req,Model model) {
@@ -47,9 +48,9 @@ public class WechatPayController {
 		String leftAmtStr=req.getParameter("leftAmt");
         logger.info(orderNo+"微信支付传入余额:"+leftAmtStr);
         double leftAmtD=0.0;
-        if(com.st.utils.StringUtils.isNotEmpty(leftAmtStr)){
+        if(DataUtil.isNotEmpty(leftAmtStr)){
             leftAmtD=Double.parseDouble(leftAmtStr);
-			JSONObject balance = JSONObject.fromObject(JoYoUtil.sendGet(JoYoUtil.JAVA_INSURERBALANCE_BY_ORDER, "orderNo=" +orderNo));//取参保人可用余额
+			JSONObject balance = JSONObject.fromObject(JoYoUtil.sendGet("", "orderNo=" +orderNo));//取参保人可用余额
             double leftAmt=balance.getJSONObject("data").getDouble("leftAmt");
             logger.info("微信支付获取余额:"+leftAmt);
             if(leftAmtD>leftAmt){
@@ -69,7 +70,7 @@ public class WechatPayController {
 		JSONObject resultStr = JSONObject.fromObject("{\"status\":1,\"msg\":\"出错了\"}");
 		String mystr="policyHolderId="+userId+"&orderNo="+orderNo;
         try {
-            resultStr = JSONObject.fromObject(JoYoUtil.sendGet(JoYoUtil.JAVA_ORDER_INFO, mystr));
+            resultStr = JSONObject.fromObject(JoYoUtil.sendGet("", mystr));
         } catch (Exception e) {
             logger.error("订单明细查询接口出错:" + e.getMessage(), e);
         }
@@ -107,9 +108,7 @@ public class WechatPayController {
 		            amLong = Long.valueOf((payAmt.substring(0, index+1)).replace(".", "")+"00");    
 		        } 
 		        payAmt=amLong+"";
-				if(Constant.ENVIROMENT.equals("test")){
-					payAmt="1";
-				}
+//                payAmt="1";
 				logger.info("order_money（分）:"+payAmt);
 			}
 			totalFee=payAmt;

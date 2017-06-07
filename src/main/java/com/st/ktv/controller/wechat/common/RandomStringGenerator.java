@@ -3,7 +3,6 @@ package com.st.ktv.controller.wechat.common;
 import java.util.Random;
 
 /**
- * User: rizenguo
  * Date: 2014/10/29
  * Time: 14:18
  */

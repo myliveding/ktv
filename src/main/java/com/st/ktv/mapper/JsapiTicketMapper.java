@@ -1,6 +1,7 @@
 package com.st.ktv.mapper;
 
-import com.st.ktv.entity.wx.JsapiTicket;
+import com.st.ktv.entity.JsapiTicket;
+
 
 public interface JsapiTicketMapper {
     /**

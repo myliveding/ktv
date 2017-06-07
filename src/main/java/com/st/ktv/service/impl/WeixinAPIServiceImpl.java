@@ -1,13 +1,15 @@
-package com.st.ktv.service;
+package com.st.ktv.service.impl;
 
+import com.st.ktv.service.JsapiTicketService;
+import com.st.ktv.service.TBWechatService;
 import com.st.utils.Constant;
-import com.st.utils.StringUtils;
 import com.st.framework.TemplateData;
 import com.st.framework.WxTemplate;
 import com.st.ktv.entity.wx.AccessToken;
 import com.st.ktv.entity.wx.Weixin;
-import com.st.ktv.entity.wx.JsapiTicket;
+import com.st.ktv.entity.JsapiTicket;
 import com.st.ktv.entity.TBWechat;
+import com.st.utils.DataUtil;
 import com.st.utils.PropertiesUtils;
 import com.st.utils.wx.WeixinUtil;
 import net.sf.json.JSONObject;
@@ -28,7 +30,7 @@ import java.util.Map;
  * @author wuh
  */
 @Component
-public class WeixinAPIService {
+public class WeixinAPIServiceImpl {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -38,20 +40,6 @@ public class WeixinAPIService {
     @Resource
     private JsapiTicketService jsapiTicketService;
 
-    /**
-     * 获取token
-     * <p/>
-     * <ul>
-     * <li>
-     * <b>功能：<br/>
-     * <p/>
-     * 2015-06-01<br/>
-     *
-     * @return token字符串 获取失败（-1）
-     * </p>
-     * </li>
-     * </ul>
-     */
 
     public String getAccessTOken(String appid) {
         TBWechat tBWechat = tBWechatService.selectByPrimaryKey(appid);
@@ -108,10 +96,8 @@ public class WeixinAPIService {
         return token;
     }
 
-
     /**
      * 获取用于调用微信JS接口的临时票据
-     *
      * @param appid 微信公众编号
      * @return
      */
@@ -260,7 +246,7 @@ public class WeixinAPIService {
      */
     public boolean IsSubscribe(String appid, String openid) {
         logger.info("根据appid和openid判断当前用户是否关注公众号,appid为：" + appid + ",openid为：" + openid);
-        if (StringUtils.isNotEmpty(appid) && StringUtils.isNotEmpty(openid)) {
+        if (DataUtil.isNotEmpty(appid) && DataUtil.isNotEmpty(openid)) {
             try {
                 JSONObject jSONObject = this.getUserInfoOfOpenId(appid, openid);
                 String subscribe = jSONObject.getString("subscribe");
@@ -354,7 +340,7 @@ public class WeixinAPIService {
 //     String type=request.getParameter("type"); //0 业务服务提醒 ；  1 认证通知；2 消息提醒 ；3 获得代金券通知；4注册通知；
 //5 参保成功通知；6参保失败通知；7停保成功通知；8停保失败通知；9退款成功通知；10服务到期提醒；11业务办理取消通知；12订单未支付通知;13订单支付成功；14业务动态提醒；15手机号绑定提醒
         WxTemplate t = new WxTemplate();
-        if (StringUtils.isEmpty(remarkStr)) {
+        if (DataUtil.isEmpty(remarkStr)) {
             if (type.equals("1") || type.equals("2")) {
                 remarkStr = "感谢您对我们工作的支持！如有疑问，请拨打咨询热线400-111-8900。";
             } else if (type.equals("3")) {
@@ -448,7 +434,7 @@ public class WeixinAPIService {
      */
     public String downloadFromWxAndUploadToAliYun(String picId,String accessToken,String path){
         String picPath="";
-        if(StringUtils.isNotEmpty(picId)&&picId.indexOf("http")<0){
+        if(DataUtil.isNotEmpty(picId)&&picId.indexOf("http")<0){
             if(WeixinUtil.checkAccessToken(accessToken, picId)){//判断accexxTkoen的有效性，无效直接重新获取
                 Weixin weixin = this.getJSAPITicketIm(Constant.APP_ID);
                 accessToken = weixin.getAccessToken();

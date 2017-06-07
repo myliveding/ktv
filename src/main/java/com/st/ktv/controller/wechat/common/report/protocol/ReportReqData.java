@@ -12,7 +12,6 @@ import com.st.ktv.controller.wechat.common.Signature;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
- * User: rizenguo
  * Date: 2014/11/12
  * Time: 17:05
  */

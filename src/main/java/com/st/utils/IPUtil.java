@@ -124,13 +124,13 @@ public class IPUtil {
 //			ip = "218.4.58.41";//苏州
 //			ip = "125.71.216.26";//成都
 //			ip = "58.60.124.50";//深圳
-			if(com.st.utils.StringUtils.isNotEmpty(ip)){
+			if(DataUtil.isNotEmpty(ip)){
 				String inputline="";
 				String info="";
 				try {
 					Random r = new Random();
 					int n = r.nextInt(10);
-					String urlIP = ConstantsUtil.BAIDU_IP.replace("AK", ConstantsUtil.AK_S[n]).replace("IP", ip);
+					String urlIP = Constant.BAIDU_IP.replace("AK", Constant.AK_S[n]).replace("IP", ip);
 					logger.info("随机获取的AK为第：" + n + "个," +  "调用的完整url为：" + urlIP);
 					URL url = new URL(urlIP);
 					HttpURLConnection conn = (HttpURLConnection)url.openConnection();
@@ -144,7 +144,7 @@ public class IPUtil {
 						info += inputline;
 					}
 					logger.info("IP地址调用API解析后中获取的信息：" + info);
-					if(com.st.utils.StringUtils.isEmpty(info)){
+					if(DataUtil.isEmpty(info)){
 						logger.info("返回值为空,调用失败或者是调用次数超限了");
 					}else{
 						//解析api返回值
@@ -182,7 +182,7 @@ public class IPUtil {
 	public static City getCityByPhone(String memberMobile) {
 		City city = new City();
 		city.setFlag(false);
-		if(com.st.utils.StringUtils.isNotEmpty(memberMobile)){
+		if(DataUtil.isNotEmpty(memberMobile)){
 			String inputline="";
 			String info="";
 			try {
@@ -197,7 +197,7 @@ public class IPUtil {
 					info += inputline;
 				}
 				logger.info("手机号调用API解析后中获取的信息：" + info);
-				if(com.st.utils.StringUtils.isEmpty(info)){
+				if(DataUtil.isEmpty(info)){
 					logger.info("返回值为空,调用失败或者是调用次数超限了");
 				}else{
 //					Document document = DocumentHelper.parseText(info);

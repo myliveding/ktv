@@ -9,7 +9,7 @@
  */
 package com.st.core.http;
 
-import com.st.utils.CheckUtil;
+import com.st.utils.DataUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,14 +54,14 @@ public class XssFilter implements Filter {
 			uri=uri.substring(0,uri.indexOf("weixin/getWeixintoIndex.do"));
 		}
 		String wybSource=httpServletRequest.getParameter("wybSource");
-		if (com.st.utils.StringUtils.isNotEmpty(wybSource)){
-			if (CheckUtil.isWord(wybSource)){
+		if (DataUtil.isNotEmpty(wybSource)){
+			if (DataUtil.isWord(wybSource)){
 				session.setAttribute("wybSource",wybSource);
 			}
 		}
 		String invitCode=httpServletRequest.getParameter("invitCode");
-		if (com.st.utils.StringUtils.isNotEmpty(invitCode)){
-			if (CheckUtil.isWord(invitCode)){
+		if (DataUtil.isNotEmpty(invitCode)){
+			if (DataUtil.isWord(invitCode)){
 				session.setAttribute("regInvitCode",invitCode);
 			}
 		}

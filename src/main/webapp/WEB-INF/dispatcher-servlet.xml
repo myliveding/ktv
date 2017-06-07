@@ -12,7 +12,7 @@
 		<!-- 开启mvc自动注解 -->
 	<mvc:annotation-driven/>
 	<!-- 自动扫描 -->
-	 <context:component-scan base-package="com.st">
+	 <context:component-scan base-package="com.st.*">
 	 <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
 	 </context:component-scan>
     
@@ -44,7 +44,8 @@
             </list>
         </property>
     </bean>
-	
+
+
 	<!-- 文件上传处理 -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<!-- 解析request的编码 ，Default is ISO-8859-1 -->

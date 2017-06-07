@@ -1,7 +1,7 @@
 package com.st.ktv.controller;
 
-import com.st.utils.StringUtils;
 import com.st.core.ContextHolderUtils;
+import com.st.utils.DataUtil;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +40,7 @@ public class FileController {
         Map<String,String> filemap=new HashMap<String, String>();
         filemap.put("filename", result);
         filemap.put("fileURL", fileURL);
-        if(StringUtils.isNotEmpty(fileURL)){
+        if(DataUtil.isNotEmpty(fileURL)){
             jsonObj.put("status", 0);
             jsonObj.put("data",filemap);
             return jsonObj;

@@ -3,9 +3,8 @@ package com.st.ktv.controller;
 import com.st.core.ContextHolderUtils;
 import com.st.utils.Constant;
 import com.st.core.CookieUtil;
-import com.st.utils.StringUtils;
 import com.st.ktv.entity.wx.Weixin;
-import com.st.ktv.service.WeixinAPIService;
+import com.st.ktv.service.impl.WeixinAPIServiceImpl;
 import com.st.utils.*;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -30,7 +29,7 @@ public class StationletterController {
 	
 	@SuppressWarnings("unused")
 	@Resource
-	private WeixinAPIService weixinAPIService;
+	private WeixinAPIServiceImpl weixinAPIService;
 	
 	/**
 	 *站内信查询
@@ -50,17 +49,17 @@ public class StationletterController {
 		}
 		int userId=Integer.parseInt(userIdObject.toString());
 		String messageId=request.getParameter("messageId");
-		if (!StringUtils.isEmpty(messageId)) {
+		if (!DataUtil.isEmpty(messageId)) {
 			arr=new String[]{"user_id"+userId,"message_id"+messageId};
 			mystr="user_id="+userId+"&message_id="+messageId;
 		}else{
 			String pageSize=request.getParameter("pageSize");
 			String page=request.getParameter("page");
 			String messageOpen=request.getParameter("");
-			if (StringUtils.isEmpty(pageSize)||StringUtils.isEmpty(page)) {
+			if (DataUtil.isEmpty(pageSize)||DataUtil.isEmpty(page)) {
 				return JSONObject.fromObject("{\"status\":1,\"msg\":\"每页显示多少条记录和当前页数均不能为空\"}");
 			}
-			if (StringUtils.isEmpty(messageOpen)) {
+			if (DataUtil.isEmpty(messageOpen)) {
 				arr=new String[]{"user_id"+userId,"page_size"+pageSize,"page"+page};
 				mystr="user_id="+userId+"&page_size="+pageSize+"&page="+page;
 			}else {
@@ -97,7 +96,7 @@ public class StationletterController {
 		}
 		int userId=Integer.parseInt(userIdObject.toString());
 		String messageId=request.getParameter("messageId");
-		if(StringUtils.isEmpty(messageId)){
+		if(DataUtil.isEmpty(messageId)){
 			return JSONObject.fromObject("{\"status\":1,\"msg\":\"用户ID不能为空\"}");
 		}
 		arr=new String[]{"user_id"+userId,"message_id"+messageId};
@@ -125,7 +124,7 @@ public class StationletterController {
     @RequestMapping("/detailinfo")
     public String detailinfo(HttpServletRequest request){
         String param = request.getParameter("param");
-        if(StringUtils.isEmpty(param)){
+        if(DataUtil.isEmpty(param)){
             param = "detailinfo";
         }else if(param.indexOf("detailinfo/detailinfo")>-1){//安全需求，防止跨站点脚本编制
             param="detailinfo/detailinfo";
@@ -139,13 +138,13 @@ public class StationletterController {
             param="agent/promotedetail";
         }
         String articleId = request.getParameter("articleId");
-        if(!CheckUtil.isNumber(articleId)){//文章参数不对跳转首页
+        if(!DataUtil.isNumber(articleId)){//文章参数不对跳转首页
             return "redirect:"+ Constant.URL+"/weixin/getweixin.do?name=index/index";
         }
         String uId=request.getParameter("uId");
         String openid=request.getParameter("openid");
         String invCode = request.getParameter("invCode");
-        if(StringUtils.isNotEmpty(invCode)){
+        if(DataUtil.isNotEmpty(invCode)){
             request.setAttribute("invCode",invCode);
         }
         String[] arr;
@@ -194,7 +193,7 @@ public class StationletterController {
                 request.setAttribute("meta_title",message.getString("meta_title"));//标题
                 request.setAttribute("meta_keyword",message.getString("meta_keyword"));//关键字
                 request.setAttribute("meta_description",message.getString("meta_description"));//内容描述
-                if (message.containsKey("s_image")&&StringUtils.isNotEmpty(message.getString("s_image"))&&!"null".equals(message.getString("s_image"))){
+                if (message.containsKey("s_image")&&DataUtil.isNotEmpty(message.getString("s_image"))&&!"null".equals(message.getString("s_image"))){
                     request.setAttribute("shareImg",message.getString("s_image"));//缩略图
                 }
 
@@ -220,7 +219,7 @@ public class StationletterController {
         Object userIdObject =  session.getAttribute("userId");
         if(userIdObject!=null&&!"".equals(userIdObject)){
             userId=userIdObject.toString();
-            JSONObject userInfo = JSONObject.fromObject(JoYoUtil.sendGet(JoYoUtil.JAVA_HOLDER_INFO,"policyHolderId="+userId));
+            JSONObject userInfo = JSONObject.fromObject(JoYoUtil.sendGet("","policyHolderId="+userId));
             if(userInfo.containsKey("status")){
                 JSONArray jsonArray=userInfo.getJSONArray("data");
                 if(jsonArray.size()>0){
@@ -232,7 +231,7 @@ public class StationletterController {
             strBackUrl=strBackUrl+"&invitCode="+invitationCode;
         }
         //将session保存，以备后面用到
-        if(StringUtils.isNotEmpty(openid)){//不为空才放入session
+        if(DataUtil.isNotEmpty(openid)){//不为空才放入session
             session.setAttribute("openid", openid);
         }
         String url = strBackUrl;
@@ -244,7 +243,7 @@ public class StationletterController {
         //分享参数
         String timestamp =Constant.TIME_STAMP;
         String noncestr = Constant.NONCESTR;
-        if(StringUtils.isNotEmpty(uId)){
+        if(DataUtil.isNotEmpty(uId)){
             userId=uId;
         }
         logger.info("shareurl:" + strBackUrl);

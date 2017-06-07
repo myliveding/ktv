@@ -15,6 +15,7 @@ import java.util.Random;
 @Transactional
 @Service("attributeService")
 public class TBAttributeServiceImpl implements TBAttributeService {
+
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired TBAttributeMapper attributeMapper;
 	

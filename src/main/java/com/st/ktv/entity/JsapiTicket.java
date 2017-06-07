@@ -1,4 +1,4 @@
-package com.st.ktv.entity.wx;
+package com.st.ktv.entity;
 
 import java.util.Date;
 

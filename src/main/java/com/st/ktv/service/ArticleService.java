@@ -37,11 +37,7 @@ public interface ArticleService {
      * @return
      */
     JSONObject cityLevelRedis();
-    /**
-     * 参保城市列表查询
-     * @return
-     */
-    JSONObject cityRedis();
+
     /**
      * 文章查询
      * @return

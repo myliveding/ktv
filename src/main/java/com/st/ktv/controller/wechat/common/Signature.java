@@ -11,7 +11,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 /**
- * User: rizenguo
  * Date: 2014/10/29
  * Time: 15:23
  */

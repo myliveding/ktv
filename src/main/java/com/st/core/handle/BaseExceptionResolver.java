@@ -4,7 +4,7 @@
  */
 package com.st.core.handle;
 
-import com.st.utils.ConstantsUtil;
+import com.st.utils.Constant;
 import com.st.utils.WebUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,7 +53,7 @@ public class BaseExceptionResolver extends SimpleMappingExceptionResolver {
 			if (WebUtil.isAjaxRequest(request)) { // ajax请求
 				try {
 					WebUtil.write(response, "{success:true,http_status_code_:\"exception\"}",
-							ConstantsUtil.SYSTEM_DEFAULT_ENCODING);
+                            "utf-8");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					LOG.error(e.getMessage(), e);

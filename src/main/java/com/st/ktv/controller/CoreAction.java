@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.st.ktv.service.CoreService;
+import com.st.ktv.service.impl.CoreServiceImpl;
 import com.st.utils.SignUtil;
 
 /** 
@@ -51,7 +51,7 @@ public class CoreAction extends HttpServlet {
         response.setCharacterEncoding("UTF-8");  
   
         // 调用核心业务类接收消息、处理消息  
-        String respMessage = CoreService.processRequest(request);  
+        String respMessage = CoreServiceImpl.processRequest(request);
           
         // 响应消息  
         PrintWriter out = response.getWriter();  

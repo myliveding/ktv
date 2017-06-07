@@ -3,7 +3,6 @@ package com.st.ktv.controller.wechat.common;
 import java.security.MessageDigest;
 
 /**
- * User: rizenguo
  * Date: 2014/10/23
  * Time: 15:43
  */

@@ -1,9 +1,9 @@
 package com.st.ktv.controller;
 
 import com.st.utils.Constant;
-import com.st.utils.StringUtils;
-import com.st.ktv.service.WeixinAPIService;
+import com.st.ktv.service.impl.WeixinAPIServiceImpl;
 import com.st.core.ContextHolderUtils;
+import com.st.utils.DataUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -24,7 +24,7 @@ public class ScopeController {
 	private Logger logger =LoggerFactory.getLogger(this.getClass());
 	
 	@Resource
-	private WeixinAPIService weixinAPIService;
+	private WeixinAPIServiceImpl weixinAPIService;
 	
 	@RequestMapping("/openid")
 	public ModelAndView getUserOpenIdOfScope(HttpServletRequest request, HttpServletResponse response )throws IOException {
@@ -48,7 +48,7 @@ public class ScopeController {
 			 boolean subscribe = weixinAPIService.IsSubscribe(appid, openid);
 			 session.setAttribute("Subscribe", subscribe);
 			 
-			 if(StringUtils.isNotEmpty(pram)){
+			 if(DataUtil.isNotEmpty(pram)){
 			     logger.info(nextPage+"?"+pram);
 			     return new ModelAndView("redirect:"+Constant.URL+"/"+nextPage+"?"+pram);
 			     
@@ -111,9 +111,9 @@ public class ScopeController {
              session.setAttribute("appid", appid);
              boolean subscribe = weixinAPIService.IsSubscribe(appid, openid);
 			 session.setAttribute("Subscribe", subscribe);
-			 if(StringUtils.isNotEmpty(orderNo)&&StringUtils.isNotEmpty(userId)){
+			 if(DataUtil.isNotEmpty(orderNo)&&DataUtil.isNotEmpty(userId)){
                  return new ModelAndView("redirect:"+Constant.URL+"/"+nextPage+"?orderNo="+orderNo+"&shareUserId="+userId);
-             }else if(StringUtils.isNotEmpty(orderNo)){
+             }else if(DataUtil.isNotEmpty(orderNo)){
                  return new ModelAndView("redirect:"+Constant.URL+"/"+nextPage+"?orderNo="+orderNo);
              }else{
                  return new ModelAndView("redirect:"+Constant.URL+"/"+nextPage);
@@ -155,7 +155,8 @@ public class ScopeController {
 			return new ModelAndView("redirect:error.do");
 		}
 	}
-	@RequestMapping("/openidC")//用于渠道分享的登录
+
+	@RequestMapping("/openidC") //用于渠道分享的登录
 	public ModelAndView getUserOpenIdOfScopeForChannel(HttpServletRequest request, HttpServletResponse response )throws IOException {
 		String code = request.getParameter("code");
 		String next = request.getParameter("next");
@@ -174,11 +175,6 @@ public class ScopeController {
 			boolean subscribe = weixinAPIService.IsSubscribe(appid, openid);
 			session.setAttribute("Subscribe", subscribe);
 			return new ModelAndView("redirect:"+Constant.URL+"/"+nextPage);
-//			if (nextPage.indexOf("?")>-1){
-//				return new ModelAndView("redirect:"+Constant.URL+"/"+nextPage+"&openid="+openid+"&appid="+appid);
-//			}else{
-//				return new ModelAndView("redirect:"+Constant.URL+"/"+nextPage+"?openid="+openid+"&appid="+appid);
-//			}
 		}else {
 			logger.error("未将对象引入到实例");
 			request.setAttribute("error", "未将对象引入到实例");

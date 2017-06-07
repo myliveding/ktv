@@ -27,6 +27,7 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 
 import com.st.utils.Constant;
+import com.st.utils.DataUtil;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 
@@ -222,8 +223,8 @@ private static Logger logger =LoggerFactory.getLogger(WeixinUtil.class);
 	 * @return
 	 */
 	public static  AccessToken getAccessTokenForWXService(String appid ,String appsecret) {
-		AccessToken accessToken = null;
 
+		AccessToken accessToken = null;
 		String requestUrl = ACCESS_TOKEN_URL.replace("APPID", appid).replace("APPSECRET", appsecret);
 		JSONObject jsonObject = httpRequest(requestUrl, "GET", null);
 		// 如果请求成功
@@ -579,7 +580,7 @@ private static Logger logger =LoggerFactory.getLogger(WeixinUtil.class);
        if (StringUtils.isEmpty(accessToken) || StringUtils.isEmpty(mediaId)){
            return null; 
        } 
-       if(com.st.utils.StringUtils.isNotEmpty(mediaId)&&(mediaId.indexOf("http")>=0||mediaId.endsWith(".jpg"))){
+       if(DataUtil.isNotEmpty(mediaId)&&(mediaId.indexOf("http")>=0||mediaId.endsWith(".jpg"))){
            return mediaId;
        }
        String requestUrl = DOWNLOAD_MEDIA_URL.replace("ACCESS_TOKEN", accessToken).replace("MEDIA_ID", mediaId);
@@ -592,7 +593,7 @@ private static Logger logger =LoggerFactory.getLogger(WeixinUtil.class);
        InputStream in = conn.getInputStream();  
        logger.info("从微信服务器下载多媒体文件 路径"+url.toString()+" 大小"+conn.getContentLength());
        String ContentDisposition = conn.getHeaderField("Content-disposition");  
-       if(com.st.utils.StringUtils.isEmpty(ContentDisposition)||ContentDisposition.equals("null")){
+       if(DataUtil.isEmpty(ContentDisposition)||ContentDisposition.equals("null")){
            return null;  
        }
 
@@ -608,7 +609,7 @@ private static Logger logger =LoggerFactory.getLogger(WeixinUtil.class);
     */
    public static String getTempURLFromOSS(String filename,String path) {
        String url="";
-       if(com.st.utils.StringUtils.isNotEmpty(filename)){
+       if(DataUtil.isNotEmpty(filename)){
            if(filename.indexOf("http")>-1){
                filename=filename.substring(filename.lastIndexOf("/")+1,filename.length());
            }
@@ -644,7 +645,7 @@ private static Logger logger =LoggerFactory.getLogger(WeixinUtil.class);
             conn.setDoOutput(true);  
 //            InputStream in = conn.getInputStream();  
             String ContentDisposition = conn.getHeaderField("Content-disposition");  
-            if(com.st.utils.StringUtils.isNotEmpty(ContentDisposition)){
+            if(DataUtil.isNotEmpty(ContentDisposition)){
                 return false;
             }
         } catch (Exception e) {
@@ -777,7 +778,6 @@ private static Logger logger =LoggerFactory.getLogger(WeixinUtil.class);
      */
     public static JSONObject getUserGroup(String accessToken,String jsonStr) {
         String userUrl = USER_GROUP.replace("ACCESS_TOKEN", accessToken);
-//        String jsonStr = "{\"openid\":\""+openId+"\"}";
         JSONObject jsonObject = httpRequest(userUrl, "POST", jsonStr);
         logger.info("获取用户分组"+jsonObject);
         return jsonObject;

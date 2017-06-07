@@ -1,6 +1,6 @@
 package com.st.ktv.controller.wechat;
 
-import com.st.utils.StringUtils;
+import com.st.utils.DataUtil;
 import com.st.utils.JoYoUtil;
 import com.st.utils.wx.MessageUtil;
 import net.sf.json.JSONObject;
@@ -78,11 +78,11 @@ public class WechatNotifyController {
 				 * 订单业务
 				 */
 				String userId="";
-				if(!StringUtils.isEmpty(orderNo)){
+				if(!DataUtil.isEmpty(orderNo)){
 					JSONObject resultStr = JSONObject.fromObject("{\"status\":1,\"msg\":\"出错了\"}");
 					thirdPayAmt=thirdPayAmt.replaceAll(",", "");
 					String mystr="orderNo="+orderNo+"&payType=wechatpay&serialNo="+serialNo+"&thirdPayAmt="+thirdPayAmt;
-					resultStr = JSONObject.fromObject(JoYoUtil.sendPost(JoYoUtil.JAVA_ORDER_CONFIRM, mystr));
+					resultStr = JSONObject.fromObject(JoYoUtil.sendPost("", mystr));
 //					if(resultStr.containsKey("status")||(resultStr.containsKey("errcode")&&resultStr.getString("errcode").equals("20095"))){
 					if(resultStr.containsKey("status")){
 						logger.info("微信支付确认订单完成:"+orderNo);

@@ -1,6 +1,7 @@
 package com.st.core;
 
 import com.st.utils.Constant;
+import com.st.utils.DataUtil;
 import com.st.utils.PropertiesUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -35,7 +36,7 @@ public class LoginFilter implements Filter {
 			uri=uri.substring(0,uri.indexOf("weixin/getWeixintoIndex.do"));
 		}
 		String backUrl=httpServletRequest.getParameter("backUrl");
-		if (com.st.utils.StringUtils.isNotEmpty(backUrl)){
+		if (DataUtil.isNotEmpty(backUrl)){
 			session.setAttribute("backUrl",backUrl);
 		}
 		logger.info("正常拦截器中,项目访问路径getServletPath：" + uri);
@@ -54,7 +55,6 @@ public class LoginFilter implements Filter {
         	if ((userId == null) || ("".equals(userId))){
 				httpServletRequest.setAttribute("error", "请重新登录");
 				request.setAttribute("error", "请重新登录");
-//				RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/weixin/getweixin.do?name=account/login");
 				RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/weixin/getweixin.do?name=account/fasterlogin");
 				rd.forward(httpServletRequest, response);
 				return;

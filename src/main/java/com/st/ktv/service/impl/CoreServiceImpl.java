@@ -1,16 +1,20 @@
-package com.st.ktv.service;
+package com.st.ktv.service.impl;
 
+import com.st.ktv.entity.wx.RespObject;
+import com.st.ktv.service.TBUserTransferService;
+import com.st.ktv.service.TBWechatMessageService;
+import com.st.ktv.service.TBWechatReciveRecordService;
+import com.st.ktv.service.TBWechatService;
 import com.st.utils.Constant;
 import com.st.core.handle.SpringContextHolder;
+import com.st.utils.DataUtil;
 import com.st.utils.DateUtil;
-import com.st.utils.StringUtils;
 import com.st.ktv.entity.wx.AccessToken;
 import com.st.ktv.entity.resp.*;
 import com.st.ktv.entity.TBUserTransfer;
 import com.st.ktv.entity.TBWechat;
 import com.st.ktv.entity.TBWechatMessage;
 import com.st.ktv.entity.TBWechatReciveRecord;
-import com.st.utils.CheckUtil;
 import com.st.utils.wx.MessageUtil;
 import com.st.utils.wx.WeixinUtil;
 import net.sf.json.JSONObject;
@@ -25,14 +29,14 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 /**
- * 核心服务类
- *
+ * 处理微信输入窗口发来的请求
  * @author wuhao
  * @date 2015-06-01
  */
-public class CoreService {
+public class CoreServiceImpl {
 
-	private static Logger logger =LoggerFactory.getLogger(CoreService.class);
+	private static Logger logger =LoggerFactory.getLogger(CoreServiceImpl.class);
+
 	/**
 	 * 处理微信发来的请求
 	 *
@@ -40,12 +44,13 @@ public class CoreService {
 	 * @return
 	 */
 	public static String processRequest(HttpServletRequest request) {
+
 		String respMessage = null;
-		String respType=MessageUtil.RESP_MESSAGE_TYPE_TEXT;//默认回复文本消息
-        boolean send=true;
-		TBUserTransferService tBUserTransferService=SpringContextHolder.getBean("tBUserTransferService");
-		TBWechatMessageService tbWechatMessageService=SpringContextHolder.getBean("tBWechatMessageService");
-		TBWechatReciveRecordService tBWechatReciveRecordService=SpringContextHolder.getBean("tBWechatReciveRecordService");
+		String respType = MessageUtil.RESP_MESSAGE_TYPE_TEXT;//默认回复文本消息
+        boolean send = true;
+		TBUserTransferService tBUserTransferService = SpringContextHolder.getBean("tBUserTransferService");
+		TBWechatMessageService tbWechatMessageService = SpringContextHolder.getBean("tBWechatMessageService");
+		TBWechatReciveRecordService tBWechatReciveRecordService = SpringContextHolder.getBean("tBWechatReciveRecordService");
 
 		try {
 			// 默认返回的文本消息内容
@@ -53,7 +58,8 @@ public class CoreService {
 //		    String respContent = "HI，请问有什么可以帮助您的吗？<a href=\"http://wybhotline.udesk.cn/im_client/?group_id=18040&channel=wyb\">" +
 			String respContent = "HI，请问有什么可以帮助您的吗？<a href=\"http://joyowo.udesk.cn/im_client?group_id=1608&channel=wyb\">" +
 					"戳这</a>即可联系客服人员，也可拨打客服电话：400-111-8900。客服工作时间是上午9:00-下午5:30。（周末正常上班，法定节假日除外）";
-			List<TBWechatMessage> defaultRC = tbWechatMessageService.getMessageListByKeyLike("默认回复内容");
+
+            List<TBWechatMessage> defaultRC = tbWechatMessageService.getMessageListByKeyLike("默认回复内容");
 			if (defaultRC.size()==1){
 				respContent=defaultRC.get(0).getRespContent();
 			}
@@ -69,7 +75,7 @@ public class CoreService {
 			String msgType = requestMap.get("MsgType");
 			//消息内容
 			String countent = requestMap.get("Content");
-			List<Article> articles=new ArrayList<Article>();
+			List<Article> articles = new ArrayList<Article>();
 			Image image=new Image();
 			//判断是否是多客服消息
 			try {
@@ -80,11 +86,7 @@ public class CoreService {
 					long timeDB = tBUserTransfer.getUpdateTime().getTime();
 					long timeService = date.getTime();//获得毫秒数
 					//判断客服消息是否过期
-					if((timeService-timeDB)<7200000){
-//						textMessage.setMsgType(MessageUtil.REQ_MESSAGE_TYPE_Transfer_Customer_Service);
-//						textMessage.setContent(countent);
-//						respMessage = MessageUtil.textMessageToXml(textMessage);
-//						return respMessage;
+					if((timeService-timeDB) < 7200000){
 					}else {
 						logger.info("客服对话已过期");
 					}
@@ -99,56 +101,31 @@ public class CoreService {
 				if("客服".equals(countent)||"KF".equals(countent.toUpperCase())){ //用户发送“客服”或者“KF”，接入多客服
 					logger.info("客服事件-----");
 					try {
+                        Date date = new Date();
 						TBUserTransfer tBUserTransferTempDB = tBUserTransferService.selectByPrimaryKey(fromUserName);
-						if(!"".equals(tBUserTransferTempDB)&&tBUserTransferTempDB!=null){
+						if(!"".equals(tBUserTransferTempDB) && tBUserTransferTempDB!=null){
 							tBUserTransferTempDB.setState("1");
-							tBUserTransferTempDB.setUpdateTime(new Date());
+							tBUserTransferTempDB.setUpdateTime(date);
 							tBUserTransferService.updateByPrimaryKeySelective(tBUserTransferTempDB);
 						}else {
 							tBUserTransferTempDB = new TBUserTransfer();
 							tBUserTransferTempDB.setState("1");
 							tBUserTransferTempDB.setOpenid(fromUserName);
-							tBUserTransferTempDB.setCreateTime(new Date());
-							tBUserTransferTempDB.setUpdateTime(new Date());
+							tBUserTransferTempDB.setCreateTime(date);
+							tBUserTransferTempDB.setUpdateTime(date);
 							tBUserTransferService.insertSelective(tBUserTransferTempDB);
 						}
 					} catch (Exception e) {
 						logger.error("打开客服通道1失败"+e.getMessage(), e);
 					}
 				}else {
-					if (Pattern.matches(CheckUtil.ZSZ, countent)){//只允许中文，数值，字母
-						countent=countent.replaceAll("\\s*", "");
-						logger.info("自动回复关键词："+countent);
-						List<TBWechatMessage> list = tbWechatMessageService.getMessageListByKeyLike(countent);
-						if (list.size() > 0) {
-							for (TBWechatMessage tbWechatMessage : list) {
-								if (tbWechatMessage.getContent().equals(countent)) {
-									if (tbWechatMessage.getMsgType().equals(MessageUtil.RESP_MESSAGE_TYPE_TEXT)) {
-										respContent = tbWechatMessage.getRespContent();
-									} else if (tbWechatMessage.getMsgType().equals(MessageUtil.RESP_MESSAGE_TYPE_NEWS)) {
-										respType = MessageUtil.RESP_MESSAGE_TYPE_NEWS;
-										Article article = new Article();
-										article.setTitle(tbWechatMessage.getTitle());
-										article.setDescription(tbWechatMessage.getRespContent());
-										article.setPicUrl(tbWechatMessage.getFirstUrl());
-										article.setUrl(tbWechatMessage.getSecondUrl());
-										articles.add(article);
-									}else if (tbWechatMessage.getMsgType().equals(MessageUtil.RESP_MESSAGE_TYPE_IMAGE)) {
-										respType=MessageUtil.RESP_MESSAGE_TYPE_IMAGE;
-										image.setMediaId(tbWechatMessage.getRespContent());
-									}
-								} else if (tbWechatMessage.getContent().equals("1") && countent.indexOf(tbWechatMessage.getContent()) > -1) {
-									if (tbWechatMessage.getThumb() != null && tbWechatMessage.getThumb().equals("openid")) {
-										List<TBWechatReciveRecord> tbWechatReciveRecordList = tBWechatReciveRecordService.selectByOpenid(fromUserName);
-										if (tbWechatReciveRecordList.size() > 0) {
-											respContent = tbWechatMessage.getRespContent();
-										}
-									} else {
-										respContent = tbWechatMessage.getRespContent();
-									}
-								}
-							}
-						}
+					if (Pattern.matches(DataUtil.ZSZ, countent)){ //只允许中文，数值，字母
+						countent = countent.replaceAll("\\s*", "");
+						logger.info("自动回复关键词：" + countent);
+                        RespObject respObject = getRespContent(tbWechatMessageService, tBWechatReciveRecordService,
+                                articles, image, fromUserName, respType,  respContent,  countent);
+                        respContent = respObject.getRespContent();
+                        respType = respObject.getRespType();
 					}
 				}
 			}
@@ -163,40 +140,26 @@ public class CoreService {
 				tBWechatReciveRecordService.insertSelective(tbWechatReciveRecord);
 				List<TBWechatMessage> list=tbWechatMessageService.getMessageListByType("imageRecive");
 				if (list.size()>0) {
-//					for (TBWechatMessage tbWechatMessage : list) {
-//						if (tbWechatMessage.getContent().equals(countent)) {
-//							if (tbWechatMessage.getMsgType().equals(MessageUtil.RESP_MESSAGE_TYPE_TEXT)) {
-//								respContent = tbWechatMessage.getRespContent();
-//							} else if (tbWechatMessage.getMsgType().equals(MessageUtil.RESP_MESSAGE_TYPE_NEWS)) {
-//								respType=MessageUtil.RESP_MESSAGE_TYPE_NEWS;
-//								Article article = new Article();
-//								article.setTitle(tbWechatMessage.getTitle());
-//								article.setDescription(tbWechatMessage.getRespContent());
-//								article.setPicUrl(tbWechatMessage.getFirstUrl());
-//								article.setUrl(tbWechatMessage.getSecondUrl());
-//								articles.add(article);
-//							}
-//						} else if (tbWechatMessage.getMsgType().equals("imageRecive")) {
 					respContent = list.get(0).getRespContent();
-//						}
-//					}
 				}
 			}
-//			// 地理位置消息
-//			else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_LOCATION)) {
-//				respContent = "您发送的是地理位置消息！";
-//			}
-//			// 链接消息
-//			else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_LINK)) {
-//				respContent = "您发送的是链接消息！";
-//			}
-//			// 音频消息
-//			else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_VOICE)) {
-//				respContent = "您发送的是音频消息！";
-//			}
+			// 地理位置消息
+			else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_LOCATION)) {
+				respContent = "您发送的是地理位置消息！";
+			}
+			// 链接消息
+			else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_LINK)) {
+				respContent = "您发送的是链接消息！";
+			}
+			// 音频消息
+			else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_VOICE)) {
+				respContent = "您发送的是音频消息！";
+			}
 			// 事件推送
 			else {
 				if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_EVENT)) {
+                    Date date = new Date();
+
 					// 事件类型
 					String eventType = requestMap.get("Event");
 					// 订阅
@@ -208,22 +171,21 @@ public class CoreService {
 								+ "☞算保费，<a href=\"https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + Constant.APP_ID + "&redirect_uri=" + Constant.URL + "/scope/openid.do?next=personsocial/gotojsq.do" + Constant.APP_ID + "&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect\">点击这里！</a>\n"
 								+ "☞学社保，<a href=\"http://mp.weixin.qq.com/mp/getmasssendmsg?__biz=MzAxMzU1Mzg5Ng==#wechat_webview_type=1&wechat_redirect\">点击这里！</a>\n"
 								+ "☞要提问，<a href=\"http://joyowo.udesk.cn/im_client?group_id=1608&channel=wyb\">点击这里！</a>\n\n"
-//							+"☞要提问，<a href=\"http://wybhotline.udesk.cn/im_client/?group_id=18040&channel=wyb\">点击这里！</a>";
-//							+"全国招募社保代理，<a href=\"http://form.mikecrm.com/1ZI786\">点我报名！</a>";
 								+ "查看往期社保干货内容，<a href=\"http://mp.weixin.qq.com/mp/homepage?__biz=MzAxMzU1Mzg5Ng==&hid=1&sn=9e7716381c377e6928a341ca18ef1cf1#wechat_redirect\">点击这里！</a>"
 								+ "成为无忧保社保代理商，<a href=\"http://form.mikecrm.com/EDfP0u\">点击这里！</a>";
 						String eventKey = requestMap.get("EventKey");
-						if (StringUtils.isNotEmpty(eventKey) && eventKey.indexOf("qrscene") > -1) {
+						if (DataUtil.isNotEmpty(eventKey) && eventKey.indexOf("qrscene") > -1) {
 							String scene = eventKey.substring(eventKey.indexOf("_") + 1, eventKey.length());
 							String jsonStr = "{\"openid\":\"" + fromUserName + "\",\"to_groupid\":" + Integer.parseInt(scene) + "}";
-//							logger.info("Core==" + jsonStr);
-							String accessToken = CoreService.getAccessTOken();
-//							logger.info("Core=accessToken=" + accessToken);
-							JSONObject jsonObject=WeixinUtil.updateUserGroup(accessToken,jsonStr);
+							String accessToken = CoreServiceImpl.getAccessToken();
+                            logger.info("Core获取accessToken：" + accessToken);
+							JSONObject jsonObject = WeixinUtil.updateUserGroup(accessToken,jsonStr);
 							if (jsonObject != null && jsonObject.containsKey("errcode")) {
 								if (jsonObject.getInt("errcode") == 40001) {
-//									logger.info("Core=重获accessTokenIm=" + accessToken);
-									WeixinUtil.updateUserGroup(CoreService.getAccessTOkenIm(),jsonStr);
+                                    TBWechatService tBWechatService = SpringContextHolder.getBean("tBWechatService");
+                                    accessToken = getAccessTokenIm(tBWechatService, date);
+                                    logger.info("数据库中值有误重新获取accesstoken：" + accessToken);
+                                    WeixinUtil.updateUserGroup(accessToken, jsonStr);
 								}
 							}
 						}
@@ -256,38 +218,10 @@ public class CoreService {
 							}
 //						respContent="HI,我是小忧，请问有什么可以帮您的吗？\n在这里直接输入问题即可咨询，也可以直接拨打客服电话：400-111-8900\n我的工作时间是上午9:00-下午6:00，全年无休。";
 						} else {
-//							TBWechatMessage tbWechatMessage = tbWechatMessageService.getMessageListByKey(eventKey);
-//							respContent = tbWechatMessage.getRespContent();
-							List<TBWechatMessage> list = tbWechatMessageService.getMessageListByKeyLike(eventKey);
-							if (list.size() > 0) {
-								for (TBWechatMessage tbWechatMessage : list) {
-									if (tbWechatMessage.getContent().equals(eventKey)) {
-										if (tbWechatMessage.getMsgType().equals(MessageUtil.RESP_MESSAGE_TYPE_TEXT)) {
-											respContent = tbWechatMessage.getRespContent();
-										} else if (tbWechatMessage.getMsgType().equals(MessageUtil.RESP_MESSAGE_TYPE_NEWS)) {
-											respType = MessageUtil.RESP_MESSAGE_TYPE_NEWS;
-											Article article = new Article();
-											article.setTitle(tbWechatMessage.getTitle());
-											article.setDescription(tbWechatMessage.getRespContent());
-											article.setPicUrl(tbWechatMessage.getFirstUrl());
-											article.setUrl(tbWechatMessage.getSecondUrl());
-											articles.add(article);
-										}else if (tbWechatMessage.getMsgType().equals(MessageUtil.RESP_MESSAGE_TYPE_IMAGE)) {
-											respType=MessageUtil.RESP_MESSAGE_TYPE_IMAGE;
-											image.setMediaId(tbWechatMessage.getRespContent());
-										}
-									} else if (tbWechatMessage.getContent().equals("1") && eventKey.indexOf(tbWechatMessage.getContent()) > -1) {
-										if (tbWechatMessage.getThumb() != null && tbWechatMessage.getThumb().equals("openid")) {
-											List<TBWechatReciveRecord> tbWechatReciveRecordList = tBWechatReciveRecordService.selectByOpenid(fromUserName);
-											if (tbWechatReciveRecordList.size() > 0) {
-												respContent = tbWechatMessage.getRespContent();
-											}
-										} else {
-											respContent = tbWechatMessage.getRespContent();
-										}
-									}
-								}
-							}
+                            RespObject respObject = getRespContent(tbWechatMessageService, tBWechatReciveRecordService,
+                                    articles, image, fromUserName, respType,  respContent,  eventKey);
+                            respContent = respObject.getRespContent();
+                            respType = respObject.getRespType();
 						}
 					}
 				}
@@ -305,7 +239,6 @@ public class CoreService {
 				logger.info("回复文本消息 "+fromUserName+" 内容 "+respContent);
 			}else if(respType.equals(MessageUtil.RESP_MESSAGE_TYPE_NEWS)){
 				//回复图文消息
-//				logger.info("回复图文消息");
 				NewsMessage newsMessage=new NewsMessage();
 				newsMessage.setToUserName(fromUserName);
 				newsMessage.setFromUserName(toUserName);
@@ -333,9 +266,68 @@ public class CoreService {
 		return respMessage;
 	}
 
+    /**
+     * 获取应答相关信息
+     * @param tbWechatMessageService
+     * @param tBWechatReciveRecordService
+     * @param articles
+     * @param image
+     * @param fromUserName
+     * @param respType
+     * @param respContent
+     * @param eventKey
+     * @return
+     */
+    private static RespObject getRespContent(TBWechatMessageService tbWechatMessageService,
+                                             TBWechatReciveRecordService tBWechatReciveRecordService,
+                                             List<Article> articles, Image image, String fromUserName,
+                                             String respType, String respContent, String eventKey){
 
-	public static String getAccessTOken() {
-		TBWechatService tBWechatService=SpringContextHolder.getBean("tBWechatService");
+        RespObject respObject = new RespObject();
+
+        List<TBWechatMessage> list = tbWechatMessageService.getMessageListByKeyLike(eventKey);
+        if (!list.isEmpty()) {
+            for (TBWechatMessage tbWechatMessage : list) {
+                if (tbWechatMessage.getContent().equals(eventKey)) {
+                    if (tbWechatMessage.getMsgType().equals(MessageUtil.RESP_MESSAGE_TYPE_TEXT)) {
+                        respContent = tbWechatMessage.getRespContent();
+                    } else if (tbWechatMessage.getMsgType().equals(MessageUtil.RESP_MESSAGE_TYPE_NEWS)) {
+                        respType = MessageUtil.RESP_MESSAGE_TYPE_NEWS;
+                        Article article = new Article();
+                        article.setTitle(tbWechatMessage.getTitle());
+                        article.setDescription(tbWechatMessage.getRespContent());
+                        article.setPicUrl(tbWechatMessage.getFirstUrl());
+                        article.setUrl(tbWechatMessage.getSecondUrl());
+                        articles.add(article);
+                    }else if (tbWechatMessage.getMsgType().equals(MessageUtil.RESP_MESSAGE_TYPE_IMAGE)) {
+                        respType=MessageUtil.RESP_MESSAGE_TYPE_IMAGE;
+                        image.setMediaId(tbWechatMessage.getRespContent());
+                    }
+                } else if (tbWechatMessage.getContent().equals("1") && eventKey.indexOf(tbWechatMessage.getContent()) > -1) {
+                    if (tbWechatMessage.getThumb() != null && tbWechatMessage.getThumb().equals("openid")) {
+                        List<TBWechatReciveRecord> tbWechatReciveRecordList = tBWechatReciveRecordService.selectByOpenid(fromUserName);
+                        if (tbWechatReciveRecordList.size() > 0) {
+                            respContent = tbWechatMessage.getRespContent();
+                        }
+                    } else {
+                        respContent = tbWechatMessage.getRespContent();
+                    }
+                }
+            }
+        }
+        respObject.setRespType(respType);
+        respObject.setRespContent(respContent);
+        return respObject;
+    }
+
+    /**
+     * 去获取AccessToken，同时判断是否过期
+     * @return
+     */
+	public static String getAccessToken() {
+
+		TBWechatService tBWechatService = SpringContextHolder.getBean("tBWechatService");
+
 		TBWechat tBWechat = tBWechatService.selectByPrimaryKey(Constant.APP_ID);
 		String token = "-1";
 		Date date = new Date();//创建现在的日期
@@ -349,9 +341,9 @@ public class CoreService {
 				} else {
 					AccessToken accessToken = WeixinUtil.getAccessTokenForWXService(Constant.APP_ID, Constant.APP_SECRET);
 					if (null != accessToken) {
-						logger.info("获取到服务器的accesstoken：" + accessToken.getToken());
 						token = accessToken.getToken();
-						tBWechat.setAccessToken(accessToken.getToken());
+                        logger.info("获取到服务器的accesstoken：" + token);
+						tBWechat.setAccessToken(token);
 						tBWechat.setCreattime(date);
 						tBWechatService.updateByPrimaryKeySelective(tBWechat);
 					}
@@ -360,44 +352,38 @@ public class CoreService {
 				AccessToken accessToken = WeixinUtil.getAccessTokenForWXService(Constant.APP_ID, Constant.APP_SECRET);
 				if (null != accessToken) {
 					token = accessToken.getToken();
-					logger.info("数据库中有值时,此公众号第一次获取accesstoken=" + token);
-					tBWechat.setAccessToken(accessToken.getToken());
+					logger.info("数据库中有记录但是没有该值,此公众号获取accesstoken=" + token);
+					tBWechat.setAccessToken(token);
 					tBWechat.setCreattime(date);
 					tBWechatService.updateByPrimaryKeySelective(tBWechat);
 				}
 			}
 		} else {
-			//appid对应的微信公众平台为空
-			tBWechat = new TBWechat();
-			AccessToken accessToken = WeixinUtil.getAccessTokenForWXService(Constant.APP_ID, Constant.APP_SECRET);
-			if (null != accessToken) {
-				token = accessToken.getToken();
-				logger.info("数据库中没有初始值,此公众号第一次获取accesstoken=" + token);
-				tBWechat.setAccessToken(token);
-				tBWechat.setCreattime(date);
-				tBWechat.setAppid(Constant.APP_ID);
-				tBWechat.setAppsecret(Constant.APP_SECRET);
-				tBWechat.setWxname("无忧保");
-				tBWechatService.insertSelective(tBWechat);
-			}
+			//appid对应的微信公众平台为空，获取并插入
+            token = getAccessTokenIm(tBWechatService, date);
+            logger.info("数据库中没有初始值,此公众号第一次获取accesstoken=" + token);
 		}
 		return token;
 	}
-	public static String getAccessTOkenIm() {
-		TBWechatService tBWechatService=SpringContextHolder.getBean("tBWechatService");
+
+    /**
+     * 再次获取token
+     * @return
+     */
+	private static String getAccessTokenIm(TBWechatService tBWechatService, Date date) {
+//		TBWechatService tBWechatService = SpringContextHolder.getBean("tBWechatService");
 		String token = "-1";
-		Date date = new Date();//创建现在的日期
+//		Date date = new Date();
 		//appid对应的微信公众平台为空
 		TBWechat tBWechat = new TBWechat();
 		AccessToken accessToken = WeixinUtil.getAccessTokenForWXService(Constant.APP_ID, Constant.APP_SECRET);
 		if (null != accessToken) {
 			token = accessToken.getToken();
-			logger.info("数据库中值有误重新获取accesstoken=" + token);
 			tBWechat.setAccessToken(token);
 			tBWechat.setCreattime(date);
 			tBWechat.setAppid(Constant.APP_ID);
 			tBWechat.setAppsecret(Constant.APP_SECRET);
-			tBWechat.setWxname("无忧保");
+			tBWechat.setWxname("ktv");
 			tBWechatService.updateByPrimaryKeySelective(tBWechat);
 		}
 		return token;

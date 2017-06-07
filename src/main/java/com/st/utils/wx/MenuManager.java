@@ -6,27 +6,6 @@ import org.slf4j.LoggerFactory;
 
 public class MenuManager {
 	private static Logger logger =LoggerFactory.getLogger(MenuManager.class);
-	public static void main(String[] args) {
-
-        String accessToken = "2P5OdhA1K3dqH6eLjF1sYdovG9W6mOozTHjZnAmfaetee0SJoEgxrnU6sVdy-4KlpgdeooSdMmjpJzMiveuBGKnCHKq_OIXNutrsB9JjcLLNIKMN49q2GV65LKpWkYXhXBBcAAARVV";
-		String url="";
-		String appId="";
-
-		appId="wx07ae659c009c0d6b";
-		url="https://m.shebaoonline.com";
-
-		System.out.println(url+" = "+appId);
-//		if (null != accessToken) {
-			// 调用接口创建菜单
-			int result =1;
-			result= WeixinUtil.createMenu(getMenu(appId,url), accessToken);
-			// 判断菜单创建结果
-			if (0 == result)
-				logger.info("菜单创建成功！");
-			else
-				logger.info("菜单创建失败，错误码：" + result);
-//		}
-	}
 
 	/**
 	 * 组装菜单数据
@@ -98,21 +77,6 @@ public class MenuManager {
 		mainBtn3.setName("在线服务");
 		mainBtn3.setSub_button(new Button[] { btn31,btn32,btn33,btn34,btn35});
 
-//		ViewButton btn11 = new ViewButton();
-//		btn11.setName("无忧保");
-//		btn11.setType("view");
-//		btn11.setUrl("http://staticwuyou.joyomm.com/trunk/images/systemupdate.jpg");
-//
-//		ViewButton btn21 = new ViewButton();
-//		btn21.setName("系统升级");
-//		btn21.setType("view");
-//		btn21.setUrl("http://staticwuyou.joyomm.com/trunk/images/systemupdate.jpg");
-//
-//		ViewButton btn31 = new ViewButton();
-//		btn31.setName("请稍后");
-//		btn31.setType("view");
-//		btn31.setUrl("http://staticwuyou.joyomm.com/trunk/images/systemupdate.jpg");
-
 		/**
 		 * 
 		 * 在某个一级菜单下没有二级菜单的情况，menu该如何定义呢？<br>
@@ -124,4 +88,25 @@ public class MenuManager {
 		menu.setButton(new Button[] { btn11, mainBtn2, mainBtn3 });
 		return menu;
 	}
+
+    public static void main(String[] args) {
+        String accessToken = "2P5OdhA1K3dqH6eLjF1sYdovG9W6mOozTHjZnAmfaetee0SJoEgxrnU6sVdy-4KlpgdeooSdMmjpJzMiveuBGKnCHKq_OIXNutrsB9JjcLLNIKMN49q2GV65LKpWkYXhXBBcAAARVV";
+        String url="";
+        String appId="";
+
+        appId="wx07ae659c009c0d6b";
+        url="https://m.shebaoonline.com";
+
+        System.out.println(url+" = "+appId);
+        // 调用接口创建菜单
+        int result =1;
+        result= WeixinUtil.createMenu(getMenu(appId,url), accessToken);
+        // 判断菜单创建结果
+        if (0 == result) {
+            logger.info("菜单创建成功！");
+        }else {
+            logger.info("菜单创建失败，错误码：" + result);
+        }
+    }
+
 }

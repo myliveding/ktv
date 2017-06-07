@@ -1,6 +1,6 @@
 package com.st.ktv.service;
 
-import com.st.ktv.entity.wx.JsapiTicket;
+import com.st.ktv.entity.JsapiTicket;
 
 public interface JsapiTicketService {
 	public int insertSelective(JsapiTicket record);

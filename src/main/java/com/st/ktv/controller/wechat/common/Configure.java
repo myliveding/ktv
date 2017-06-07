@@ -3,7 +3,6 @@ package com.st.ktv.controller.wechat.common;
 import com.st.utils.Constant;
 
 /**
- * User: rizenguo
  * Date: 2014/10/29
  * Time: 14:40
  * 这里放置各种配置数据
