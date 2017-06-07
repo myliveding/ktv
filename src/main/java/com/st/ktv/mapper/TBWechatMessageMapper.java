@@ -1,9 +1,11 @@
 package com.st.ktv.mapper;
 
 import com.st.ktv.entity.TBWechatMessage;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface TBWechatMessageMapper {
     //获取所有有效回复
     List<TBWechatMessage> getMessageList();

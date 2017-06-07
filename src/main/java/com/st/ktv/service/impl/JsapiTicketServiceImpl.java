@@ -3,6 +3,7 @@ package com.st.ktv.service.impl;
 import com.st.ktv.entity.JsapiTicket;
 import com.st.ktv.mapper.JsapiTicketMapper;
 import com.st.ktv.service.JsapiTicketService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,7 +13,7 @@ import javax.annotation.Resource;
 @Service("jsapiTicketService")
 public class JsapiTicketServiceImpl implements JsapiTicketService {
 
-	@Resource
+	@Autowired
 	private JsapiTicketMapper jsapiTicketMapper;
 	
 	@Override

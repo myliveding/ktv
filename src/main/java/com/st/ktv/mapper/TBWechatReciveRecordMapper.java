@@ -1,9 +1,11 @@
 package com.st.ktv.mapper;
 
 import com.st.ktv.entity.TBWechatReciveRecord;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface TBWechatReciveRecordMapper {
     int deleteByPrimaryKey(Integer id);
 

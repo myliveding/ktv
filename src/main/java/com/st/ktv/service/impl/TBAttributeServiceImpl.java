@@ -17,6 +17,7 @@ import java.util.Random;
 public class TBAttributeServiceImpl implements TBAttributeService {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
+
 	@Autowired TBAttributeMapper attributeMapper;
 	
 	/**
