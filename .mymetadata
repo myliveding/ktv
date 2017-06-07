@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-module
   type="WEB"
-  name="wuyou3.1gt"
+  name="ktv"
   id="myeclipse.1470364221071"
   context-root="/wuyou"
   j2ee-spec="6.0"
-  archive="wuyou3.1gt.war">
+  archive="ktv.war">
   <attributes>
     <attribute name="webrootdir" value="src/main/webapp" />
   </attributes>
