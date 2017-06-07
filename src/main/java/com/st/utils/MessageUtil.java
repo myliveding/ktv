@@ -34,6 +34,7 @@ import com.thoughtworks.xstream.io.xml.XppDriver;
  * 
  */
 public class MessageUtil {
+
 	private static Logger logger =LoggerFactory.getLogger(MessageUtil.class);
 	/**
 	 * 返回消息类型：文本

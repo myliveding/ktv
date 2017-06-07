@@ -1,11 +1,10 @@
 package com.st.controller;
 
 import com.st.utils.Constant;
-import com.st.utils.util.iputil.City;
-import com.st.utils.util.iputil.IPUtil;
-import com.st.utils.util.text.StringUtils;
+import com.st.utils.iputil.City;
+import com.st.utils.iputil.IPUtil;
+import com.st.utils.text.StringUtils;
 import com.st.javabean.pojo.Weixin;
-import com.st.javabean.pojo.wxtour.PseudoStatic;
 import com.st.service.ArticleService;
 import com.st.service.WeixinAPIService;
 import com.st.service.impl.ArticleRedisHandleServiceImpl;
@@ -24,7 +23,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
 @Controller
 @RequestMapping("/weixin")
@@ -89,40 +87,7 @@ public class WeixinController {
         String shareUrl=url;
         if(request.getServletPath().equalsIgnoreCase("/weixin/getweixin.do")
         		&& null != param && !"".equalsIgnoreCase(param) ){
-        	List<PseudoStatic> urlList = PseudoStaticUrl.getInstance().getStaticUrl();
-            for (PseudoStatic pseudoStatic : urlList) {
-            	if(null != pseudoStatic.getRemark()
-            			&& !"".equalsIgnoreCase(pseudoStatic.getRemark()) 
-                		&& param.equalsIgnoreCase(pseudoStatic.getRemark())){
-            		String urlTemp = "";
-            		if(pseudoStatic.getDescription().contains(PropertiesUtils.findPropertiesKey("SOCAIL_THINGS",Constant.SEO_FILE_NAME))){
-            			String[] temp = pseudoStatic.getSeoUrl().split("_");
-            			urlTemp = temp[0] + "_" + param1 + "/";
-            		}else{
-            			urlTemp = PseudoStaticUrl.getSeourlByRealurl(request.getServletPath()+"?"+request.getQueryString());
-            		}
-                    if (param.equals("activity/cityshebao")){
-                        if (param1!=null){
-                            if(param1.equals("bj")){
-                                urlTemp="/bjshebao/";
-                                param1="北京";
-                            }else if (param1.equals("sh")){
-                                urlTemp="/shshebao/";
-                                param1="上海";
-                            }else if (param1.equals("gz")){
-                                urlTemp="/gzshebao/";
-                                param1="广州";
-                            }else if (param1.equals("sz")){
-                                urlTemp="/szshebao/";
-                                param1="深圳";
-                            }
-                        }
-                    }
-            		url = Constant.URL.substring(0,Constant.URL.indexOf(":"))+"://"  +  request.getServerName() + request.getContextPath()
-            				+ urlTemp;
-                	break;
-            	}
-    		}
+
         }
         // 分享参数
         logger.info("JS调用时的确切路径，需要在加密时使用：" + url);// 当前网页的URL，不包含#及其后面部分

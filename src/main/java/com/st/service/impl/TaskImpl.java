@@ -1,6 +1,5 @@
 package com.st.service.impl;
 
-import com.st.utils.PseudoStaticUrl;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -11,7 +10,6 @@ public class TaskImpl {
 	 * @Description 更新缓存
 	 */
 	public void updateInstance(){
-		PseudoStaticUrl.updateInstance();
 	}
 	
 	/**

@@ -1,10 +1,9 @@
 package com.st.controller;
 
 import com.st.utils.Constant;
-import com.st.utils.util.CookieUtil;
-import com.st.utils.util.text.StringUtils;
+import com.st.core.CookieUtil;
+import com.st.utils.text.StringUtils;
 import com.st.javabean.pojo.Weixin;
-import com.st.javabean.pojo.wxtour.PseudoStatic;
 import com.st.service.WeixinAPIService;
 import com.st.utils.*;
 import net.sf.json.JSONArray;
@@ -21,7 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
 
 @Controller
@@ -198,10 +196,7 @@ public class StationletterController {
                 if (message.containsKey("s_image")&&StringUtils.isNotEmpty(message.getString("s_image"))&&!"null".equals(message.getString("s_image"))){
                     request.setAttribute("shareImg",message.getString("s_image"));//缩略图
                 }
-                if(PropertiesUtils.findPropertiesKey("ACTIVITY_CODE",Constant.SEO_FILE_NAME)
-                        .equals(message.getString("cat_id"))){
-                    param = "more/activityinfo";
-                }
+
             }else {
                 request.setAttribute("error","文章已删除");
             }
@@ -243,19 +238,7 @@ public class StationletterController {
         //微信分享的伪静态
         if(request.getServletPath().equalsIgnoreCase("/article/detailinfo.do")
                 && null != param && !"".equalsIgnoreCase(param) ){
-            List<PseudoStatic> urlList = PseudoStaticUrl.getInstance().getStaticUrl();
-            for (PseudoStatic pseudoStatic : urlList) {
-                if(null != pseudoStatic.getRealUrl()
-                        && !"".equalsIgnoreCase(pseudoStatic.getRealUrl())
-                        && pseudoStatic.getRealUrl().indexOf(param)>-1){
-                    String urlTemp = "";
-                    String[] temp = pseudoStatic.getSeoUrl().split("_");
-                    urlTemp = temp[0].replaceAll("\\^", "") + "_" + articleId + "/";
-                    url = Constant.URL.substring(0,Constant.URL.indexOf(":"))+"://"  +  request.getServerName() + request.getContextPath()
-                            + urlTemp;
-                    break;
-                }
-            }
+
         }
         //分享参数
         String timestamp =Constant.TIME_STAMP;

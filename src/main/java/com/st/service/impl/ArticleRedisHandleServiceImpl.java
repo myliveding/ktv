@@ -4,7 +4,7 @@
 package com.st.service.impl;
 
 import com.st.utils.Constant;
-import com.st.utils.util.date.DateUtil;
+import com.st.utils.date.DateUtil;
 import com.st.utils.PropertiesUtils;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
@@ -39,15 +39,7 @@ public class ArticleRedisHandleServiceImpl {
 
 			Integer intervalTime=1;
 			Integer timeType=DateUtil.DATE_INTERVAL_HOUR;
-			if (type==0){
-				intervalTime=Integer.valueOf(PropertiesUtils.findPropertiesKey("REDIS_INTERVAL_TIME",Constant.SEO_FILE_NAME).trim());
-			}else if(type==1){
-				intervalTime=Integer.valueOf(PropertiesUtils.findPropertiesKey("REDIS_VCODE_INTERVAL_TIME",Constant.SEO_FILE_NAME).trim());
-//				timeType=DateUtil.DATE_INTERVAL_MINUTE;
-			}else if(type==2){
-				intervalTime=Integer.valueOf(PropertiesUtils.findPropertiesKey("REDIS_FORGETPW_INTERVAL_TIME",Constant.SEO_FILE_NAME).trim());
-//				timeType=DateUtil.DATE_INTERVAL_MINUTE;
-			}
+
 			//设置这个key的到期时间，后面一个参数就是该key过期的确切的时间点
 			redisTemplate.expireAt(key, DateUtil.dateAdd(timeType,DateUtil.getNowTime(),intervalTime));
 		}

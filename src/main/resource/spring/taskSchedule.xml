@@ -24,10 +24,4 @@
 	</task:scheduled-tasks>
 	<context:component-scan base-package="com.st.service.impl" />
 	
-	<!-- 计划任务每隔两个小时去更新用户数量  0 0 0/2 * * *
-	<bean id="userNumTask" class="com.st.service.impl.TaskImpl"/>
-	<task:scheduled-tasks> 
-        <task:scheduled ref="userNumTask" method="updateUserNum" cron="0 0 0/2 * * * "/> 
-	</task:scheduled-tasks>
-	<context:component-scan base-package="com.st.service.impl" />-->
 </beans>

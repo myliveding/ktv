@@ -14,9 +14,6 @@ public class MenuManager {
 
 		appId="wx07ae659c009c0d6b";
 		url="https://m.shebaoonline.com";
-//
-//		appId="wx8d204f669d159007";
-//        url="http://rat.shebaoonline.com";
 
 		System.out.println(url+" = "+appId);
 //		if (null != accessToken) {

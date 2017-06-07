@@ -4,7 +4,7 @@ import com.st.utils.Constant;
 import com.st.controller.wechat.common.Configure;
 import com.st.controller.wechat.common.MD5;
 import com.st.controller.wechat.common.report.protocol.ReportReqData;
-import com.st.utils.util.xml.ParseXmlUtil;
+import com.st.utils.xml.ParseXmlUtil;
 import com.st.service.WeixinAPIService;
 import com.st.utils.JoYoUtil;
 import com.st.utils.WeixinUtil;
@@ -47,7 +47,7 @@ public class WechatPayController {
 		String leftAmtStr=req.getParameter("leftAmt");
         logger.info(orderNo+"微信支付传入余额:"+leftAmtStr);
         double leftAmtD=0.0;
-        if(com.st.utils.util.text.StringUtils.isNotEmpty(leftAmtStr)){
+        if(com.st.utils.text.StringUtils.isNotEmpty(leftAmtStr)){
             leftAmtD=Double.parseDouble(leftAmtStr);
 			JSONObject balance = JSONObject.fromObject(JoYoUtil.sendGet(JoYoUtil.JAVA_INSURERBALANCE_BY_ORDER, "orderNo=" +orderNo));//取参保人可用余额
             double leftAmt=balance.getJSONObject("data").getDouble("leftAmt");

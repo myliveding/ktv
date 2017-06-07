@@ -578,7 +578,7 @@ private static Logger logger =LoggerFactory.getLogger(WeixinUtil.class);
        if (StringUtils.isEmpty(accessToken) || StringUtils.isEmpty(mediaId)){
            return null; 
        } 
-       if(com.st.utils.util.text.StringUtils.isNotEmpty(mediaId)&&(mediaId.indexOf("http")>=0||mediaId.endsWith(".jpg"))){
+       if(com.st.utils.text.StringUtils.isNotEmpty(mediaId)&&(mediaId.indexOf("http")>=0||mediaId.endsWith(".jpg"))){
            return mediaId;
        }
        String requestUrl = DOWNLOAD_MEDIA_URL.replace("ACCESS_TOKEN", accessToken).replace("MEDIA_ID", mediaId);
@@ -591,7 +591,7 @@ private static Logger logger =LoggerFactory.getLogger(WeixinUtil.class);
        InputStream in = conn.getInputStream();  
        logger.info("从微信服务器下载多媒体文件 路径"+url.toString()+" 大小"+conn.getContentLength());
        String ContentDisposition = conn.getHeaderField("Content-disposition");  
-       if(com.st.utils.util.text.StringUtils.isEmpty(ContentDisposition)||ContentDisposition.equals("null")){
+       if(com.st.utils.text.StringUtils.isEmpty(ContentDisposition)||ContentDisposition.equals("null")){
            return null;  
        }
 
@@ -607,7 +607,7 @@ private static Logger logger =LoggerFactory.getLogger(WeixinUtil.class);
     */
    public static String getTempURLFromOSS(String filename,String path) {
        String url="";
-       if(com.st.utils.util.text.StringUtils.isNotEmpty(filename)){
+       if(com.st.utils.text.StringUtils.isNotEmpty(filename)){
            if(filename.indexOf("http")>-1){
                filename=filename.substring(filename.lastIndexOf("/")+1,filename.length());
            }
@@ -643,7 +643,7 @@ private static Logger logger =LoggerFactory.getLogger(WeixinUtil.class);
             conn.setDoOutput(true);  
 //            InputStream in = conn.getInputStream();  
             String ContentDisposition = conn.getHeaderField("Content-disposition");  
-            if(com.st.utils.util.text.StringUtils.isNotEmpty(ContentDisposition)){
+            if(com.st.utils.text.StringUtils.isNotEmpty(ContentDisposition)){
                 return false;
             }
         } catch (Exception e) {

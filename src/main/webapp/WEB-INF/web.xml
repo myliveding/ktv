@@ -50,7 +50,7 @@
 
   <filter>
     <filter-name>loginfilter</filter-name>
-    <filter-class>com.st.core.filter.LoginFilter</filter-class>
+    <filter-class>com.st.core.LoginFilter</filter-class>
     <init-param>
       <param-name>excludedPages</param-name>
       <param-value>personsocial,article,weixin,scope,siteMap,
@@ -87,7 +87,7 @@
     <url-pattern>/action/CoreAction</url-pattern>
   </servlet-mapping>
   <listener>
-    <listener-class>com.st.core.listener.SystemApplicationListener</listener-class>
+    <listener-class>com.st.core.SystemApplicationListener</listener-class>
   </listener>
   <context-param>
     <param-name>contextConfigLocation</param-name>

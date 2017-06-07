@@ -28,14 +28,13 @@ public class PropertiesUtils {
 
     /**
      * 返回　Properties
-     *
      * @param fileName 文件名　(注意：加载的是src下的文件,如果在某个包下．请把包名加上)
      * @param
      * @return
      */
-    public static Properties getProperties(String filename) {
+    public static Properties getProperties(String fileName) {
         Properties prop = new Properties();
-        String savePath = PropertiesUtils.class.getResource("/" + filename).getPath();
+        String savePath = PropertiesUtils.class.getResource("/" + fileName).getPath();
         //以下方法读取属性文件会缓存问题
         try {
             InputStream in = new BufferedInputStream(new FileInputStream(savePath));
@@ -67,19 +66,6 @@ public class PropertiesUtils {
     }
     
     public static void main(String[] args) {
-        Properties prop = new Properties();
-        InputStream in = PropertiesUtils.class
-                .getResourceAsStream("/" + Constant.SEO_FILE_NAME);
-        try {
-            prop.load(in);
-            Iterator<Entry<Object, Object>> itr = prop.entrySet().iterator();
-            while (itr.hasNext()) {
-                Entry<Object, Object> e = (Entry<Object, Object>) itr.next();
-//                System.err.println((e.getKey().toString() + "" + e.getValue()
-//                        .toString()));
-            }
-        } catch (Exception e) {
 
-        }
     }
 }

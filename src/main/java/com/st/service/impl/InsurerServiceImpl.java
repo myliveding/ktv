@@ -1,6 +1,6 @@
 package com.st.service.impl;
 
-import com.st.utils.util.date.DateUtil;
+import com.st.utils.date.DateUtil;
 import com.st.service.InsurerService;
 import net.sf.json.JSONObject;
 import org.springframework.stereotype.Service;

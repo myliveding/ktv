@@ -1,7 +1,7 @@
 package com.st.service;
 
 import com.st.utils.Constant;
-import com.st.utils.util.text.StringUtils;
+import com.st.utils.text.StringUtils;
 import com.st.javabean.TemplateData;
 import com.st.javabean.WxTemplate;
 import com.st.javabean.pojo.AccessToken;
@@ -392,108 +392,7 @@ public class WeixinAPIService {
         TemplateData remark = new TemplateData();
 //         remark.setColor("#0000FF");
         remark.setValue(remarkStr);
-        if (type.equals("0")) {//业务服务提醒
-            t.setTemplate_id(Constant.TEMPLATE_SERVICE);
-            m.put("keyword1", keyword1);
-            m.put("keyword2", keyword2);
-            m.put("keyword3", keyword3);
-        }
-        if (type.equals("1")) {//认证通知
-            t.setTemplate_id(Constant.TEMPLATE_AUTHENTICATION);
-            m.put("keyword1", keyword1);
-            m.put("keyword2", keyword2);
-        }
-        if (type.equals("2")) {//消息提醒
-            t.setTemplate_id(Constant.TEMPLATE_REMIND);
-            m.put("keyword1", keyword1);
-            m.put("keyword2", keyword2);
-        }
-        if (type.equals("3")) {//获得代金券通知
-            t.setTemplate_id(Constant.TEMPLATE_VOUCHER);
-            m.put("coupon", keyword1);
-            m.put("expDate", keyword2);
-        }
-        if (type.equals("4")) {//注册通知
-            t.setTemplate_id(Constant.TEMPLATE_REGISTERED);
-            m.put("keyword1", keyword1);
-            m.put("keyword2", keyword2);
-        }
-        if (type.equals("5")) {//参保成功通知
-            t.setTemplate_id(Constant.TEMPLATE_SERVICE_SUCC);
-            m.put("keyword1", keyword1);
-            m.put("keyword2", keyword2);
-            m.put("keyword3", keyword3);
-            m.put("keyword4", keyword4);
-        }
-        if (type.equals("6")) {//参保失败通知
-            t.setTemplate_id(Constant.TEMPLATE_SERVICE_FAIL);
-            m.put("keyword1", keyword1);
-            m.put("keyword2", keyword2);
-            m.put("keyword3", keyword3);
-        }
-        if (type.equals("7")) {//停保成功通知
-            t.setTemplate_id(Constant.TEMPLATE_STOP_SUCC);
-            m.put("keyword1", keyword1);
-            m.put("keyword2", keyword2);
-            m.put("keyword3", keyword3);
-            m.put("keyword4", keyword4);
-        }
-        if (type.equals("8")) {//停保失败通知
-            t.setTemplate_id(Constant.TEMPLATE_STOP_FAIL);
-            m.put("keyword1", keyword1);
-            m.put("keyword2", keyword2);
-            m.put("keyword3", keyword3);
-            m.put("keyword4", keyword4);
-        }
-        if (type.equals("9")) {//退款成功通知
-            t.setTemplate_id(Constant.TEMPLATE_REFUND_SUCC);
-            m.put("keyword1", keyword1);
-            m.put("keyword2", keyword2);
-            m.put("keyword3", keyword3);
-        }
-        if (type.equals("10")) {//续保提醒
-            t.setTemplate_id(Constant.TEMPLATE_SERVICE_EXPIRE);
-            m.put("keyword1", keyword1);
-            m.put("keyword2", keyword2);
-            m.put("keyword3", keyword3);
-        }
-        if (type.equals("11")) {//业务办理取消通知
-            t.setTemplate_id(Constant.TEMPLATE_DEAL_CANCEL);
-            m.put("keyword1", keyword1);
-            m.put("keyword2", keyword2);
-            m.put("keyword3", keyword3);
-        }
-        if (type.equals("12")) {//订单未支付通知v2
-            t.setTemplate_id(Constant.TEMPLATE_UNPAY);
-            m.put("type", keyword1);
-            m.put("e_title", keyword2);
-            m.put("o_id", keyword3);
-            m.put("order_date", keyword4);
-            m.put("o_money", keyword5);
-        }
-        if (type.equals("13")) {//订单支付成功
-            t.setTemplate_id(Constant.TEMPLATE_PAY_SUCC);
-            m.put("orderMoneySum", keyword1);
-            m.put("orderProductName", keyword2);
-            m.put("Remark", remark);
-        }
-        if (type.equals("14")) {//业务动态提醒
-            t.setTemplate_id(Constant.TEMPLATE_BUS_DYNAMICS);
-            m.put("keyword1", keyword1);
-            m.put("keyword2", keyword2);
-        }
-        if (type.equals("15")) {//手机号绑定提醒
-            t.setTemplate_id(Constant.TEMPLATE_BUILD_MOBILE);
-            m.put("keyword1", keyword1);
-            m.put("keyword2", keyword2);
-        }
-        if (type.equals("16")) {//参保材料通知
-            t.setTemplate_id(Constant.TEMPLATE_INSURED_MATERIAL);
-            m.put("keyword1", keyword1);
-            m.put("keyword2", keyword2);
-            m.put("keyword3", keyword3);
-            m.put("keyword4", keyword4);
-        }
+
         m.put("remark", remark);
         t.setData(m);
         String content = JSONObject.fromObject(t).toString();
