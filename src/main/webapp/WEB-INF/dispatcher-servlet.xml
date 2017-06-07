@@ -9,10 +9,10 @@
 			http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
 			http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd" default-lazy-init="true">
 
-		<!-- 开启mvc自动注解 -->
+    <!-- 开启mvc自动注解 -->
 	<mvc:annotation-driven/>
 	<!-- 自动扫描 -->
-	 <context:component-scan base-package="com.st.*">
+	 <context:component-scan base-package="com.st">
 	 <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
 	 </context:component-scan>
     

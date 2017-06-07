@@ -13,7 +13,7 @@ import javax.annotation.Resource;
 @Service("jsapiTicketService")
 public class JsapiTicketServiceImpl implements JsapiTicketService {
 
-	@Autowired
+	@Resource
 	private JsapiTicketMapper jsapiTicketMapper;
 	
 	@Override
