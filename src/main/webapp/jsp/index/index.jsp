@@ -1,7 +1,4 @@
 <%@ page language="java" import="com.st.constant.Constant" pageEncoding="utf-8"%>
-<%@ page import="com.st.utils.JsonUtil"%>
-<%--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>--%>
-<%--<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>--%>
 <%@ taglib prefix="fn" uri="/WEB-INF/tld/fn.tld"%>
 <%@ taglib prefix="c" uri="/WEB-INF/tld/c.tld"%>
 <%

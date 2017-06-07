@@ -11,7 +11,6 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.st.comment.web.httpUtil;
 import com.thoughtworks.xstream.XStream;
 
 /**
@@ -22,7 +21,7 @@ import com.thoughtworks.xstream.XStream;
 public class Util {
 
     //打log用
-	private  static Logger logger =LoggerFactory.getLogger(httpUtil.class);
+	private  static Logger logger =LoggerFactory.getLogger(Util.class);
 
     /**
      * 通过反射的方式遍历对象的属性和属性值，方便调试

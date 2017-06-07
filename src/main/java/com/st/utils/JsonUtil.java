@@ -12,8 +12,6 @@ import org.slf4j.LoggerFactory;
 
 import net.sf.json.JSONObject;
 
-import com.st.constant.Constant;
-
 public class JsonUtil {
     private static Logger logger =LoggerFactory.getLogger(JoYoUtil.class);
     public static String getJsonFile(String fileName){

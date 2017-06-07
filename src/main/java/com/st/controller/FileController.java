@@ -1,9 +1,8 @@
 package com.st.controller;
 
-import com.st.constant.Constant;
-import com.st.core.util.text.StringUtils;
+import com.st.utils.Constant;
+import com.st.utils.util.text.StringUtils;
 import com.st.utils.ContextHolderUtils;
-import com.st.utils.WeixinUtil;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

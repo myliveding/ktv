@@ -6,7 +6,7 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.st.constant.Constant;
+import com.st.utils.Constant;
 import com.st.controller.wechat.common.Configure;
 import com.st.controller.wechat.common.Signature;
 import com.thoughtworks.xstream.annotations.XStreamAlias;

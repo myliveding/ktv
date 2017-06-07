@@ -1,7 +1,7 @@
 package com.st.service;
 
-import com.st.constant.Constant;
-import com.st.core.util.text.StringUtils;
+import com.st.utils.Constant;
+import com.st.utils.util.text.StringUtils;
 import com.st.javabean.TemplateData;
 import com.st.javabean.WxTemplate;
 import com.st.javabean.pojo.AccessToken;

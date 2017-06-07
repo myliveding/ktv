@@ -392,15 +392,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>commons-codec</groupId>
-			<artifactId>commons-codec</artifactId>
-			<version>1.9</version>
-			<scope>system</scope>
-			<systemPath>
-                ${project.basedir}/src/main/webapp/WEB-INF/lib/commons-codec-1.9.jar
-            </systemPath>
-		</dependency>
-		<dependency>
 			<groupId>com.aliyun.oss</groupId>
 			<artifactId>aliyun-sdk-oss</artifactId>
 			<version>2.0.7</version>
@@ -410,7 +401,8 @@
             <groupId>redis.clients</groupId>  
             <artifactId>jedis</artifactId>  
             <version>2.3.1</version>  
-        </dependency>  
+        </dependency>
+
         <dependency>  
             <groupId>org.springframework.data</groupId>  
             <artifactId>spring-data-redis</artifactId>  
@@ -428,90 +420,11 @@
 			<version>1.0</version>
 		</dependency>
 
-        <!-- json -->
+        <!-- json start-->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.5.3</version>
-        </dependency>
-
-        <dependency>
-            <groupId>jackson-annotations</groupId>
-            <version>2.3.0</version>
-            <artifactId>jackson-annotations</artifactId>
-            <scope>system</scope>
-            <systemPath>
-                ${project.basedir}/src/main/webapp/WEB-INF/lib/jackson-annotations-2.3.0.jar
-            </systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>jackson-core-2.3.0</groupId>
-            <version>2.3.0</version>
-            <artifactId>jackson-core-2.3.0</artifactId>
-            <scope>system</scope>
-            <systemPath>
-                ${project.basedir}/src/main/webapp/WEB-INF/lib/jackson-core-2.3.0.jar
-            </systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>jackson-core-asl</groupId>
-            <version>1.9.9</version>
-            <artifactId>jackson-core-asl</artifactId>
-            <scope>system</scope>
-            <systemPath>
-                ${project.basedir}/src/main/webapp/WEB-INF/lib/jackson-core-asl-1.9.9.jar
-            </systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>jackson-core-lgpl</groupId>
-            <version>1.9.6</version>
-            <artifactId>jackson-core-lgpl</artifactId>
-            <scope>system</scope>
-            <systemPath>
-                ${project.basedir}/src/main/webapp/WEB-INF/lib/jackson-core-lgpl-1.9.6.jar
-            </systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>jackson-databind</groupId>
-            <version>2.3.0</version>
-            <artifactId>jackson-databind</artifactId>
-            <scope>system</scope>
-            <systemPath>
-                ${project.basedir}/src/main/webapp/WEB-INF/lib/jackson-databind-2.3.0.jar
-            </systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>jackson-mapper-asl</groupId>
-            <version>1.9.6</version>
-            <artifactId>jackson-mapper-asl</artifactId>
-            <scope>system</scope>
-            <systemPath>
-                ${project.basedir}/src/main/webapp/WEB-INF/lib/jackson-mapper-asl-1.9.6.jar
-            </systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.1.24</version>
-        </dependency>
-
-
-        <dependency>
-            <groupId>org.codehaus.jackson</groupId>
-            <artifactId>jackson-mapper-asl</artifactId>
-            <version>1.9.13</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.codehaus.jackson</groupId>
-            <artifactId>jackson-core-asl</artifactId>
-            <version>1.9.13</version>
         </dependency>
 
         <dependency>
@@ -526,13 +439,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.2.4</version>
-        </dependency>
-        <!-- JSON end -->
+        <!-- json end -->
 
         <!-- lombok -->
         <dependency>

@@ -1,6 +1,6 @@
 package com.st.controller;
 
-import com.st.constant.Constant;
+import com.st.utils.Constant;
 import com.st.core.javabean.Result;
 import com.st.javabean.pojo.*;
 import com.st.service.WeixinAPIService;

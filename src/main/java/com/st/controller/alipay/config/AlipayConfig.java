@@ -1,6 +1,6 @@
 package com.st.controller.alipay.config;
 
-import com.st.constant.Constant;
+import com.st.utils.Constant;
 
 public class AlipayConfig {
 

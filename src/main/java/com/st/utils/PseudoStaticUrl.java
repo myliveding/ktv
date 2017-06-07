@@ -8,8 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.st.constant.Constant;
-import com.st.core.util.text.StringUtils;
+import com.st.utils.util.text.StringUtils;
 import com.st.javabean.pojo.wxtour.PseudoStatic;
 import com.st.service.impl.PseudoStaticServiceImpl;
 

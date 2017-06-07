@@ -17,25 +17,21 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
-import java.util.UUID;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
-import com.st.constant.Constant;
+
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.multipart.MultipartFile;
 import com.st.javabean.pojo.AccessToken;
 import com.st.javabean.pojo.Menu;
 
@@ -582,7 +578,7 @@ private static Logger logger =LoggerFactory.getLogger(WeixinUtil.class);
        if (StringUtils.isEmpty(accessToken) || StringUtils.isEmpty(mediaId)){
            return null; 
        } 
-       if(com.st.core.util.text.StringUtils.isNotEmpty(mediaId)&&(mediaId.indexOf("http")>=0||mediaId.endsWith(".jpg"))){
+       if(com.st.utils.util.text.StringUtils.isNotEmpty(mediaId)&&(mediaId.indexOf("http")>=0||mediaId.endsWith(".jpg"))){
            return mediaId;
        }
        String requestUrl = DOWNLOAD_MEDIA_URL.replace("ACCESS_TOKEN", accessToken).replace("MEDIA_ID", mediaId);
@@ -595,7 +591,7 @@ private static Logger logger =LoggerFactory.getLogger(WeixinUtil.class);
        InputStream in = conn.getInputStream();  
        logger.info("从微信服务器下载多媒体文件 路径"+url.toString()+" 大小"+conn.getContentLength());
        String ContentDisposition = conn.getHeaderField("Content-disposition");  
-       if(com.st.core.util.text.StringUtils.isEmpty(ContentDisposition)||ContentDisposition.equals("null")){
+       if(com.st.utils.util.text.StringUtils.isEmpty(ContentDisposition)||ContentDisposition.equals("null")){
            return null;  
        }
 
@@ -611,7 +607,7 @@ private static Logger logger =LoggerFactory.getLogger(WeixinUtil.class);
     */
    public static String getTempURLFromOSS(String filename,String path) {
        String url="";
-       if(com.st.core.util.text.StringUtils.isNotEmpty(filename)){
+       if(com.st.utils.util.text.StringUtils.isNotEmpty(filename)){
            if(filename.indexOf("http")>-1){
                filename=filename.substring(filename.lastIndexOf("/")+1,filename.length());
            }
@@ -647,7 +643,7 @@ private static Logger logger =LoggerFactory.getLogger(WeixinUtil.class);
             conn.setDoOutput(true);  
 //            InputStream in = conn.getInputStream();  
             String ContentDisposition = conn.getHeaderField("Content-disposition");  
-            if(com.st.core.util.text.StringUtils.isNotEmpty(ContentDisposition)){
+            if(com.st.utils.util.text.StringUtils.isNotEmpty(ContentDisposition)){
                 return false;
             }
         } catch (Exception e) {

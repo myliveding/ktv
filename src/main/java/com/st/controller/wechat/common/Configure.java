@@ -1,6 +1,6 @@
 package com.st.controller.wechat.common;
 
-import com.st.constant.Constant;
+import com.st.utils.Constant;
 
 /**
  * User: rizenguo

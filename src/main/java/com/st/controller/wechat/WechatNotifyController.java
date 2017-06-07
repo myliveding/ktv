@@ -1,6 +1,6 @@
 package com.st.controller.wechat;
 
-import com.st.core.util.text.StringUtils;
+import com.st.utils.util.text.StringUtils;
 import com.st.utils.JoYoUtil;
 import com.st.utils.MessageUtil;
 import net.sf.json.JSONObject;

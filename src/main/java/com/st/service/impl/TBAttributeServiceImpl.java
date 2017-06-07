@@ -1,6 +1,6 @@
 package com.st.service.impl;
 
-import com.st.core.util.date.DateUtil;
+import com.st.utils.util.date.DateUtil;
 import com.st.javabean.pojo.wxtour.TBAttribute;
 import com.st.mapper.wxtour.TBAttributeMapper;
 import com.st.service.TBAttributeService;

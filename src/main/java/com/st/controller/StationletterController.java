@@ -1,10 +1,13 @@
 package com.st.controller;
 
-import com.st.core.util.CookieUtil;
-import com.st.core.util.text.StringUtils;
+import com.st.utils.Constant;
+import com.st.utils.util.CookieUtil;
+import com.st.utils.util.text.StringUtils;
+import com.st.javabean.pojo.Weixin;
+import com.st.javabean.pojo.wxtour.PseudoStatic;
 import com.st.service.WeixinAPIService;
-import com.st.utils.ContextHolderUtils;
-import com.st.utils.JoYoUtil;
+import com.st.utils.*;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 
 @Controller
@@ -111,4 +115,165 @@ public class StationletterController {
         out.println(resultStr);
         return null;
 	}
+
+
+    /**
+     * 文章和活动详细信息
+     * 根据cat_id判断,其中101代表的是活动的，已经写在配置文件中
+     * @param request
+     * @return
+     */
+    @RequestMapping("/detailinfo")
+    public String detailinfo(HttpServletRequest request){
+        String param = request.getParameter("param");
+        if(StringUtils.isEmpty(param)){
+            param = "detailinfo";
+        }else if(param.indexOf("detailinfo/detailinfo")>-1){//安全需求，防止跨站点脚本编制
+            param="detailinfo/detailinfo";
+        }else if(param.indexOf("servicehall/questionDetail")>-1){
+            param="servicehall/questionDetail";
+        }else if(param.indexOf("more/activityinfo")>-1){
+            param="more/activityinfo";
+        }else if(param.indexOf("agent/agentbasedetail")>-1){
+            param="agent/agentbasedetail";
+        }else if(param.indexOf("agent/promotedetail")>-1){
+            param="agent/promotedetail";
+        }
+        String articleId = request.getParameter("articleId");
+        if(!CheckUtil.isNumber(articleId)){//文章参数不对跳转首页
+            return "redirect:"+ Constant.URL+"/weixin/getweixin.do?name=index/index";
+        }
+        String uId=request.getParameter("uId");
+        String openid=request.getParameter("openid");
+        String invCode = request.getParameter("invCode");
+        if(StringUtils.isNotEmpty(invCode)){
+            request.setAttribute("invCode",invCode);
+        }
+        String[] arr;
+        String mystr="";
+        String linkActivityId ="1";
+        JSONObject resultStr = JSONObject.fromObject("{\"status\":1,\"msg\":\"出错了\"}");
+        StringBuffer key = new StringBuffer("wyb_wechat_detailinfo");
+        //查询当前的活动接口
+        try {
+            String[] arr1 = new String[] {};
+            String mystr1 = "";
+            resultStr = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.PERSONRED_DEMANDACTIVITY_URL,mystr1,arr1));
+            if(0 == resultStr.getInt("status")){
+                JSONObject message = JSONObject.fromObject(resultStr.getString("data"));
+                if(message!=null){
+                    request.setAttribute("link_activity_id",message.getString("activity_id"));//活动id
+                    linkActivityId = message.getString("activity_id");
+                    logger.info("当前文章的编号："+linkActivityId);
+                }else {
+                    request.setAttribute("error","文章已删除");
+                }
+            }
+        } catch (Exception e1) {
+            logger.error("获取数据出错:" + e1.getMessage(), e1);
+        }
+        arr=new String[] {"article_id"+articleId};
+        mystr="article_id="+articleId;
+        key.append("_" + articleId);
+
+        resultStr = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.ARTICLE_DETAIL_URL,mystr,arr));
+
+        if(0 == resultStr.getInt("status")){
+            JSONObject message = JSONObject.fromObject(resultStr.getString("data"));
+            if(message != null){
+                request.setAttribute("article_id",message.getString("article_id"));
+                request.setAttribute("cat_id", message.getString("cat_id"));//分类ID,
+                request.setAttribute("title", message.getString("title"));//标题，
+                request.setAttribute("summary", message.getString("summary"));//内容，
+                request.setAttribute("author", message.getString("author"));//作者，
+                request.setAttribute("source",message.getString("source"));//来源,
+                request.setAttribute("create_time",message.getString("create_time"));//创建日期
+                request.setAttribute("description",message.getString("description"));//文章内容
+                request.setAttribute("oimage",message.getString("o_image"));//原图
+                request.setAttribute("ourl",message.getString("url"));//链接
+                request.setAttribute("urltext",message.getString("url_text"));//链接描述
+                request.setAttribute("meta_title",message.getString("meta_title"));//标题
+                request.setAttribute("meta_keyword",message.getString("meta_keyword"));//关键字
+                request.setAttribute("meta_description",message.getString("meta_description"));//内容描述
+                if (message.containsKey("s_image")&&StringUtils.isNotEmpty(message.getString("s_image"))&&!"null".equals(message.getString("s_image"))){
+                    request.setAttribute("shareImg",message.getString("s_image"));//缩略图
+                }
+                if(PropertiesUtils.findPropertiesKey("ACTIVITY_CODE",Constant.SEO_FILE_NAME)
+                        .equals(message.getString("cat_id"))){
+                    param = "more/activityinfo";
+                }
+            }else {
+                request.setAttribute("error","文章已删除");
+            }
+        }else {
+            request.setAttribute("error","文章出错了");
+        }
+        String strBackUrl = Constant.URL.substring(0,Constant.URL.indexOf(":"))+"://" + request.getServerName() //服务器地址
+                + request.getContextPath()      //项目名称
+                + request.getServletPath();      //请求页面或其他地址
+        String paramStr=request.getQueryString();
+        if (paramStr.indexOf("param")>-1){//安全需求，防止跨站点脚本编制
+            paramStr=paramStr.substring(0,paramStr.indexOf("param="))+"param="+param;
+        }
+        strBackUrl=strBackUrl+"?"+paramStr;
+        logger.info("detailinfo strBackUrl="+strBackUrl);
+
+        HttpSession session = ContextHolderUtils.getSession();
+        String userId="1";
+        String invitationCode="";
+        Object userIdObject =  session.getAttribute("userId");
+        if(userIdObject!=null&&!"".equals(userIdObject)){
+            userId=userIdObject.toString();
+            JSONObject userInfo = JSONObject.fromObject(JoYoUtil.sendGet(JoYoUtil.JAVA_HOLDER_INFO,"policyHolderId="+userId));
+            if(userInfo.containsKey("status")){
+                JSONArray jsonArray=userInfo.getJSONArray("data");
+                if(jsonArray.size()>0){
+                    for(int i=0;i<jsonArray.size();i++){
+                        invitationCode=jsonArray.getJSONObject(i).getString("invitationCode");
+                    }
+                }
+            }
+            strBackUrl=strBackUrl+"&invitCode="+invitationCode;
+        }
+        //将session保存，以备后面用到
+        if(StringUtils.isNotEmpty(openid)){//不为空才放入session
+            session.setAttribute("openid", openid);
+        }
+        String url = strBackUrl;
+        //微信分享的伪静态
+        if(request.getServletPath().equalsIgnoreCase("/article/detailinfo.do")
+                && null != param && !"".equalsIgnoreCase(param) ){
+            List<PseudoStatic> urlList = PseudoStaticUrl.getInstance().getStaticUrl();
+            for (PseudoStatic pseudoStatic : urlList) {
+                if(null != pseudoStatic.getRealUrl()
+                        && !"".equalsIgnoreCase(pseudoStatic.getRealUrl())
+                        && pseudoStatic.getRealUrl().indexOf(param)>-1){
+                    String urlTemp = "";
+                    String[] temp = pseudoStatic.getSeoUrl().split("_");
+                    urlTemp = temp[0].replaceAll("\\^", "") + "_" + articleId + "/";
+                    url = Constant.URL.substring(0,Constant.URL.indexOf(":"))+"://"  +  request.getServerName() + request.getContextPath()
+                            + urlTemp;
+                    break;
+                }
+            }
+        }
+        //分享参数
+        String timestamp =Constant.TIME_STAMP;
+        String noncestr = Constant.NONCESTR;
+        if(StringUtils.isNotEmpty(uId)){
+            userId=uId;
+        }
+        logger.info("shareurl:" + strBackUrl);
+        Weixin weixin = weixinAPIService.getJSAPITicket(Constant.APP_ID);
+        String jsapi_ticket = weixin.getJsapiTicket();
+        String signature = SignUtil.getSignature(jsapi_ticket, timestamp, noncestr, url);
+        request.setAttribute("timestamp", timestamp);
+        request.setAttribute("noncestr", noncestr);
+        request.setAttribute("url", url);
+        request.setAttribute("signature", signature);
+        request.setAttribute("appid", Constant.APP_ID);
+        request.setAttribute("shareurl", strBackUrl);
+        logger.info("文章跳转"+param);
+        return param;
+    }
 }

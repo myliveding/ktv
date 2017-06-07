@@ -22,32 +22,28 @@
   		<property name="suffix" value=".jsp" />
 	</bean>
 	
-	<!-- 自定义注解映射 -->
-	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
-		<property name="messageConverters">
-			<list>
-				<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
-					<property name="supportedMediaTypes">
-						<list>
-							<value>text/html;charset=UTF-8</value>
-							<value>application/json;charset=UTF-8</value>
-						</list>
-					</property>
-				</bean>
-				<bean class="org.springframework.http.converter.StringHttpMessageConverter">
-					<property name="supportedMediaTypes">
-						<list>
-							<value>text/html;charset=UTF-8</value>
-						</list>
-					</property>
-				</bean>
-			</list>
-		</property>
-	</bean>
-	
-
-    
-   
+    <!-- json转换注解适配器 -->
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                    <property name="supportedMediaTypes">
+                        <list>
+                            <value>text/html;charset=UTF-8</value>
+                            <value>application/json;charset=UTF-8</value>
+                        </list>
+                    </property>
+                </bean>
+                <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                    <property name="supportedMediaTypes">
+                        <list>
+                            <value>text/html;charset=UTF-8</value>
+                        </list>
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
 	
 	<!-- 文件上传处理 -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

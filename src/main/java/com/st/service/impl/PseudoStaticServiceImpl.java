@@ -1,8 +1,8 @@
 package com.st.service.impl;
 
-import com.st.constant.Constant;
-import com.st.core.util.date.DateUtil;
-import com.st.core.util.text.StringUtils;
+import com.st.utils.Constant;
+import com.st.utils.util.date.DateUtil;
+import com.st.utils.util.text.StringUtils;
 import com.st.javabean.pojo.wxtour.PseudoStatic;
 import com.st.javabean.pojo.wxtour.TBArticleStatic;
 import com.st.mapper.wxtour.PseudoStaticMapper;

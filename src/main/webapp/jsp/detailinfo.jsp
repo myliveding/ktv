@@ -1,5 +1,4 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
-<%@ page import="com.st.utils.JsonUtil"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.st.constant.Constant"%>
 <%
@@ -135,7 +134,7 @@ img {
 
 
 
-<script type="text/javascript" src="<%=JsonUtil.getJsonFile("js/jquery/jquery-1.8.0.js") %>" ></script>
+<script type="text/javascript" src="js/jquery/jquery-1.8.0.js"" ></script>
 <script src="//res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script type="text/javascript">
 var myApp = new Framework7();

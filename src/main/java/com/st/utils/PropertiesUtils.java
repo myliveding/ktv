@@ -8,8 +8,6 @@ import java.util.Iterator;
 import java.util.Properties;
 import java.util.Map.Entry;
 
-import com.st.constant.Constant;
-
 public class PropertiesUtils {
     /**
      * 获取属性文件的数据 根据key获取值
