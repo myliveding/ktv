@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.st.ktv.mapper.WechatMemberMapper">
+  <resultMap id="BaseResultMap" type="com.st.ktv.entity.WechatMember">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="head_portrait" jdbcType="VARCHAR" property="headPortrait" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="level" jdbcType="INTEGER" property="level" />
+    <result column="openid" jdbcType="VARCHAR" property="openid" />
+    <result column="available_score" jdbcType="INTEGER" property="availableScore" />
+    <result column="total_score" jdbcType="INTEGER" property="totalScore" />
+    <result column="commission" jdbcType="DOUBLE" property="commission" />
+    <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime" />
+    <result column="last_login_ip" jdbcType="VARCHAR" property="lastLoginIp" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="delete_time" jdbcType="TIMESTAMP" property="deleteTime" />
+    <result column="is_delete" jdbcType="BIT" property="isDelete" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, nick_name, head_portrait, mobile, email, level, openid, available_score, total_score, 
+    commission, last_login_time, last_login_ip, status, create_time, update_time, delete_time, 
+    is_delete
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from member
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from member
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.st.ktv.entity.WechatMember">
+    insert into member (id, nick_name, head_portrait, 
+      mobile, email, level, 
+      openid, available_score, total_score, 
+      commission, last_login_time, last_login_ip, 
+      status, create_time, update_time, 
+      delete_time, is_delete)
+    values (#{id,jdbcType=INTEGER}, #{nickName,jdbcType=VARCHAR}, #{headPortrait,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}, 
+      #{openid,jdbcType=VARCHAR}, #{availableScore,jdbcType=INTEGER}, #{totalScore,jdbcType=INTEGER}, 
+      #{commission,jdbcType=DOUBLE}, #{lastLoginTime,jdbcType=TIMESTAMP}, #{lastLoginIp,jdbcType=VARCHAR}, 
+      #{status,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{deleteTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.st.ktv.entity.WechatMember">
+    insert into member
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="nickName != null">
+        nick_name,
+      </if>
+      <if test="headPortrait != null">
+        head_portrait,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="level != null">
+        level,
+      </if>
+      <if test="openid != null">
+        openid,
+      </if>
+      <if test="availableScore != null">
+        available_score,
+      </if>
+      <if test="totalScore != null">
+        total_score,
+      </if>
+      <if test="commission != null">
+        commission,
+      </if>
+      <if test="lastLoginTime != null">
+        last_login_time,
+      </if>
+      <if test="lastLoginIp != null">
+        last_login_ip,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="deleteTime != null">
+        delete_time,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="headPortrait != null">
+        #{headPortrait,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null">
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="openid != null">
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="availableScore != null">
+        #{availableScore,jdbcType=INTEGER},
+      </if>
+      <if test="totalScore != null">
+        #{totalScore,jdbcType=INTEGER},
+      </if>
+      <if test="commission != null">
+        #{commission,jdbcType=DOUBLE},
+      </if>
+      <if test="lastLoginTime != null">
+        #{lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastLoginIp != null">
+        #{lastLoginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteTime != null">
+        #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.st.ktv.entity.WechatMember">
+    update member
+    <set>
+      <if test="nickName != null">
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="headPortrait != null">
+        head_portrait = #{headPortrait,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null">
+        level = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="openid != null">
+        openid = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="availableScore != null">
+        available_score = #{availableScore,jdbcType=INTEGER},
+      </if>
+      <if test="totalScore != null">
+        total_score = #{totalScore,jdbcType=INTEGER},
+      </if>
+      <if test="commission != null">
+        commission = #{commission,jdbcType=DOUBLE},
+      </if>
+      <if test="lastLoginTime != null">
+        last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastLoginIp != null">
+        last_login_ip = #{lastLoginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteTime != null">
+        delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.st.ktv.entity.WechatMember">
+    update member
+    set nick_name = #{nickName,jdbcType=VARCHAR},
+      head_portrait = #{headPortrait,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      level = #{level,jdbcType=INTEGER},
+      openid = #{openid,jdbcType=VARCHAR},
+      available_score = #{availableScore,jdbcType=INTEGER},
+      total_score = #{totalScore,jdbcType=INTEGER},
+      commission = #{commission,jdbcType=DOUBLE},
+      last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+      last_login_ip = #{lastLoginIp,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+      is_delete = #{isDelete,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  </mapper>
