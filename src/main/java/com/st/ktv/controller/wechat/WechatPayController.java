@@ -6,7 +6,7 @@ import com.st.ktv.controller.wechat.common.MD5;
 import com.st.ktv.controller.wechat.common.report.protocol.ReportReqData;
 import com.st.utils.DataUtil;
 import com.st.utils.ParseXmlUtil;
-import com.st.ktv.service.impl.WeixinAPIServiceImpl;
+import com.st.ktv.service.impl.WechatAPIServiceImpl;
 import com.st.utils.JoYoUtil;
 import com.st.utils.wx.WeixinUtil;
 import com.thoughtworks.xstream.XStream;
@@ -37,7 +37,7 @@ public class WechatPayController {
 	
 	@SuppressWarnings("unused")
 	@Resource
-	private WeixinAPIServiceImpl weixinAPIService;
+	private WechatAPIServiceImpl weixinAPIService;
 	
 	@RequestMapping(value="/index",method=RequestMethod.GET)
 	public  String pay(HttpServletRequest req,Model model) {

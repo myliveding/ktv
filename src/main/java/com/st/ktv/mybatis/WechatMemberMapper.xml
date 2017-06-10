@@ -232,4 +232,12 @@
       is_delete = #{isDelete,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <!-- 根据openid获取相关信息 -->
+  <select id="getObjectByOpenid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select *
+    from member
+    where openid = #{openid}
+  </select>
+
   </mapper>

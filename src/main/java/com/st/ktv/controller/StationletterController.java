@@ -4,7 +4,7 @@ import com.st.core.ContextHolderUtils;
 import com.st.utils.Constant;
 import com.st.core.CookieUtil;
 import com.st.ktv.entity.wx.Weixin;
-import com.st.ktv.service.impl.WeixinAPIServiceImpl;
+import com.st.ktv.service.impl.WechatAPIServiceImpl;
 import com.st.utils.*;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -29,7 +29,7 @@ public class StationletterController {
 	
 	@SuppressWarnings("unused")
 	@Resource
-	private WeixinAPIServiceImpl weixinAPIService;
+	private WechatAPIServiceImpl weixinAPIService;
 	
 	/**
 	 *站内信查询

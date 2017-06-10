@@ -1,7 +1,7 @@
 package com.st.ktv.controller;
 
 import com.st.utils.Constant;
-import com.st.ktv.service.impl.WeixinAPIServiceImpl;
+import com.st.ktv.service.impl.WechatAPIServiceImpl;
 import com.st.core.ContextHolderUtils;
 import com.st.utils.DataUtil;
 import org.slf4j.Logger;
@@ -24,7 +24,7 @@ public class ScopeController {
 	private Logger logger =LoggerFactory.getLogger(this.getClass());
 	
 	@Resource
-	private WeixinAPIServiceImpl weixinAPIService;
+	private WechatAPIServiceImpl weixinAPIService;
 	
 	@RequestMapping("/openid")
 	public ModelAndView getUserOpenIdOfScope(HttpServletRequest request, HttpServletResponse response )throws IOException {

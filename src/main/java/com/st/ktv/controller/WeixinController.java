@@ -7,7 +7,7 @@ import com.st.ktv.entity.City;
 import com.st.utils.IPUtil;
 import com.st.ktv.entity.wx.Weixin;
 import com.st.ktv.service.ArticleService;
-import com.st.ktv.service.impl.WeixinAPIServiceImpl;
+import com.st.ktv.service.impl.WechatAPIServiceImpl;
 import com.st.utils.*;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -33,7 +33,7 @@ public class WeixinController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Resource
-    private WeixinAPIServiceImpl weixinAPIService;
+    private WechatAPIServiceImpl weixinAPIService;
     @Resource
     private ArticleService articleService;
 

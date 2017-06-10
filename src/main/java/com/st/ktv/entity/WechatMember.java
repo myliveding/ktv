@@ -6,6 +6,7 @@ import java.util.Date;
 
 @Data
 public class WechatMember {
+
     private Integer id;
 
     private String nickName;
