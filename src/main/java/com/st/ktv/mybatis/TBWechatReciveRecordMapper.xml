@@ -16,22 +16,22 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from tb_wechat_receive_record
+    from wechat_receive_record
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-       delete from tb_wechat_receive_record
+       delete from wechat_receive_record
     where  id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.st.ktv.entity.TBWechatReciveRecord">
-    insert into tb_wechat_receive_record (types, openid, context, scene, parentid,create_time
+    insert into wechat_receive_record (types, openid, context, scene, parentid,create_time
       )
     values (#{types,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, #{context,jdbcType=VARCHAR},
       #{scene,jdbcType=VARCHAR}, #{parentid,jdbcType=INTEGER}, #{createTime,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.st.ktv.entity.TBWechatReciveRecord">
-    insert into tb_wechat_receive_record
+    insert into wechat_receive_record
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="types != null">
         types,
@@ -74,7 +74,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.st.ktv.entity.TBWechatReciveRecord">
-    update tb_wechat_receive_record
+    update wechat_receive_record
     <set>
       <if test="types != null">
         types = #{types,jdbcType=VARCHAR},
@@ -98,7 +98,7 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.st.ktv.entity.TBWechatReciveRecord">
-    update tb_wechat_receive_record
+    update wechat_receive_record
     set types = #{types,jdbcType=VARCHAR},
       openid = #{openid,jdbcType=VARCHAR},
       context = #{context,jdbcType=VARCHAR},
@@ -111,7 +111,7 @@
   <select id="selectByOpenid" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from tb_wechat_receive_record
+    from wechat_receive_record
     where openid = #{openid,jdbcType=VARCHAR}
   </select>
 </mapper>

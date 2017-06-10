@@ -17,7 +17,7 @@
     <select id="getMessageList"  resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from tb_wechat_message
+    from wechat_message
     where enable=1
     and endtime>unix_timestamp()
   </select>
@@ -25,7 +25,7 @@
   <select id="getMessageListByKey" parameterType="java.lang.String"  resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from tb_wechat_message
+    from wechat_message
     where content=#{keyStr}
     and enable=1
     and endtime>unix_timestamp()
@@ -34,7 +34,7 @@
   <select id="getMessageListByKeyLike" parameterType="java.lang.String"  resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from tb_wechat_message
+    from wechat_message
     WHERE
     content LIKE #{keyStr}
     AND ENABLE = 1
@@ -43,7 +43,7 @@
   <select id="getMessageListByType" parameterType="java.lang.String"  resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from tb_wechat_message
+    from wechat_message
     WHERE
     msgtype=#{keyStr}
     AND ENABLE = 1

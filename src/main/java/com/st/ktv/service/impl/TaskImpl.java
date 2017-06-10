@@ -18,7 +18,5 @@ public class TaskImpl {
 	 */
 	public void updateUserNum(){
 		WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
-		TBAttributeServiceImpl attributeService = (TBAttributeServiceImpl) context.getBean("attributeService");
-		attributeService.updateUserNum();
 	}
 }

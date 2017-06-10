@@ -21,19 +21,16 @@ public class JsapiTicketServiceImpl implements JsapiTicketService {
 	
 	@Override
 	public int insertSelective(JsapiTicket record) {
-		// TODO Auto-generated method stub
 		return jsapiTicketMapper.insertSelective(record);
 	}
 
 	@Override
 	public JsapiTicket selectByPrimaryKey(String appid) {
-		// TODO Auto-generated method stub
 		return jsapiTicketMapper.selectByPrimaryKey(appid);
 	}
 
 	@Override
 	public int updateByPrimaryKeySelective(JsapiTicket record) {
-		// TODO Auto-generated method stub
 		return jsapiTicketMapper.updateByPrimaryKeySelective(record);
 	}
 
