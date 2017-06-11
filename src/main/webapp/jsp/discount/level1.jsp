@@ -7,7 +7,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 %>
 
 <!doctype html>
-<html style="background: #fbd1c1;">
+<html >
 <head>
     <meta charset="utf-8">
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
@@ -16,46 +16,39 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple fullscreen -->
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <title>ktv</title> 
+    <title>ktv</title>
     <link rel="stylesheet" href="jsp/resources/css/main.css">
 </head>
 <body>  
-    <div id="header" style="background: #fbd1c1;">
+    <div id="header">
          <a href="javascript:history.go(-1);">
-             <img src="jsp/resources/img/b2.png">
+             <img src="jsp/resources/img/b3.png">
          </a>
-         <h1 >我的超市订单</h1>
+         <h1 class="color-red">一级下线</h1>
      </div> 
-    <div class="main" style="background: #f2f2f4;">
-         <div class="pay-price">
-             <img src="jsp/resources/img/p1.png" >
-             <div class="pay-price-info">
-                 <h1>￥138.00</h1>
-                 <h3>在线超市消费订单</h3>
-             </div>
-             <div class="clear"></div>
-         </div>
-         <div class="pay-form">
-             <div class="pay-group pay-group-act"> 
-                 <img src="jsp/resources/img/w1.png">
-                 <div class="payment">
-                     <h2>微信支付</h2>
-                     <span>推荐微信安装5.0及以上版本的用户使用</span>
-                 </div>
-                 <div class="clear"></div> 
-             </div>
-            <div class="pay-group"> 
-                 <img src="jsp/resources/img/w2.png">
-                 <div class="payment">
-                     <h2>支付宝支付</h2>
-                     <span>推荐有支付宝账号的用户使用</span>
-                 </div>
-                 <div class="clear"></div> 
-             </div>
-         </div>
-         <div class="pay-submit">
-             确认支付<span>￥138.00</span>
-         </div>
+    <div class="main" >
+         <table id="table">
+             <tr>
+                 <th>用户名</th>
+                 <th>获得佣金</th>
+                 <th>获得积分</th>
+             </tr>
+             <tr>
+                 <td>我是缪某</td>
+                 <td>6800元</td>
+                 <td>9876分</td>
+             </tr>
+             <tr>
+                 <td>我是缪某</td>
+                 <td>6800元</td>
+                 <td>9876分</td>
+             </tr>
+             <tr>
+                 <td>我是缪某</td>
+                 <td>6800元</td>
+                 <td>9876分</td>
+             </tr>
+         </table>
     </div>
    
     <div class="footer">
@@ -67,19 +60,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </a>
             </li>
             <li>
-                <a href="about.jsp" class="red">
+                <a href="" class="red">
                     <img src="jsp/resources/img/h2.png">
                     <span>关于盛世</span>
                 </a>
             </li>
             <li>
-                <a href="integralmall.jsp" class="red">
+                <a href="" class="red">
                     <img src="jsp/resources/img/h3.png">
                     <span>积分商城</span>
                 </a>
             </li>
             <li>
-                <a href="usercenter.jsp" class="red">
+                <a href="../my/usercenter.jsp" class="red">
                     <img src="jsp/resources/img/h4.png">
                     <span>我的盛世</span>
                 </a>
@@ -89,11 +82,4 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
 </body> 
 <script src='jsp/resources/js/rem.js'></script>
-<script src='jsp/resources/js/jquery.min.js'></script>
-<script>
-    $('.pay-group').click(function(){
-        $('.pay-group').removeClass('pay-group-act');
-        $(this).addClass('pay-group-act');
-    })
-</script>
 </html>

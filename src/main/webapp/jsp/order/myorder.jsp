@@ -51,7 +51,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <span>订单金额：<i>6760元</i></span>
                     </div> 
                     <div class="scoreorder-detail"> 
-                         <a href="../ktv/pay.jsp" class="scoreorder-go">去支付</a>
+                         <a href="../shop/pay.jsp" class="scoreorder-go">去支付</a>
                          <a class="noact" href="javascript:void(0);">详情></a>
                     </div>
                     <div class="clear"></div>
@@ -64,7 +64,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <span>订单金额：<i>6760元</i></span>
                     </div> 
                     <div class="scoreorder-detail"> 
-                         <a href="../ktv/pay.jsp" class="scoreorder-go">去支付</a>
+                         <a href="../shop/pay.jsp" class="scoreorder-go">去支付</a>
                          <a class="noact" href="javascript:void(0);">详情></a>
                     </div>
                     <div class="clear"></div>
@@ -77,7 +77,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <span>订单金额：<i>6760元</i></span>
                     </div> 
                     <div class="scoreorder-detail"> 
-                         <a href="../ktv/pay.jsp" class="scoreorder-go">去支付</a>
+                         <a href="../shop/pay.jsp" class="scoreorder-go">去支付</a>
                          <a class="noact" href="javascript:void(0);">详情></a>
                     </div>
                     <div class="clear"></div>
@@ -90,7 +90,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <span>订单金额：<i>6760元</i></span>
                     </div> 
                     <div class="scoreorder-detail"> 
-                         <a href="../ktv/pay.jsp" class="scoreorder-go">去支付</a>
+                         <a href="../shop/pay.jsp" class="scoreorder-go">去支付</a>
                          <a class="noact" href="javascript:void(0);">详情></a>
                     </div>
                     <div class="clear"></div>
@@ -113,13 +113,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </a>
             </li>
             <li>
-                <a href="../ktv/integralmall.jsp" class="red">
+                <a href="../my/integralmall.jsp" class="red">
                     <img src="jsp/resources/img/h3.png">
                     <span>积分商城</span>
                 </a>
             </li>
             <li>
-                <a href="../ktv/usercenter.jsp" class="red">
+                <a href="../my/usercenter.jsp" class="red">
                     <img src="jsp/resources/img/h4.png">
                     <span>我的盛世</span>
                 </a>

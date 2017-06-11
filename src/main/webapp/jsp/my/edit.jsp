@@ -7,7 +7,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 %>
 
 <!doctype html>
-<html >
+<html style="background: #fc3f1f;">
 <head>
     <meta charset="utf-8">
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
@@ -19,38 +19,39 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <title>ktv</title>
     <link rel="stylesheet" href="jsp/resources/css/main.css">
 </head>
-<body>  
-    <div id="header">
-         <a href="javascript:history.go(-1);">
-             <img src="jsp/resources/img/b3.png">
-         </a>
-         <h1 class="color-red">一级下线</h1>
-     </div> 
-    <div class="main" >
-         <table id="table">
-             <tr>
-                 <th>用户名</th>
-                 <th>获得佣金</th>
-                 <th>获得积分</th>
-             </tr>
-             <tr>
-                 <td>我是缪某</td>
-                 <td>6800元</td>
-                 <td>9876分</td>
-             </tr>
-             <tr>
-                 <td>我是缪某</td>
-                 <td>6800元</td>
-                 <td>9876分</td>
-             </tr>
-             <tr>
-                 <td>我是缪某</td>
-                 <td>6800元</td>
-                 <td>9876分</td>
-             </tr>
-         </table>
+<body>   
+    <div class="edit">
+        <div class="user-top">
+            <span>普通会员</span> 
+            <a href="message.jsp">
+                <img src="jsp/resources/img/message.png">
+                <i>2</i>
+            </a>
+            <a href="javascript:void(0);">
+                <img src="jsp/resources/img/set.png" >
+            </a>
+            <div class="clear"></div>
+        </div>
+        <h1>设置中心</h1>
     </div>
-   
+    <div class="edit-info">
+        <div class="edit-header">
+            <img src="jsp/resources/img/1.png" >
+            <span>上传新头像</span> 
+        </div>
+        <p>
+            <span>线下会员绑定</span>
+            <a href="">修改</a>  
+            <a href="">查看</a>
+            <div class="clear"></div>
+        </p>
+        <p>
+            <span>绑定手机</span>
+            <em>138***298</em>
+            <a href="">修改</a> 
+            <div class="clear"></div>
+        </p>
+    </div>
     <div class="footer">
         <ul>
             <li>
@@ -60,7 +61,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </a>
             </li>
             <li>
-                <a href="" class="red">
+                <a href="../ktv/about.jsp" class="red">
                     <img src="jsp/resources/img/h2.png">
                     <span>关于盛世</span>
                 </a>
@@ -82,4 +83,4 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
 </body> 
 <script src='jsp/resources/js/rem.js'></script>
-</html>
+</html> 

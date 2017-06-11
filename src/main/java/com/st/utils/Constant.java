@@ -16,7 +16,7 @@ public final class Constant {
 	/**
      * 域名
      */
-    public static final String URL=PropertiesUtils.findPropertiesKey("URL",Constant.CONFIG_FILE_NAME);
+    public static final String URL = PropertiesUtils.findPropertiesKey("URL",Constant.CONFIG_FILE_NAME);
     /*
     * 支付宝异步通知地址
     * */

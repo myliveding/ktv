@@ -20,20 +20,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link rel="stylesheet" href="jsp/resources/css/main.css">
 </head>
 <body> 
-     <div id="header" class="color-pink">
+     <div id="header" style="background: #fbd1c1;">
          <a href="javascript:history.go(-1);">
              <img src="jsp/resources/img/b2.png">
          </a>
-         <h1>包厢信息</h1>
+         <h1>积分商品信息</h1>
      </div> 
      <div class="main"> 
          <div class="shop-detail">
-             <h2>盛世欢唱武夷山西门头店</h2>
-             <p>房间号：小包/B27（8-10人）</p>
-             <span>状态：未被预定</span>
-             <a href="pay.jsp">立即预定</a>
+             <h2>小包套餐（邵武区）</h2>
+             <p>价值： <i>3888</i>元</p>
+             <span>所需积分：<i>3699</i>分</span>
+             <a href="../order/exchangeorder.jsp">立即兑换</a>
          </div>
-         <div class="room-img">
+         <div class="shop-detail-content">
+             <套餐包含内容>
+         </div>         
+         <div class="room-img"> 
+             <span>雪津啤酒12瓶</span>
+             <span>6个小蝶</span>
+             <span>1份水果</span>
+             <span>1盒纸巾</span>
+             <span>1套消毒</span>
              <img src="jsp/resources/img/r1.png">
              <img src="jsp/resources/img/r2.png">
              <img src="jsp/resources/img/r3.png">

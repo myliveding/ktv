@@ -84,7 +84,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <span>小包</span>
                             <span>8-10人</span> 
                         </div>
-                        <a href="roominfo.jsp">
+                        <a href="../room/roominfo.jsp">
                             <i>查看包厢 </i>
                             <i>环境照片</i>
                             <em></em>
@@ -96,7 +96,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <span>小包</span>
                             <span>8-10人</span> 
                         </div>
-                        <a href="roominfo.jsp">
+                        <a href="../room/roominfo.jsp">
                             <i>查看包厢 </i>
                             <i>环境照片</i>
                             <em></em>
@@ -108,7 +108,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <span>小包</span>
                             <span>8-10人</span> 
                         </div>
-                        <a href="roominfo.jsp">
+                        <a href="../room/roominfo.jsp">
                             <i>查看包厢 </i>
                             <i>环境照片</i>
                             <em></em>
@@ -120,7 +120,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <span>小包</span>
                             <span>8-10人</span> 
                         </div>
-                        <a href="roominfo.jsp">
+                        <a href="../room/roominfo.jsp">
                             <i>查看包厢 </i>
                             <i>环境照片</i>
                             <em></em>
@@ -132,7 +132,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <span>小包</span>
                             <span>8-10人</span> 
                         </div>
-                        <a href="roominfo.jsp">
+                        <a href="../room/roominfo.jsp">
                             <i>查看包厢 </i>
                             <i>环境照片</i>
                             <em></em>
@@ -144,7 +144,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <span>小包</span>
                             <span>8-10人</span> 
                         </div>
-                        <a href="roominfo.jsp">
+                        <a href="../room/roominfo.jsp">
                             <i>查看包厢 </i>
                             <i>环境照片</i>
                             <em></em>
@@ -156,7 +156,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <span>小包</span>
                             <span>8-10人</span> 
                         </div>
-                        <a href="roominfo.jsp">
+                        <a href="../room/roominfo.jsp">
                             <i>查看包厢 </i>
                             <i>环境照片</i>
                             <em></em>
@@ -168,7 +168,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <span>小包</span>
                             <span>8-10人</span> 
                         </div>
-                        <a href="roominfo.jsp">
+                        <a href="../room/roominfo.jsp">
                             <i>查看包厢 </i>
                             <i>环境照片</i>
                             <em></em>
@@ -180,7 +180,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <span>小包</span>
                             <span>8-10人</span> 
                         </div>
-                        <a href="roominfo.jsp">
+                        <a href="../room/roominfo.jsp">
                             <i>查看包厢 </i>
                             <i>环境照片</i>
                             <em></em>
@@ -192,7 +192,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <span>小包</span>
                             <span>8-10人</span> 
                         </div>
-                        <a href="roominfo.jsp">
+                        <a href="../room/roominfo.jsp">
                             <i>查看包厢 </i>
                             <i>环境照片</i>
                             <em></em>
@@ -204,7 +204,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <span>小包</span>
                             <span>8-10人</span> 
                         </div>
-                        <a href="roominfo.jsp">
+                        <a href="../room/roominfo.jsp">
                             <i>查看包厢 </i>
                             <i>环境照片</i>
                             <em></em>
@@ -216,7 +216,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <span>小包</span>
                             <span>8-10人</span> 
                         </div>
-                        <a href="roominfo.jsp">
+                        <a href="../room/roominfo.jsp">
                             <i>查看包厢 </i>
                             <i>环境照片</i>
                             <em></em>
@@ -273,19 +273,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </a>
             </li>
             <li>
-                <a href="about.jsp" class="red">
+                <a href="../ktv/about.jsp" class="red">
                     <img src="jsp/resources/img/h2.png">
                     <span>关于盛世</span>
                 </a>
             </li>
             <li>
-                <a href="integralmall.jsp" class="red">
+                <a href="../my/integralmall.jsp" class="red">
                     <img src="jsp/resources/img/h3.png">
                     <span>积分商城</span>
                 </a>
             </li>
             <li>
-                <a href="usercenter.jsp" class="red">
+                <a href="../my/usercenter.jsp" class="red">
                     <img src="jsp/resources/img/h4.png">
                     <span>我的盛世</span>
                 </a>

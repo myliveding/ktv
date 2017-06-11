@@ -308,10 +308,6 @@ private static Logger logger =LoggerFactory.getLogger(WeixinUtil.class);
     * @return
     */
    public static JSONObject setSendMessage(String accessToken, String context) {
-//     int result = 0;
-     //拼装发送消息的URL
-     
-     
      String url = MESSAGE_TEMPLATE_SEND_URL.replace("ACCESS_TOKEN", accessToken);
      // 将文本对象转换成json字符串
      // 调用接口发送消息

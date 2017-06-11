@@ -7,7 +7,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 %>
 
 <!doctype html>
-<html style="background: #fc3f1f;">
+<html  id="line-bg">
 <head>
     <meta charset="utf-8">
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
@@ -19,39 +19,37 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <title>ktv</title>
     <link rel="stylesheet" href="jsp/resources/css/main.css">
 </head>
-<body>   
-    <div class="edit">
-        <div class="user-top">
-            <span>普通会员</span> 
-            <a href="message.jsp">
-                <img src="jsp/resources/img/message.png">
-                <i>2</i>
-            </a>
-            <a href="javascript:void(0);">
-                <img src="jsp/resources/img/set.png" >
-            </a>
-            <div class="clear"></div>
+<body>  
+    <div id="header">
+         <a href="javascript:history.go(-1);">
+             <img src="jsp/resources/img/b3.png">
+         </a>
+         <h1 class="color-red">盛世招聘</h1>
+     </div> 
+    <div class="main" >
+        <div class="message-list"> 
+            <ul> 
+                <div class="line"></div>
+                <li>
+                    <h1>盛世欢唱邵武店劳动节活动</h1>
+                    <h2>18-25岁  男女皆可</h2> 
+                    <p>五官端正，亲和力强，具有餐饮服务行业经 验者优先。五官端正， 副本</p>
+                </li>
+                <li>
+                    <h1>盛世欢唱邵武店劳动节活动</h1>
+                    <h2>18-25岁  男女皆可</h2> 
+                    <p>五官端正，亲和力强，具有餐饮服务行业经 验者优先。五官端正， 副本</p>
+                </li>
+                <li>
+                    <h1>盛世欢唱邵武店劳动节活动</h1>
+                    <h2>18-25岁  男女皆可</h2> 
+                    <p>五官端正，亲和力强，具有餐饮服务行业经 验者优先。五官端正， 副本</p>
+                </li>
+                 
+            </ul>
         </div>
-        <h1>设置中心</h1>
     </div>
-    <div class="edit-info">
-        <div class="edit-header">
-            <img src="jsp/resources/img/1.png" >
-            <span>上传新头像</span> 
-        </div>
-        <p>
-            <span>线下会员绑定</span>
-            <a href="">修改</a>  
-            <a href="">查看</a>
-            <div class="clear"></div>
-        </p>
-        <p>
-            <span>绑定手机</span>
-            <em>138***298</em>
-            <a href="">修改</a> 
-            <div class="clear"></div>
-        </p>
-    </div>
+   
     <div class="footer">
         <ul>
             <li>
@@ -61,7 +59,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </a>
             </li>
             <li>
-                <a href="about.jsp" class="red">
+                <a href="" class="red">
                     <img src="jsp/resources/img/h2.png">
                     <span>关于盛世</span>
                 </a>
@@ -73,7 +71,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </a>
             </li>
             <li>
-                <a href="usercenter.jsp" class="red">
+                <a href="../my/usercenter.jsp" class="red">
                     <img src="jsp/resources/img/h4.png">
                     <span>我的盛世</span>
                 </a>
@@ -83,4 +81,4 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
 </body> 
 <script src='jsp/resources/js/rem.js'></script>
-</html> 
+</html>

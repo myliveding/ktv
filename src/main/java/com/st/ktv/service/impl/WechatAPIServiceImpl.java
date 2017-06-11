@@ -251,7 +251,7 @@ public class WechatAPIServiceImpl {
                 JSONObject jSONObject = this.getUserInfoOfOpenId(appid, openid);
                 String subscribe = jSONObject.getString("subscribe");
                 logger.info("根据appid和openid判断当前用户是否关注公众号,结果为(0为未关注,1为已关注)：" + subscribe);
-                if (PropertiesUtils.findPropertiesKey("USER_SUBSCRIBE", Constant.CONFIG_FILE_NAME).equalsIgnoreCase(subscribe)) {//已关注
+                if ("1".equalsIgnoreCase(subscribe)) { //已关注
                     return true;
                 }
             } catch (Exception e) {

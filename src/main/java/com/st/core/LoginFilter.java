@@ -12,8 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-
-
+/**
+ *  登陆的校验
+ */
 public class LoginFilter implements Filter {
 	private Logger logger=LoggerFactory.getLogger(this.getClass());
 	private String excludedPages;       
@@ -26,19 +27,12 @@ public class LoginFilter implements Filter {
 
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
+
 		HttpServletRequest httpServletRequest = (HttpServletRequest)request;
 		HttpSession session = httpServletRequest.getSession();
-		String userId = (String)httpServletRequest.getSession().getAttribute("userId");
-		String isMobileBind = (String)httpServletRequest.getSession().getAttribute("isMobileBind");
+
 		//获取访问的url路径
 		String uri = httpServletRequest.getServletPath();
-		if (uri.indexOf("weixin/getWeixintoIndex.do")>1){
-			uri=uri.substring(0,uri.indexOf("weixin/getWeixintoIndex.do"));
-		}
-		String backUrl=httpServletRequest.getParameter("backUrl");
-		if (DataUtil.isNotEmpty(backUrl)){
-			session.setAttribute("backUrl",backUrl);
-		}
 		logger.info("正常拦截器中,项目访问路径getServletPath：" + uri);
         boolean isExcludedPage = false;  
         
@@ -52,19 +46,19 @@ public class LoginFilter implements Filter {
         }
         
         if (!isExcludedPage) { //需要去判断的
-        	if ((userId == null) || ("".equals(userId))){
-				httpServletRequest.setAttribute("error", "请重新登录");
-				request.setAttribute("error", "请重新登录");
-				RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/weixin/getweixin.do?name=account/fasterlogin");
-				rd.forward(httpServletRequest, response);
-				return;
-			}else if ((isMobileBind == null) || ("".equals(isMobileBind)) 
-					|| PropertiesUtils.findPropertiesKey("UNBIND_MOBILE_CODE", Constant.CONFIG_FILE_NAME).equals(isMobileBind)){
-				httpServletRequest.setAttribute("error", "请绑定手机");
-				RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/jsp/account/bindmobile.jsp");
-				rd.forward(httpServletRequest, response);
-				return;
-			}
+            //        HttpSession session = ContextHolderUtils.getSession();
+            String openid = (String)httpServletRequest.getSession().getAttribute("openid");
+            String appid = (String)httpServletRequest.getSession().getAttribute("appid");
+
+        	if (null != openid && !"".equals(openid) && null != appid && !"".equals(appid)){
+			}else{
+                logger.info("openid或者appid不存在不能进入相应上述页面，需要去重新获取并加载到session里面");
+                httpServletRequest.setAttribute("error", "请重新登录");
+                request.setAttribute("error", "请重新登录");
+                RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/member/gotoErrorMsg.do");
+                rd.forward(httpServletRequest, response);
+                return;
+            }
         }
 		chain.doFilter(request, response);
 	}

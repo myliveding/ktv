@@ -1,5 +1,8 @@
 package com.st.ktv.service;
 
+import com.st.ktv.entity.WechatMember;
+import net.sf.json.JSONObject;
+
 /**
  * @Description
  * @FileName MemberService
@@ -9,10 +12,21 @@ package com.st.ktv.service;
 public interface MemberService {
 
     /**
-     * 微信进入之后校验是否绑定手机号码
+     * 校验登录
      * @param openid
      * @return
      */
-    public String wechatLogin(String openid);
+    public void checkLogin(String openid, String appid);
+
+    public WechatMember getObjectByOpenid(String openid);
+
+    /**
+     * 执行手机号码的校验、新增绑定和修改
+     * @param openid
+     * @param phone
+     * @param type 1校验2新增3修改
+     * @return
+     */
+    public JSONObject checkAndUpdateMobile(String openid, String phone, String type);
 
 }

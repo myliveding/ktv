@@ -72,7 +72,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </a>
             </li>
             <li>
-                <a href="usercenter.jsp" class="red">
+                <a href="../my/usercenter.jsp" class="red">
                     <img src="jsp/resources/img/h4.png">
                     <span>我的盛世</span>
                 </a>

@@ -26,10 +26,6 @@ public class FileController {
         HttpSession session = ContextHolderUtils.getSession();
         JSONObject jsonObj = new JSONObject();
         Object userIdObject =  session.getAttribute("userId");//4125
-//        if(userIdObject==null||"".equals(userIdObject)){
-//            jsonObj = JSONObject.fromObject("{\"status\":-1,\"msg\":\"未登录\"}");
-//            return jsonObj;
-//        }
         String path="";
         long l1=System.currentTimeMillis();
         String result= "";

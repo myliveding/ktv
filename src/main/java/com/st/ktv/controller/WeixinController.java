@@ -156,19 +156,7 @@ public class WeixinController {
      */
     @RequestMapping("/getWeixintoIndex")
     public String getWeixintoIndex(HttpServletRequest request) {
-
-        List<Store> list = new ArrayList<Store>();
-        for(int i =1 ; i<5 ; i++){
-            Store store = new Store();
-            store.setName("test");
-            store.setBigNum(3);
-            store.setDistance(BigDecimal.TEN);
-            store.setMediumNum(7);
-            store.setSmallNum(3);
-            store.setVipNum(8);
-            list.add(store);
-        }
-        request.setAttribute("storeList",list);
+        request.setAttribute("storeList","");
         return "index";
     }
 

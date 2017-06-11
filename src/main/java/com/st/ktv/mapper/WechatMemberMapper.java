@@ -18,4 +18,6 @@ public interface WechatMemberMapper {
 
     WechatMember getObjectByOpenid(String openid);
 
+    WechatMember getObjectByMobile(String mobile);
+
 }

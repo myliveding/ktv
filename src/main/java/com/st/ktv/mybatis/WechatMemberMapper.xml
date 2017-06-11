@@ -240,4 +240,11 @@
     where openid = #{openid}
   </select>
 
+  <!-- mobile -->
+  <select id="getObjectByMobile" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select *
+    from member
+    where mobile = #{mobile}
+  </select>
+
   </mapper>

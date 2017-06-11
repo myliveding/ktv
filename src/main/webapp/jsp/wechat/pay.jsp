@@ -14,7 +14,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta charset="utf-8">
     <meta name="keywords" content=""> 
     <meta name="description" content="">
-    <jsp:include page="/jsp/layouts/head.jsp" flush="true"/>
     <link href="jsp/resources/css/basic.css %>" type="text/css" rel="stylesheet" />
   </head>
 <body class="jsb_add1 gray pb40">
@@ -89,10 +88,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		              //使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。 
 		           }else if(res.err_msg == "get_brand_wcpay_request:cancel"){
 		              alert("取消支付，正在跳转到订单列表");
-		              window.location.href="${pageContext.request.contextPath}/jsp/my/myorder.jsp";
+		              window.location.href="../order/myorder.jsp";
 		           }else{
 		              alert("支付失败，正在跳转到订单列表");
-                      window.location.href="${pageContext.request.contextPath}/jsp/my/myorder.jsp";
+                      window.location.href="../order/myorder.jsp";
 		           }
 		       }
 		   ); 
@@ -110,8 +109,5 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 		</script>
 
-
-<jsp:include page="/jsp/layouts/foot.jsp" flush="true"/>
-<jsp:include page="/jsp/layouts/pv.jsp" flush="true"/>
 </body>
 </html>

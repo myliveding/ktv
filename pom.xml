@@ -498,7 +498,7 @@
 				<artifactId>tomcat7-maven-plugin</artifactId>
 				<version>2.1</version>
 				<configuration>
-					<url>http://localhost/manager/html</url>
+					<url>http://127.0.0.1/manager/html</url>
 					<path>/ktv</path>
 					<server>tomcat7</server>
 					<port>80</port>

@@ -59,19 +59,19 @@
                     </div> 
                 </li>
                  <li>
-                    <a href="../my/myorder.jsp">
+                    <a href="../order/myorder.jsp">
                         <img src="jsp/resources/img/u2.png">
                         <span>我的预定</span>
                     </a>
                 </li>
                  <li>
-                    <a href="../my/myscoreorder.jsp">
+                    <a href="../order/myscoreorder.jsp">
                         <img src="jsp/resources/img/u3.png">
                         <span>积分订单</span>
                     </a>
                 </li>
                  <li>
-                    <a href="withdrawals.jsp">
+                    <a href="../commission/commission.jsp">
                         <img src="jsp/resources/img/u4.png">
                         <span>佣金提现</span>
                     </a>
@@ -79,13 +79,13 @@
             </ul>
             <ul>
                 <li>
-                    <a href="commissiondetails.jsp">
+                    <a href="../commission/commissiondetails.jsp">
                         <img src="jsp/resources/img/u5.png">
                         <span>佣金明细</span>
                     </a>
                 </li>
                  <li>
-                    <a href="myshoporder.jsp">
+                    <a href="../shop/myshoporder.jsp">
                         <img src="jsp/resources/img/u6.png">
                         <span>我的超市订单</span>
                     </a>
@@ -102,7 +102,7 @@
                     </div> 
                 </li>
                  <li>
-                    <a href="code.jsp">
+                    <a href="../ktv/code.jsp">
                         <img src="jsp/resources/img/u8.png">
                         <span>我的邀请二维码</span>
                     </a>
@@ -119,7 +119,7 @@
                 </a>
             </li>
             <li>
-                <a href="about.jsp" class="red">
+                <a href="../ktv/about.jsp" class="red">
                     <img src="jsp/resources/img/h2.png">
                     <span>关于盛世</span>
                 </a>

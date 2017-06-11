@@ -51,7 +51,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <span>消耗积分：<i>6760分</i></span>
                     </div> 
                     <div class="scoreorder-detail"> 
-                         <a href="../ktv/orderselect.jsp" class="scoreorder-go">确认开机</a>
+                         <a href="orderselect.jsp" class="scoreorder-go">确认开机</a>
                          <a class="noact" href="">详情></a>
                     </div>
                     <div class="clear"></div>
@@ -64,7 +64,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <span>消耗积分：<i>6760分</i></span>
                     </div> 
                     <div class="scoreorder-detail"> 
-                         <a href="../ktv/orderselect.jsp" class="scoreorder-go">确认开机</a>
+                         <a href="orderselect.jsp" class="scoreorder-go">确认开机</a>
                          <a class="noact" href="">详情></a>
                     </div>
                     <div class="clear"></div>
@@ -77,7 +77,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <span>消耗积分：<i>6760分</i></span>
                     </div> 
                     <div class="scoreorder-detail"> 
-                         <a href="../ktv/orderselect.jsp" class="scoreorder-go">确认开机</a>
+                         <a href="orderselect.jsp" class="scoreorder-go">确认开机</a>
                          <a class="noact" href="">详情></a>
                     </div>
                     <div class="clear"></div>
@@ -90,7 +90,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <span>消耗积分：<i>6760分</i></span>
                     </div> 
                     <div class="scoreorder-detail"> 
-                         <a href="../ktv/orderselect.jsp" class="scoreorder-go">确认开机</a>
+                         <a href="orderselect.jsp" class="scoreorder-go">确认开机</a>
                          <a class="noact" href="">详情></a>
                     </div>
                     <div class="clear"></div>
@@ -103,7 +103,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <span>消耗积分：<i>6760分</i></span>
                     </div> 
                     <div class="scoreorder-detail"> 
-                         <a href="../ktv/orderselect.jsp" class="scoreorder-go">确认开机</a>
+                         <a href="orderselect.jsp" class="scoreorder-go">确认开机</a>
                          <a class="noact" href="">详情></a>
                     </div>
                     <div class="clear"></div>
@@ -126,13 +126,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </a>
             </li>
             <li>
-                <a href="../ktv/integralmall.jsp" class="red">
+                <a href="../my/integralmall.jsp" class="red">
                     <img src="jsp/resources/img/h3.png">
                     <span>积分商城</span>
                 </a>
             </li>
             <li>
-                <a href="../ktv/usercenter.jsp" class="red">
+                <a href="../my/usercenter.jsp" class="red">
                     <img src="jsp/resources/img/h4.png">
                     <span>我的盛世</span>
                 </a>

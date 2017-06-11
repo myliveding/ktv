@@ -10,39 +10,14 @@
     <url-pattern>/*</url-pattern>
     <dispatcher>REQUEST</dispatcher>
   </filter-mapping>
-
   <filter-mapping>
     <filter-name>loginfilter</filter-name>
     <url-pattern>/jsp/my/*</url-pattern>
   </filter-mapping>
-  <filter-mapping>
-    <filter-name>loginfilter</filter-name>
-    <url-pattern>/jsp/personorder/*</url-pattern>
-  </filter-mapping>
-  <filter-mapping>
-    <filter-name>loginfilter</filter-name>
-    <url-pattern>/jsp/order/*</url-pattern>
-  </filter-mapping>
-  <filter-mapping>
-    <filter-name>loginfilter</filter-name>
-    <url-pattern>/jsp/user/*</url-pattern>
-  </filter-mapping>
-  <filter-mapping>
-    <filter-name>loginfilter</filter-name>
-    <url-pattern>/jsp/personinsurance/*</url-pattern>
-  </filter-mapping>
-  <filter-mapping>
-    <filter-name>loginfilter</filter-name>
-    <url-pattern>/jsp/personsocial/*</url-pattern>
-  </filter-mapping>
-  <filter-mapping>
-    <filter-name>loginfilter</filter-name>
-    <url-pattern>/jsp/payshebao/*</url-pattern>
-  </filter-mapping>
-  <filter-mapping>
-    <filter-name>loginfilter</filter-name>
-    <url-pattern>/jsp/agent/*</url-pattern>
-  </filter-mapping>
+    <filter-mapping>
+        <filter-name>loginfilter</filter-name>
+        <url-pattern>/jsp/order/*</url-pattern>
+    </filter-mapping>
   <filter-mapping>
     <filter-name>loginfilter</filter-name>
     <url-pattern>*.do</url-pattern>
@@ -53,19 +28,9 @@
     <filter-class>com.st.core.LoginFilter</filter-class>
     <init-param>
       <param-name>excludedPages</param-name>
-      <param-value>personsocial,article,weixin,scope,siteMap,
-		,wechat/pay/notify.do,swiftpass/pay/notify.do,mclient/pay/notify.do,personorder/alipayReturn.do,user/updateurl.do,user/usernum.do,user/delrediskey.do,
-		,personorder/gotoshare.do,personorder/gotodetailunPay.do,voucher/getActivityRemark.do,/voucher/isShareActivity.do,
-		,personsocial/gotoinvitation.do,weixin/cityLocation.do,weixin/verifyCode,home/getuserinfo.do,
-		,jsp/my/my.jsp,jsp/my/recommendfriend.jsp,jsp/my/invitefriend.jsp,
-		,jsp/my/about.jsp,jsp/my/aboutus.jsp,jsp/my/contactour.jsp,jsp/my/socailcontract.jsp,jsp/agent/promote.jsp,jsp/agent/agentdisabled.jsp,
-		,personinsurance/cityleveldemand.do,personinsurance/citydemand.do,personinsurance/cityinformation.do,
-        ,personinsurance/residenceCity.do,personinsurance/getCalcMonth.do,/personinsurance/gotopage.do,
-        ,personinsurance/getBase.do,personinsurance/saveProject.do,personinsurance/socialitem.do,personinsurance/mydetail.do,
-        ,agentCompany/getActiveInfo.do,agentCompany/updateAcitiveStatus.do,agentCompany/checkMobile.do,jsp/agent/agentcheck.jsp,
-        ,agentCompany/getAgentType.do,personinsurance/indexInfo.do,personsocial/clickRate.do,personsocial/gotoChaSheBao.do,
-        ,agentCompany/goToAgentCompany,agentCompany/gotoPromotionPage.do,agentCompany/getAgentStatusAndInfo.do,alipay/orderCancel.do,
-	</param-value>
+      <param-value>
+          scope,wechat/pay/notify.do,personorder/alipayReturn.do,member/gotoIndexDomain.do,member/gotoErrorMsg.do,jsp/resouces/*,
+      </param-value>
     </init-param>
   </filter>
 
@@ -111,17 +76,17 @@
     </init-param>
   </filter>
   <filter>
-    <filter-name>xssFilter</filter-name>
-    <filter-class>com.st.core.http.XssFilter</filter-class>
-    <init-param>
-      <param-name>excludedPages</param-name>
-      <param-value>weixin,scope,wechat,mclient,alipay,
-      </param-value>
-    </init-param>
+      <filter-name>xssFilter</filter-name>
+      <filter-class>com.st.core.http.XssFilter</filter-class>
   </filter>
+    <filter-mapping>
+        <filter-name>xssFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
 
   <welcome-file-list>
-    <welcome-file>weixin/getWeixintoIndex.do</welcome-file>
+    <welcome-file>member/gotoIndexDomain.do</welcome-file>
     <!--<welcome-file>/jsp/index.jsp</welcome-file>-->
   </welcome-file-list>
   <error-page>

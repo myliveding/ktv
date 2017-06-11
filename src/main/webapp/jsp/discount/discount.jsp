@@ -7,7 +7,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 %>
 
 <!doctype html>
-<html >
+<html  id="line-bg">
 <head>
     <meta charset="utf-8">
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
@@ -19,53 +19,40 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <title>ktv</title>
     <link rel="stylesheet" href="jsp/resources/css/main.css">
 </head>
-<body id="about">  
+<body>  
     <div id="header">
          <a href="javascript:history.go(-1);">
              <img src="jsp/resources/img/b3.png">
          </a>
-         <h1 class="color-red">关于盛世</h1>
+         <h1 class="color-red">优惠活动/一网打尽</h1>
      </div> 
     <div class="main" >
-          <div class="about">
-              <div class="logo">
-                  <img src="jsp/resources/img/1.png">
-              </div> 
-               <div class="about-item">
-                   <h1>盛世欢唱</h1>
-                   <h2>我们专注KTV 却不只是KTV</h2>
-                   <span class="about-item-box1"></span>
-                   <span class="about-item-box2"></span>
-                   <span class="about-item-box3"></span>
-                   <label class="about-item-box1"></label>
-                   <label class="about-item-box2"></label>
-                   <label class="about-item-box3"></label>
-               </div>
-               <div class="about-info">
-                   <img src="jsp/resources/img/5.png">
-                   <p> 福建ktv介绍介绍介绍福建ktv介绍福建ktv介 绍介绍介绍福建ktv介绍介绍介绍福建ktv介绍介 绍介绍福建ktv介</p>
-                   <h1>盛世大家庭</h1>
-                   <ul>
-                       <li>
-                           <h4>(1)西门店</h4>
-                           <p> 福建ktv介绍介绍介绍福建ktv介绍福建ktv介 绍介绍介绍福建ktv介绍介绍介绍福建ktv介绍介 绍介绍福建ktv介</p>
-                           <img src="jsp/resources/img/6.png">
-                       </li>
-                       <li>
-                           <h4>(1)西门店</h4>
-                           <p> 福建ktv介绍介绍介绍福建ktv介绍福建ktv介 绍介绍介绍福建ktv介绍介绍介绍福建ktv介绍介 绍介绍福建ktv介</p>
-                           <img src="jsp/resources/img/6.png">
-                       </li>
-                   </ul>
-                   
-               </div>
-          </div>
+        <div class="message-list"> 
+            <ul> 
+                <div class="line"></div>
+                <li>
+                    <h1>盛世欢唱邵武店劳动节活动</h1>
+                    <h2>劳动节当天全全场消费300送300</h2>
+                    <img src="jsp/resources/img/1.png">
+                    <a href="discountdetail.jsp">查看详情</a>
+                    <div class="clear"></div>
+                </li>
+                <li>
+                    <h1>盛世欢唱邵武店劳动节活动</h1>
+                    <h2>劳动节当天全全场消费300送300</h2>
+                    <img src="jsp/resources/img/1.png">
+                    <a href="discountdetail.jsp">查看详情</a>
+                    <div class="clear"></div>
+                </li>
+                 
+            </ul>
+        </div>
     </div>
    
     <div class="footer">
         <ul>
             <li>
-                <a href="jsp/index.jsp" class="footer-now red">
+                <a href="" class="footer-now red">
                     <img src="jsp/resources/img/h1.png">
                     <span>在线定包</span>
                 </a>
@@ -83,7 +70,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </a>
             </li>
             <li>
-                <a href="usercenter.jsp" class="red">
+                <a href="../my/usercenter.jsp" class="red">
                     <img src="jsp/resources/img/h4.png">
                     <span>我的盛世</span>
                 </a>
