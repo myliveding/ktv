@@ -27,25 +27,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          <h1 class="color-red">盛世招聘</h1>
      </div> 
     <div class="main" >
-        <div class="message-list"> 
+        <div class="message-list">
             <ul> 
                 <div class="line"></div>
-                <li>
-                    <h1>盛世欢唱邵武店劳动节活动</h1>
-                    <h2>18-25岁  男女皆可</h2> 
-                    <p>五官端正，亲和力强，具有餐饮服务行业经 验者优先。五官端正， 副本</p>
-                </li>
-                <li>
-                    <h1>盛世欢唱邵武店劳动节活动</h1>
-                    <h2>18-25岁  男女皆可</h2> 
-                    <p>五官端正，亲和力强，具有餐饮服务行业经 验者优先。五官端正， 副本</p>
-                </li>
-                <li>
-                    <h1>盛世欢唱邵武店劳动节活动</h1>
-                    <h2>18-25岁  男女皆可</h2> 
-                    <p>五官端正，亲和力强，具有餐饮服务行业经 验者优先。五官端正， 副本</p>
-                </li>
-                 
+                <c:forEach var = "data" items ="${recruits}">
+                    <li>
+                        <h1>${data.title}</h1>
+                        <p>${data.content}</p>
+                    </li>
+                </c:forEach>
+                    <%--<li>--%>
+                        <%--<h1>盛世欢唱邵武店劳动节活动</h1>--%>
+                        <%--<h2>18-25岁  男女皆可</h2>--%>
+                        <%--<p>五官端正，亲和力强，具有餐饮服务行业经 验者优先。五官端正， 副本</p>--%>
+                    <%--</li>--%>
             </ul>
         </div>
     </div>
@@ -80,5 +75,5 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </ul>
     </div>
 </body> 
-<script src='jsp/resources/js/rem.js'></script>
+<script src="jsp/resources/js/rem.js"></script>
 </html>

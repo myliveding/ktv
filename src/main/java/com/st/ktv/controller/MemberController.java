@@ -63,6 +63,19 @@ public class MemberController {
             list.add(store);
         }
         request.setAttribute("storeList",list);
+
+        //获取轮播图
+        String[] arr = new String[]{"type" + 1};
+        String mystr = "type=" + 1;
+        JSONObject result = JSONObject.fromObject("{\"status\":1,\"msg\":\"出错了\"}");
+        try {
+            result = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.INDEX_BANNERS, mystr, arr));
+            if(result.getInt("error_code") == 0){
+                request.setAttribute("recruits",result.get("result"));
+            }
+        } catch (Exception e) {
+            logger.error("获取登录出错:" + e.getMessage(), e);
+        }
         return "index";
     }
 

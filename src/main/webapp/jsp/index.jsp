@@ -12,7 +12,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta charset="utf-8">
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
     <meta name="author" content="linx" />
-     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple fullscreen -->
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -52,7 +52,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </a>
                 </li>
                 <li>
-                    <a href="recruit.html">
+                    <a href="${pageContext.request.contextPath}/other/getCompanyRecruits.do">
                         <div class="nav-item nav-item4">
                             <img src="jsp/resources/img/s4.png">
                         </div>
@@ -84,7 +84,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </a>
                 </li>
                 <li>
-                    <a href="about.html">
+                    <a href="${pageContext.request.contextPath}/other/getCompanyInfo.do">
                         <div class="nav-item nav-item8">
                             <img src="jsp/resources/img/s8.png">
                         </div>

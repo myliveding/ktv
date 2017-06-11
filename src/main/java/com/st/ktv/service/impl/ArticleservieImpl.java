@@ -275,11 +275,11 @@ public class ArticleservieImpl implements ArticleService{
             logger.info("redis缓存的返回值，key为："  + key + ",value：" + resultStr);
             if(resultStr == null){
                 //文章查询
-                resultStr = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.PERSONINSURANCE_CITYLEVELDEMAND_URL, "", null));
-                if(0 == resultStr.getInt("status") && resultStr.has("data")){
-                    String message = resultStr.getString("data");
-
-                }
+//                resultStr = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.PERSONINSURANCE_CITYLEVELDEMAND_URL, "", null));
+//                if(0 == resultStr.getInt("status") && resultStr.has("data")){
+//                    String message = resultStr.getString("data");
+//
+//                }
             }
         } catch (Exception e) {
             logger.error("获取数据出错:" + e.getMessage(), e);

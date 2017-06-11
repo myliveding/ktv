@@ -30,79 +30,26 @@ public class JoYoUtil {
     public static final String ORDER_CONFIRM = Constant.PHP_API_URL + "/order/payOrder";
 
     /**
-     * 注册绑定URL
+     * 公司信息
      */
-    public static final String PERSONSOCIAL_REGISTER_URL = Constant.PHP_API_URL + "/openapi/personsocial/personsocial/register/client_id/social10001";
-    /**
-     * 手机验证登录URL
-     */
-    public static final String PERSONSOCIAL_MOBILELOGIN_URL = Constant.PHP_API_URL + "/openapi/personsocial/personsocial/mobilelogin/client_id/social10001";
-    /**
-     * 验证手机号码或者用户名URL
-     */
-    public static final String PERSONSOCIAL_CHECKMOBILE_URL = Constant.PHP_API_URL + "/openapi/personsocial/personsocial/check/client_id/social10001";
-    /**
-     * 完善资料
-     */
-    public static final String PERSONSOCIAL_CHANGE_URL = Constant.PHP_API_URL + "/openapi/personsocial/personsocial/change/client_id/social10001";
-    /**
-     * 我的账号设置
-     */
-    public static final String PERSONSOCIAL_SAVE_URL = Constant.PHP_API_URL + "/openapi/personsocial/personsocial/save/client_id/social10001";
-    /**
-     * 登录URL
-     */
-    public static final String PERSONSOCIAL_LOGIN_URL = Constant.PHP_API_URL + "/openapi/personsocial/personsocial/login/client_id/social10001";
-    /**
-     * 修改密码URL
-     */
-    public static final String PERSONSOCIAL_CHANGEPASSWORD_URL = Constant.PHP_API_URL + "/openapi/personsocial/personsocial/changepassword/client_id/social10001";
-    /**
-     * 绑定手机号(员工登入)
-     */
-    public static final String PERSONSOCIAL_BINDMOBILE_URL = Constant.PHP_API_URL + "/openapi/personsocial/personsocial/bindmobile/client_id/social10001";
-    /**
-     * 重新绑定手机号 3.3
-     */
-    public static final String PERSONSOCIAL_REBINDMOBILE_URL = Constant.PHP_API_URL + "/openapi/personsocial/personsocial/editmobile/client_id/social10001";
-    /**
-     * 重新绑定手机号,原号码验证 3.3
-     */
-    public static final String PERSONSOCIAL_REBINDMOBILE_CHECK_URL = Constant.PHP_API_URL + "/openapi/personsocial/personsocial/vermobile/client_id/social10001";
-    /**
-     * 找回密码URL
-     */
-    public static final String PERSONSOCIAL_FORGETPASSWORD_URL = Constant.PHP_API_URL + "/openapi/personsocial/personsocial/forgetpassword/client_id/social10001";
-    /**
-     * 验证码发送URL
-     */
-    public static final String PERSONSOCIAL_REGISTERSEND_URL = Constant.PHP_API_URL + "/openapi/personsocial/personsocial/registersend/client_id/social10001";
-    /**
-     * 重新绑定手机号验证码发送URL 3.3
-     */
-    public static final String PERSONSOCIAL_REBINDMOBILESEND_URL = Constant.PHP_API_URL + "/openapi/personsocial/personsocial/sendcode/client_id/social10001";
-    /**
-     * 用户个人资料URL
-     */
-    public static final String PERSONSOCIAL_PERSONALINFORMATION_URL = Constant.PHP_API_URL + "/openapi/personsocial/personsocial/personalinformation/client_id/social10001";
-    /**
-     * 城市列表查询URL 3.0
-     */
-    public static final String PERSONINSURANCE_CITYDEMAND_URL = Constant.PHP_API_URL + "/openapi/personsocial/personinsurance/citydemand/client_id/social10001";
-    /**
-     * 城市列表查询URL 3.0
-     */
-    public static final String PERSONINSURANCE_CITYLEVELDEMAND_URL = Constant.PHP_API_URL + "/openapi/personsocial/personinsurance/cityleveldemand/client_id/social10001";
-    /**
-     * 城市列表查询URL 平级 3.51
-     */
-    public static final String PERSONINSURANCE_ALLCITY_URL = Constant.PHP_API_URL + "/openapi/personsocial/personcitydata/getallcitylist/client_id/social10001";
+    public static final String COMPANY_INFO = Constant.PHP_API_URL + "/api/get_company_info";
 
     /**
-     * 套餐URL 3.0
+     * 获取网站参数
      */
-    public static final String PERSONINSURANCE_PACKAGES_URL = Constant.PHP_API_URL + "/openapi/personsocial/personinsurance/packages/client_id/social10001";
+    public static final String WEB_PARAMS = Constant.PHP_API_URL + "/api/get_web_params";
+
     /**
+     * 获取轮播图
+     */
+    public static final String INDEX_BANNERS = Constant.PHP_API_URL + "/api/get_banners";
+
+    /**
+     *  获取盛世招聘
+     */
+    public static final String COMPANY_RECRUITS = Constant.PHP_API_URL + "/api/get_recruits";
+
+     /**
      * 查询当前的活动URL
      */
     public static final String PERSONRED_DEMANDACTIVITY_URL = Constant.PHP_API_URL + "/openapi/personsocial/personred/demandactivity/client_id/social10001";
@@ -114,10 +61,6 @@ public class JoYoUtil {
      * 站内信已读消息接口URL
      */
     public static final String STATIONLETTER_READ_URL = Constant.PHP_API_URL + "/openapi/personsocial/stationletter/read/client_id/social10001";
-    /**
-     * 抓取数据URL
-     */
-    public static final String DATACOUNT_CRAWL_URL = Constant.PHP_API_URL + "/openapi/personsocial/datacount/crawl/client_id/social10001";
     /**
      * 文章类别查询URL
      */
@@ -146,110 +89,6 @@ public class JoYoUtil {
      * 文章详情URL
      */
     public static final String ARTICLE_DETAIL_URL = Constant.PHP_API_URL + "/openapi/personsocial/article/detail/client_id/social10001";
-    /**
-     * 我的页面 查询
-     */
-    public static final String PERSONSOCIAL_MY_URL = Constant.PHP_API_URL + "/openapi/personsocial/personsocial/mine/client_id/social10001";
-    /**
-     * 获取该城市的基础信息
-     */
-    public static final String CITY_INFORMATION_URL = Constant.PHP_API_URL + "/openapi/personsocial/personinsurance/cityinformation/client_id/social10001";
-    /**
-     * 保存是否阅读退款和服务协议
-     */
-    public static final String SAVE_READ_AGREE_URL = Constant.PHP_API_URL + "/openapi/personsocial/personsocial/savereadagreement/client_id/social10001";
-    /**
-     * 短网址生成接口
-     */
-    public static final String SHORT_URL = Constant.PHP_API_URL + "/openapi/personsocial/personsocial/shorturl/client_id/social10001";
-    /**
-     * 短网址生成接口(新浪)
-     */
-    public static final String SINA_SHORT_URL = Constant.PHP_API_URL + "/openapi/personsocial/personsocial/SinaShortUrl/client_id/social10001";
-    /**
-     * 发送短信接口
-     */
-    public static final String SENDSMS_URL = Constant.PHP_API_URL + "/openapi/personsocial/personsocial/sendsms/client_id/social10001";
-    /**
-     * 发送短信接口（代金券）
-     */
-    public static final String SENDSMSV_URL = Constant.PHP_API_URL + "/openapi/personsocial/personsocial/sendvouchersms/client_id/social10001";
-    /**
-     * 我的邀请记录接口
-     */
-    public static final String INVITATIONRECORD_URL = Constant.PHP_API_URL + "/openapi/personsocial/personsocial/invitationrecord/client_id/social10001";
-    /**
-     * 通过手机查询用户信息接口
-     */
-    public static final String MEMBERBYMOBILE_URL = Constant.PHP_API_URL + "/openapi/personsocial/personsocial/memberbymobile/client_id/social10001";
-    /**
-     * 微信分享得代金卷获取手机查询
-     */
-    public static final String MOBILE_FIND_URL = Constant.PHP_API_URL + "/openapi/personsocial/personred/find/client_id/social10001";
-    /**
-     * 微信分享得代金卷获取手机添加
-     */
-    public static final String MOBILE_SAVE_URL = Constant.PHP_API_URL + "/openapi/personsocial/personred/save/client_id/social10001";
-    /**
-     * 通过邀请码查询用户信息
-     */
-    public static final String MEMBERBYCODE_URL = Constant.PHP_API_URL + "/openapi/personsocial/personsocial/memberbycode/client_id/social10001";
-    /**
-     * 通过邀请码查询用户信息
-     */
-    public static final String SEND_STATIONLETTER_URL = Constant.PHP_API_URL + "/openapi/personsocial/stationletter/send/client_id/social10001";
-    /**
-     * 查询无忧保城市电话和网址
-     */
-    public static final String PERSONINSURANCE_CITY_TEL_URL = Constant.PHP_API_URL + "/openapi/personsocial/personinsurance/citytelandurl/client_id/social10001";
-    /**
-     * 用户反馈功能
-     */
-    public static final String USER_FEEDBACK = Constant.PHP_API_URL + "/openapi/personsocial/personsocial/personalfeedback/client_id/social10001";
-    /**
-     * 社保计算器获取服务的城市 3.0 定位用
-     */
-    public static final String PERSONINSURANCE_GETCITY_URL = Constant.PHP_API_URL + "/openapi/personsocial/personinsurance/getcity/client_id/social10001";
-    /**
-     * 查询参保基数 3.0
-     */
-    public static final String INSUREDBASE = Constant.PHP_API_URL + "/openapi/personsocial/personcitydata/insuredbase/client_id/social10001";
-    /**
-     * 计算参保明细 3.0
-     */
-    public static final String INSUREDDETAIL = Constant.PHP_API_URL + "/openapi/personsocial/personcitydata/insureddetail/client_id/social10001";
-    /**
-     * 所有城市 3.0
-     */
-    public static final String ALLCITY = Constant.PHP_API_URL + "/openapi/personsocial/personcitydata/allcity/client_id/social10001";
-    /**
-     * 查询参保类型 3.0
-     */
-    public static final String CITY_SOCIAL_SET = Constant.PHP_API_URL + "/openapi/personsocial/personcitydata/getcitysocialset/client_id/social10001";
-    /**
-     * 查询参保基数范围 3.0
-     */
-    public static final String INSUREDBASE_RANGE = Constant.PHP_API_URL + "/openapi/personsocial/personcitydata/insuredbaserange/client_id/social10001";
-    /**
-     * 订单发送验证码 3.0
-     */
-    public static final String ORDER_SEND_CODE = Constant.PHP_API_URL + "/openapi/personsocial/personsocial/ordersendcode/client_id/social10001";
-    /**
-     * 订单验证码验证3.0
-     */
-    public static final String ORDER_SECURITY_CODE = Constant.PHP_API_URL + "/openapi/personsocial/personsocial/ordersecuritycode/client_id/social10001";
-    /**
-     * 参保明细
-     */
-    public static final String INSURANCEDETAIL = Constant.PHP_API_URL + "/openapi/personsocial/personcitydata/insurancedetail/client_id/social10001";
-    /**
-     * 获取参保材料接 3.4
-     */
-    public static final String PERSON_CITY_DATA = Constant.PHP_API_URL + "/openapi/personsocial/personcitydata/getpersoncitydata/client_id/social10001";
-    /**
-     * 首页banner统计点击率的接口 3.41
-     */
-    public static final String BANNER_CLICK_RATE = Constant.PHP_API_URL + "/openapi/personsocial/article/updateclicknum/client_id/social10001";
 
    /**
      *
@@ -261,8 +100,8 @@ public class JoYoUtil {
     public static String getInterface(String urlPath, String mystr, String[] arr) {
         StringBuffer sb = new StringBuffer();
         try {
-            String signature = SignUtil.getSignature(arr, urlPath, Constant.PHP_APP_SECRET);
-            mystr += "&signature=" + signature;
+//            String signature = SignUtil.getSignature(arr, urlPath, Constant.PHP_APP_SECRET);
+//            mystr += "&signature=" + signature;
             URL url = new URL(urlPath);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);
