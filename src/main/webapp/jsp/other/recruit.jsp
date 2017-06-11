@@ -17,12 +17,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>ktv</title>
-    <link rel="stylesheet" href="jsp/resources/css/main.css">
+    <link rel="stylesheet" href="<%=basePath%>/jsp/resources/css/main.css">
 </head>
 <body>  
     <div id="header">
          <a href="javascript:history.go(-1);">
-             <img src="jsp/resources/img/b3.png">
+             <img src="<%=basePath%>/jsp/resources/img/b3.png">
          </a>
          <h1 class="color-red">盛世招聘</h1>
      </div> 
@@ -44,36 +44,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </ul>
         </div>
     </div>
-   
-    <div class="footer">
-        <ul>
-            <li>
-                <a href="" class="footer-now red">
-                    <img src="jsp/resources/img/h1.png">
-                    <span>在线定包</span>
-                </a>
-            </li>
-            <li>
-                <a href="" class="red">
-                    <img src="jsp/resources/img/h2.png">
-                    <span>关于盛世</span>
-                </a>
-            </li>
-            <li>
-                <a href="" class="red">
-                    <img src="jsp/resources/img/h3.png">
-                    <span>积分商城</span>
-                </a>
-            </li>
-            <li>
-                <a href="../my/usercenter.jsp" class="red">
-                    <img src="jsp/resources/img/h4.png">
-                    <span>我的盛世</span>
-                </a>
-            </li>
-            <div class="clear"></div>
-        </ul>
-    </div>
+    <jsp:include page="/jsp/layouts/foot.jsp" flush="true"/>
 </body> 
-<script src="jsp/resources/js/rem.js"></script>
+<script src="<%=basePath%>/jsp/resources/js/rem.js"></script>
 </html>

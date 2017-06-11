@@ -263,36 +263,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <p>包间类型：大包厢B22</p>
             <a href="javascript:void(0);">下一步，选择套餐</a>
         </div>
-    </div> 
-    <div class="footer">
-        <ul>
-            <li>
-                <a href="" class="footer-now red">
-                    <img src="jsp/resources/img/h1.png">
-                    <span>在线定包</span>
-                </a>
-            </li>
-            <li>
-                <a href="../ktv/about.jsp" class="red">
-                    <img src="jsp/resources/img/h2.png">
-                    <span>关于盛世</span>
-                </a>
-            </li>
-            <li>
-                <a href="../my/integralmall.jsp" class="red">
-                    <img src="jsp/resources/img/h3.png">
-                    <span>积分商城</span>
-                </a>
-            </li>
-            <li>
-                <a href="../my/usercenter.jsp" class="red">
-                    <img src="jsp/resources/img/h4.png">
-                    <span>我的盛世</span>
-                </a>
-            </li>
-            <div class="clear"></div>
-        </ul>
     </div>
+    <jsp:include page="/jsp/layouts/foot.jsp" flush="true"/>
     <div id="bg"></div>
     <form class="notel">
         <h4>绑定手机</h4>

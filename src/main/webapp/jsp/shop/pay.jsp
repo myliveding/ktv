@@ -57,36 +57,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
              确认支付<span>￥138.00</span>
          </div>
     </div>
-   
-    <div class="footer">
-        <ul>
-            <li>
-                <a href="" class="footer-now red">
-                    <img src="jsp/resources/img/h1.png">
-                    <span>在线定包</span>
-                </a>
-            </li>
-            <li>
-                <a href="../ktv/about.jsp" class="red">
-                    <img src="jsp/resources/img/h2.png">
-                    <span>关于盛世</span>
-                </a>
-            </li>
-            <li>
-                <a href="../my/integralmall.jsp" class="red">
-                    <img src="jsp/resources/img/h3.png">
-                    <span>积分商城</span>
-                </a>
-            </li>
-            <li>
-                <a href="../my/usercenter.jsp" class="red">
-                    <img src="jsp/resources/img/h4.png">
-                    <span>我的盛世</span>
-                </a>
-            </li>
-            <div class="clear"></div>
-        </ul>
-    </div>
+
+    <jsp:include page="/jsp/layouts/foot.jsp" flush="true"/>
 </body> 
 <script src='jsp/resources/js/rem.js'></script>
 <script src='jsp/resources/js/jquery.min.js'></script>

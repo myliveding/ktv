@@ -18,9 +18,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
     <title>ktv</title> 
-    <link rel="stylesheet" href="jsp/resources/css/reset.css">
-    <link rel="stylesheet" href="jsp/resources/css/pullToRefresh.css">
-    <link rel="stylesheet" href="jsp/resources/css/main.css">
+    <link rel="stylesheet" href="<%=basePath%>jsp/resources/css/reset.css">
+    <link rel="stylesheet" href="<%=basePath%>jsp/resources/css/pullToRefresh.css">
+    <link rel="stylesheet" href="<%=basePath%>jsp/resources/css/main.css">
 </head>
 <body>  
     <div class="main" style="padding-top: 0;">
@@ -30,7 +30,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <li>
                     <a href="orderselect.html">
                         <div class="nav-item nav-item1">
-                            <img src="jsp/resources/img/s1.png">
+                            <img src="<%=basePath%>jsp/resources/img/s1.png">
                         </div>
                         <span>在线预定</span>
                     </a>
@@ -38,7 +38,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <li>
                     <a href="shopnowing.html">
                         <div class="nav-item nav-item2">
-                            <img src="jsp/resources/img/s2.png">
+                            <img src="<%=basePath%>jsp/resources/img/s2.png">
                         </div>
                         <span>在线超市</span>
                     </a>
@@ -46,7 +46,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <li>
                     <a href="exchangescore.html">
                         <div class="nav-item nav-item3">
-                            <img src="jsp/resources/img/s3.png">
+                            <img src="<%=basePath%>jsp/resources/img/s3.png">
                         </div>
                         <span>积分兑换</span>
                     </a>
@@ -54,7 +54,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <li>
                     <a href="${pageContext.request.contextPath}/other/getCompanyRecruits.do">
                         <div class="nav-item nav-item4">
-                            <img src="jsp/resources/img/s4.png">
+                            <img src="<%=basePath%>jsp/resources/img/s4.png">
                         </div>
                         <span>盛世招聘</span>
                     </a>
@@ -62,7 +62,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <li>
                     <a href="discount.html">
                         <div class="nav-item nav-item5">
-                            <img src="jsp/resources/img/s5.png">
+                            <img src="<%=basePath%>jsp/resources/img/s5.png">
                         </div>
                         <span>优惠活动</span>
                     </a>
@@ -70,7 +70,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <li>
                     <a href="">
                         <div class="nav-item nav-item6">
-                            <img src="jsp/resources/img/s6.png">
+                            <img src="<%=basePath%>jsp/resources/img/s6.png">
                         </div>
                         <span>盛世会员</span>
                     </a>
@@ -78,7 +78,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <li>
                     <a href="select.html">
                         <div class="nav-item nav-item7">
-                            <img src="jsp/resources/img/s7.png">
+                            <img src="<%=basePath%>jsp/resources/img/s7.png">
                         </div>
                         <span>电话</span>
                     </a>
@@ -86,7 +86,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <li>
                     <a href="${pageContext.request.contextPath}/other/getCompanyInfo.do">
                         <div class="nav-item nav-item8">
-                            <img src="jsp/resources/img/s8.png">
+                            <img src="<%=basePath%>jsp/resources/img/s8.png">
                         </div>
                         <span>关于盛世</span>
                     </a>
@@ -100,7 +100,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <c:forEach var = "data" items ="${storeList}">
                     <li>
                         <a href="roominfo.html">
-                            <img src="jsp/resources/img/1.png">
+                            <img src="<%=basePath%>jsp/resources/img/1.png">
                             <div class="shop-info">
                                 <h3>${data.name}</h3>
                                 <p>
@@ -121,41 +121,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
         </div>
     </div>
-   
-    <div class="footer">
-        <ul>
-            <li>
-                <a href="" class="footer-now">
-                    <img src="jsp/resources/img/h1.png">
-                    <span>在线定包</span>
-                </a>
-            </li>
-            <li>
-                <a href="">
-                    <img src="jsp/resources/img/h2.png">
-                    <span>关于盛世</span>
-                </a>
-            </li>
-            <li>
-                <a href="integralmall.html">
-                    <img src="jsp/resources/img/h3.png">
-                    <span>积分商城</span>
-                </a>
-            </li>
-            <li>
-                <a href="usercenter.html">
-                    <img src="jsp/resources/img/h4.png">
-                    <span>我的盛世</span>
-                </a>
-            </li>
-            <div class="clear"></div>
-        </ul>
-    </div>
+
+    <jsp:include page="/jsp/layouts/foot.jsp" flush="true"/>
 </body> 
-<script src='jsp/resources/js/rem.js'></script>
-<script src='jsp/resources/js/jquery.min.js'></script>
-<script src='jsp/resources/js/iscroll.js'></script>
-<script src='jsp/resources/js/pullToRefresh.js'></script>
+<script src='<%=basePath%>jsp/resources/js/rem.js'></script>
+<script src='<%=basePath%>jsp/resources/js/jquery.min.js'></script>
+<script src='<%=basePath%>jsp/resources/js/iscroll.js'></script>
+<script src='<%=basePath%>jsp/resources/js/pullToRefresh.js'></script>
 <script>
    refresher.init({
         id:"wrapper",//<------------------------------------------------------------------------------------┐

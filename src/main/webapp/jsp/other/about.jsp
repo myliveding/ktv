@@ -17,19 +17,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>ktv</title>
-    <link rel="stylesheet" href="jsp/resources/css/main.css">
+    <link rel="stylesheet" href="<%=basePath%>/jsp/resources/css/main.css">
 </head>
 <body id="about">  
     <div id="header">
          <a href="javascript:history.go(-1);">
-             <img src="jsp/resources/img/b3.png">
+             <img src="<%=basePath%>/jsp/resources/img/b3.png">
          </a>
          <h1 class="color-red">关于盛世</h1>
      </div> 
     <div class="main" >
           <div class="about">
               <div class="logo">
-                  <img src="resources/img/1.png">
+                  <img src="<%=basePath%>/jsp/resources/img/1.png">
               </div> 
                <div class="about-item">
                    <h1>盛世欢唱</h1>
@@ -42,55 +42,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                    <label class="about-item-box3"></label>
                </div>
                <div class="about-info">
-                   <img src="jsp/resources/img/5.png">
-                   <p> 福建ktv介绍介绍介绍福建ktv介绍福建ktv介 绍介绍介绍福建ktv介绍介绍介绍福建ktv介绍介 绍介绍福建ktv介</p>
-                   <h1>盛世大家庭</h1>
-                   <ul>
-                       <li>
-                           <h4>(1)西门店</h4>
-                           <p> 福建ktv介绍介绍介绍福建ktv介绍福建ktv介 绍介绍介绍福建ktv介绍介绍介绍福建ktv介绍介 绍介绍福建ktv介</p>
-                           <img src="jsp/resources/img/6.png">
-                       </li>
-                       <li>
-                           <h4>(1)西门店</h4>
-                           <p> 福建ktv介绍介绍介绍福建ktv介绍福建ktv介 绍介绍介绍福建ktv介绍介绍介绍福建ktv介绍介 绍介绍福建ktv介</p>
-                           <img src="jsp/resources/img/6.png">
-                       </li>
-                   </ul>
-                   
+                   ${company.company_info}
                </div>
           </div>
     </div>
    
-    <div class="footer">
-        <ul>
-            <li>
-                <a href="jsp/index.jsp" class="footer-now red">
-                    <img src="jsp/resources/img/h1.png">
-                    <span>在线定包</span>
-                </a>
-            </li>
-            <li>
-                <a href="" class="red">
-                    <img src="jsp/resources/img/h2.png">
-                    <span>关于盛世</span>
-                </a>
-            </li>
-            <li>
-                <a href="" class="red">
-                    <img src="jsp/resources/img/h3.png">
-                    <span>积分商城</span>
-                </a>
-            </li>
-            <li>
-                <a href="../my/usercenter.jsp" class="red">
-                    <img src="jsp/resources/img/h4.png">
-                    <span>我的盛世</span>
-                </a>
-            </li>
-            <div class="clear"></div>
-        </ul>
-    </div>
+    <jsp:include page="/jsp/layouts/foot.jsp" flush="true"/>
 </body> 
-<script src='jsp/resources/js/rem.js'></script>
+<script src="<%=basePath%>/jsp/resources/js/rem.js"></script>
 </html>

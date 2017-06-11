@@ -89,37 +89,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    		<div class="clear"></div>
 	    	</ul>
 	    </div>
-     </div> 
-    
-    <div class="footer">
-        <ul>
-            <li>
-                <a href="" class="footer-now red">
-                    <img src="jsp/resources/img/h1.png">
-                    <span>在线定包</span>
-                </a>
-            </li>
-            <li>
-                <a href="" class="red">
-                    <img src="jsp/resources/img/h2.png">
-                    <span>关于盛世</span>
-                </a>
-            </li>
-            <li>
-                <a href="" class="red">
-                    <img src="jsp/resources/img/h3.png">
-                    <span>积分商城</span>
-                </a>
-            </li>
-            <li>
-                <a href="" class="red">
-                    <img src="jsp/resources/img/h4.png">
-                    <span>我的盛世</span>
-                </a>
-            </li>
-            <div class="clear"></div>
-        </ul>
-    </div>
+     </div>
+
+	 <jsp:include page="/jsp/layouts/foot.jsp" flush="true"/>
     <div id="trolley">
     	<a href="shoppingtrolley.jsp">
 			<span>

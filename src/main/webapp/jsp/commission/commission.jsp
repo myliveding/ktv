@@ -50,36 +50,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <button class="withdrawals-submit" type="submit">提&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;交</button>
          </form>
     </div>
-   
-    <div class="footer">
-        <ul>
-            <li>
-                <a href="jsp/index.jsp" class="footer-now red">
-                    <img src="jsp/resources/img/h1.png">
-                    <span>在线定包</span>
-                </a>
-            </li>
-            <li>
-                <a href="" class="red">
-                    <img src="jsp/resources/img/h2.png">
-                    <span>关于盛世</span>
-                </a>
-            </li>
-            <li>
-                <a href="" class="red">
-                    <img src="jsp/resources/img/h3.png">
-                    <span>积分商城</span>
-                </a>
-            </li>
-            <li>
-                <a href="../my/usercenter.jsp" class="red">
-                    <img src="jsp/resources/img/h4.png">
-                    <span>我的盛世</span>
-                </a>
-            </li>
-            <div class="clear"></div>
-        </ul>
-    </div>
+    <jsp:include page="/jsp/layouts/foot.jsp" flush="true"/>
 </body> 
 <script src='jsp/resources/js/jquery.min.js'></script>
 <script src='jsp/resources/js/rem.js'></script>
