@@ -41,51 +41,35 @@ public class WechatPayController {
 	
 	@RequestMapping(value="/index",method=RequestMethod.GET)
 	public  String pay(HttpServletRequest req,Model model) {
-		String openid=(String) req.getSession().getAttribute("openid");
-		String userId=(String) req.getSession().getAttribute("userId");
-		logger.info("openid="+openid);
-		String orderNo =req.getParameter("orderNo");
-		String leftAmtStr=req.getParameter("leftAmt");
-        logger.info(orderNo+"微信支付传入余额:"+leftAmtStr);
-        double leftAmtD=0.0;
-        if(DataUtil.isNotEmpty(leftAmtStr)){
-            leftAmtD=Double.parseDouble(leftAmtStr);
-			JSONObject balance = JSONObject.fromObject(JoYoUtil.sendGet("", "orderNo=" +orderNo));//取参保人可用余额
-            double leftAmt=balance.getJSONObject("data").getDouble("leftAmt");
-            logger.info("微信支付获取余额:"+leftAmt);
-            if(leftAmtD>leftAmt){
-                req.setAttribute("error", "余额信息有误");
-                return "error：余额信息有误";
-            }
-        }
-		
+		String openid = (String) req.getSession().getAttribute("openid");
+		String memberId = (String) req.getSession().getAttribute("memberId");
+		logger.info("支付调用时获取的openid为：" + openid);
+		String orderNo = req.getParameter("orderNo");
+
 		if (StringUtils.isEmpty(orderNo)) {
-				req.setAttribute("error", "订单号不能为空");
-				return "error";
+            req.setAttribute("error", "订单号不能为空");
+            return "error";
 		}
-		if (StringUtils.isEmpty(userId)) {
+		if (StringUtils.isEmpty(memberId)) {
 			req.setAttribute("error", "获取用户出错了");
 			return "error";
 		}
 		JSONObject resultStr = JSONObject.fromObject("{\"status\":1,\"msg\":\"出错了\"}");
-		String mystr="policyHolderId="+userId+"&orderNo="+orderNo;
+		String mystr="memberId=" + memberId + "&orderNo=" + orderNo;
         try {
             resultStr = JSONObject.fromObject(JoYoUtil.sendGet("", mystr));
         } catch (Exception e) {
             logger.error("订单明细查询接口出错:" + e.getMessage(), e);
         }
-		String productName = "无忧保订单-"+orderNo;
-		String totalFee   ="0";
+
+		String productName = "盛世订单-"+orderNo;
+		String totalFee = "0";
 		model.addAttribute("orderId", orderNo);
-		if(0 == resultStr.getInt("status")){
-			JSONObject message = JSONObject.fromObject(resultStr.getString("data"));
-//			String order_money = message.getString("true_money");//获取实付金额
-//			model.addAttribute("order_money", order_money);
-//			logger.info("order_money（元）:"+order_money);
+		if(0 == resultStr.getInt("error_code")){
+			JSONObject message = JSONObject.fromObject(resultStr.getString("result"));
 			double orderAmt = message.getDouble("orderAmt");
-//            double payBalanceAmt = message.getDouble("payBalanceAmt");
-            String payAmt=new java.text.DecimalFormat("#0.00").format(orderAmt-leftAmtD);
-            logger.info("ordermoney（元）:"+payAmt);
+            String payAmt = new java.text.DecimalFormat("#0.00").format(orderAmt);
+            logger.info("ordermoney（元）:" + payAmt);
             String orderStatus = message.getString("orderStatus");
             if(!"10".equals(orderStatus)){
                 req.setAttribute("error", "请勿重复支付");
@@ -99,7 +83,7 @@ public class WechatPayController {
 		        int length = payAmt.length();    
 		        Long amLong = 0l;    
 		        if(index == -1){    
-		            amLong = Long.valueOf(payAmt+"00");    
+		            amLong = Long.valueOf(payAmt + "00");
 		        }else if(length - index >= 3){    
 		            amLong = Long.valueOf((payAmt.substring(0, index+3)).replace(".", ""));    
 		        }else if(length - index == 2){    
@@ -107,11 +91,11 @@ public class WechatPayController {
 		        }else{    
 		            amLong = Long.valueOf((payAmt.substring(0, index+1)).replace(".", "")+"00");    
 		        } 
-		        payAmt=amLong+"";
+		        payAmt = amLong + "";
 //                payAmt="1";
-				logger.info("order_money（分）:"+payAmt);
+				logger.info("order_money（分）:" + payAmt);
 			}
-			totalFee=payAmt;
+			totalFee = payAmt;
 		}else {
 			req.setAttribute("error", "获取订单详情出错了");
 			return "error";
@@ -147,25 +131,27 @@ public class WechatPayController {
 		}
 	return "wechat/pay";
 	}
-  public  String getSign(Map<String,String> map){
-	        ArrayList<String> list = new ArrayList<String>();
-	        for(Map.Entry<String,String> entry:map.entrySet()){
-	            if(entry.getValue()!=""){
-	                list.add(entry.getKey() + "=" + entry.getValue() + "&");
-	            }
-	        }
-	        int size = list.size();
-	        String [] arrayToSort = list.toArray(new String[size]);
-	        Arrays.sort(arrayToSort, String.CASE_INSENSITIVE_ORDER);
-	        StringBuilder sb = new StringBuilder();
-	        for(int i = 0; i < size; i ++) {
-	            sb.append(arrayToSort[i]);
-	        }
-	        String result = sb.toString();
-	        result += "key=" + Configure.key;
-	        result = MD5.MD5Encode(result).toUpperCase();
-	        return result;
-	    }
+
+    public  String getSign(Map<String,String> map){
+        ArrayList<String> list = new ArrayList<String>();
+        for(Map.Entry<String,String> entry:map.entrySet()){
+            if(entry.getValue()!=""){
+                list.add(entry.getKey() + "=" + entry.getValue() + "&");
+            }
+        }
+        int size = list.size();
+        String [] arrayToSort = list.toArray(new String[size]);
+        Arrays.sort(arrayToSort, String.CASE_INSENSITIVE_ORDER);
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < size; i ++) {
+            sb.append(arrayToSort[i]);
+        }
+        String result = sb.toString();
+        result += "key=" + Configure.key;
+        result = MD5.MD5Encode(result).toUpperCase();
+        return result;
+    }
+
 	/**
 	 * 获取ip
 	 * @param request
