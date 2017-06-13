@@ -136,7 +136,7 @@ public class CoreServiceImpl {
 				tbWechatReciveRecord.setOpenid(fromUserName);
 				tbWechatReciveRecord.setContext(requestMap.get("PicUrl"));
 				tbWechatReciveRecord.setTypes(msgType);
-				tbWechatReciveRecord.setCreateTime(DateUtil.getNowIntTime());
+				tbWechatReciveRecord.setCreateTime(DateUtil.getNowTime());
 				tBWechatReciveRecordService.insertSelective(tbWechatReciveRecord);
 				List<TBWechatMessage> list=tbWechatMessageService.getMessageListByType("imageRecive");
 				if (list.size()>0) {

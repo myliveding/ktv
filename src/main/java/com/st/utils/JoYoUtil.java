@@ -48,6 +48,24 @@ public class JoYoUtil {
      *  获取盛世招聘
      */
     public static final String COMPANY_RECRUITS = Constant.PHP_API_URL + "/api/get_recruits";
+    /**
+     * 获取优惠活动列表
+     */
+    public static final String DISCOUNT_LIST = Constant.PHP_API_URL + "/api/get_discounts";
+
+    /**
+     * 获取优惠活动详情
+     */
+    public static final String DISCOUNT_DETAIL = Constant.PHP_API_URL + "/api/get_discount_detail";
+
+
+
+
+
+
+
+
+
 
      /**
      * 查询当前的活动URL

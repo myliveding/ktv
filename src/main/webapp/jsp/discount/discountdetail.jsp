@@ -1,6 +1,7 @@
 <%@ page language="java" import="com.st.utils.Constant" pageEncoding="utf-8"%>
 <%@ taglib prefix="fn" uri="/WEB-INF/tld/fn.tld"%>
 <%@ taglib prefix="c" uri="/WEB-INF/tld/c.tld"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -17,27 +18,30 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>ktv</title>
-    <link rel="stylesheet" href="jsp/resources/css/main.css">
+    <link rel="stylesheet" href="<%=basePath%>jsp/resources/css/main.css">
 </head>
 <body>  
     <div id="header">
          <a href="javascript:history.go(-1);">
-             <img src="jsp/resources/img/b3.png">
+             <img src="<%=basePath%>jsp/resources/img/b3.png">
          </a>
          <h1 class="color-red">优惠活动/一网打尽</h1>
      </div> 
     <div class="main" >
          <div class="discount-act">
-             <div class="time">发布时间：2017年4月9日</div>
-             <h1>盛世欢唱邵武店劳动节活动</h1>
-             <img src="jsp/resources/img/1.png" >
-             <h2>劳动节当天全全场消费300送300</h2>
+             <div class="time">发布时间：${time}
+                 <%--<fmt:formatDate type="date" dateStyle="long" value="${time}" /></p>--%>
+                 <%--<fmt:formatDate value="${time}" pattern="yyyy-MM-dd HH:mm:ss"/>--%>
+             </div>
+             <h1>${detail.title}</h1>
+             <img src=${detail.image_url} >
+             <h2>${detail.summary}</h2>
              <h1>活动内容介绍</h1>
-             <p>劳动节当天全全场消费300送300劳动 节当天全全场消费30</p>
+             <p>${detail.content}</p>
          </div>
     </div>
 
     <jsp:include page="/jsp/layouts/foot.jsp" flush="true"/>
 </body> 
-<script src='jsp/resources/js/rem.js'></script>
+<script src='<%=basePath%>jsp/resources/js/rem.js'></script>
 </html>
