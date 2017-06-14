@@ -36,7 +36,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </a>
                 </li>
                 <li>
-                    <a href="shopnowing.html">
+                    <a href="${pageContext.request.contextPath}/shop/getShopping.do">
                         <div class="nav-item nav-item2">
                             <img src="jsp/resources/img/s2.png">
                         </div>

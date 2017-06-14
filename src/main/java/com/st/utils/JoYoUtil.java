@@ -58,12 +58,30 @@ public class JoYoUtil {
      */
     public static final String DISCOUNT_DETAIL = Constant.PHP_API_URL + "/api/get_discount_detail";
 
+    /**
+     * 获取超市商品分类
+     */
+    public static final String SHOP_GOODS_CATE = Constant.PHP_API_URL + "/api/get_goods_cate";
 
+    /**
+     * 获取某类下超市商品
+     */
+    public static final String SHOP_GOODS = Constant.PHP_API_URL + "/api/get_goods";
 
+    /**
+     * 获取用户站内信
+     */
+    public static final String USER_MESSAGES = Constant.PHP_API_URL + "/api/get_messages";
 
+    /**
+     * 所有门店
+     */
+    public static final String STORES = Constant.PHP_API_URL + "/api/get_shops";
 
-
-
+    /**
+     * 门店详情
+     */
+    public static final String STORE_DETAIL = Constant.PHP_API_URL + "/api/get_shop";
 
 
 

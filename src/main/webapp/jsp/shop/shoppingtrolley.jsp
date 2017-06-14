@@ -17,14 +17,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>ktv</title>
-    <link rel="stylesheet" href="jsp/resources/css/mui.min.css">
-    <link rel="stylesheet" href="jsp/resources/css/app.css">
-    <link rel="stylesheet" href="jsp/resources/css/main.css">
+    <link rel="stylesheet" href="<%=basePath%>jsp/resources/css/mui.min.css">
+    <link rel="stylesheet" href="<%=basePath%>jsp/resources/css/app.css">
+    <link rel="stylesheet" href="<%=basePath%>jsp/resources/css/main.css">
 </head>
 <body > 
      <div id="header">
          <a href="javascript:history.go(-1);">
-             <img src="jsp/resources/img/b3.png">
+             <img src="<%=basePath%>jsp/resources/img/b3.png">
          </a>
          <h1 class="color-red">盛世在线超市-购物车</h1>
      </div> 
@@ -40,7 +40,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <a class="mui-btn mui-btn-red">删除</a>
                 </div>
                 <div class="mui-slider-handle">
-                   <img src="jsp/resources/img/2.png">
+                   <img src="<%=basePath%>jsp/resources/img/2.png">
                    <div class="order-num">
                         <div class="order-num-info">
                             <em>+</em>
@@ -51,7 +51,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         </div>
                         <p>
                             <span>雪津啤酒散装1支装1支装1支装1支装</span>
-                            <img src="jsp/resources/img/b4.png">
+                            <img src="<%=basePath%>jsp/resources/img/b4.png">
                             <div class="clear"></div>
                         </p>
                    </div>
@@ -63,7 +63,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <a class="mui-btn mui-btn-red">删除</a>
                 </div>
                 <div class="mui-slider-handle">
-                   <img src="jsp/resources/img/2.png">
+                   <img src="<%=basePath%>jsp/resources/img/2.png">
                    <div class="order-num">
                         <div class="order-num-info">
                             <em>+</em>
@@ -74,7 +74,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         </div>
                         <p>
                             <span>雪津啤酒散装1支装</span>
-                            <img src="jsp/resources/img/b4.png">
+                            <img src="<%=basePath%>jsp/resources/img/b4.png">
                             <div class="clear"></div>
                         </p>
                    </div>
@@ -87,9 +87,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
      <jsp:include page="/jsp/layouts/foot.jsp" flush="true"/>
 </body> 
-<script src='jsp/resources/js/jquery.min.js'></script>
-<script src='jsp/resources/js/mui.min.js'></script>
-<script src='jsp/resources/js/rem.js'></script>
+<script src='<%=basePath%>jsp/resources/js/jquery.min.js'></script>
+<script src='<%=basePath%>jsp/resources/js/mui.min.js'></script>
+<script src='<%=basePath%>jsp/resources/js/rem.js'></script>
 <script>
 $(function(){
 

@@ -51,25 +51,31 @@ public class MemberController {
     @RequestMapping("/gotoIndexDomain")
     public String getWeixintoIndex(HttpServletRequest request) {
 
-        List<Store> list = new ArrayList<Store>();
-        for(int i =1 ; i<5 ; i++){
-            Store store = new Store();
-            store.setName("test");
-            store.setBigNum(3);
-            store.setDistance(BigDecimal.TEN);
-            store.setMediumNum(7);
-            store.setSmallNum(3);
-            store.setVipNum(8);
-            list.add(store);
+
+
+//        List<Store> list = new ArrayList<Store>();
+//        for(int i =1 ; i<5 ; i++){
+//            Store store = new Store();
+//            store.setName("test");
+//            store.setBigNum(3);
+//            store.setDistance(BigDecimal.TEN);
+//            store.setMediumNum(7);
+//            store.setSmallNum(3);
+//            store.setVipNum(8);
+//            list.add(store);
+//        }
+        String[] arr = new String[]{};
+        String mystr = "";
+        JSONObject storeList = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.STORES, mystr, arr));
+        if(storeList.getInt("error_code") == 0){
+            request.setAttribute("storeList",storeList.get("result"));
         }
-        request.setAttribute("storeList",list);
 
         //获取轮播图
-        String[] arr = new String[]{"type" + 1};
-        String mystr = "type=" + 1;
-        JSONObject result = JSONObject.fromObject("{\"status\":1,\"msg\":\"出错了\"}");
+        String[] arr1 = new String[]{"type" + 1};
+        String mystr1 = "type=" + 1;
         try {
-            result = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.INDEX_BANNERS, mystr, arr));
+            JSONObject result = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.INDEX_BANNERS, mystr1, arr1));
             if(result.getInt("error_code") == 0){
                 request.setAttribute("recruits",result.get("result"));
             }
@@ -92,7 +98,7 @@ public class MemberController {
         String str = httpServletRequest.getQueryString();
         if (DataUtil.isNotEmpty(str)){
         }
-        return "redirect:"+ Constant.URL + "index";
+        return "redirect:"+ Constant.URL + "/member/gotoIndexDomain.do";
     }
 
     /**
@@ -128,11 +134,7 @@ public class MemberController {
         String str = httpServletRequest.getQueryString();
         if (DataUtil.isNotEmpty(str)){
         }
-        //去获取数据库集合并返回给页面  超市
-//        request.setAttribute("storeList",list);
-//        request.setAttribute("storeList",list);
-//        request.setAttribute("storeList",list);
-        return "redirect:"+ Constant.URL + "shop/shopnowing";
+        return "redirect:"+ Constant.URL + "/shop/getShopping.do";
     }
 
     /**
@@ -148,7 +150,7 @@ public class MemberController {
         String str = httpServletRequest.getQueryString();
         if (DataUtil.isNotEmpty(str)){
         }
-        return "redirect:"+ Constant.URL + "discount/discount";
+        return "redirect:"+ Constant.URL + "/discount/getDiscountList.do";
     }
 
     /**
@@ -202,7 +204,7 @@ public class MemberController {
         }else{
             request.setAttribute("error", "请在微信中访问");
         }
-        return "redirect:"+ Constant.URL + "my/usercenter";
+        return "my/usercenter";
     }
 
     /**
@@ -239,7 +241,7 @@ public class MemberController {
      * @return object
      */
     @RequestMapping("/gotoUserSet")
-    public @ResponseBody String gotoUserSet(HttpServletRequest request, HttpServletResponse response) {
+    public String gotoUserSet(HttpServletRequest request, HttpServletResponse response) {
 
         HttpSession session = ContextHolderUtils.getSession();
         Object openidObj =  session.getAttribute("openid");
@@ -251,7 +253,38 @@ public class MemberController {
         }else{
             request.setAttribute("error", "请在微信中访问");
         }
-        return "redirect:my/edit";
+        return "my/edit";
+    }
+
+    /**
+     * 进入我的站内信
+     * @param request
+     */
+    @RequestMapping("/gotoMyMessages")
+    public String gotoMyMessages(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = ContextHolderUtils.getSession();
+        Object openidObj =  session.getAttribute("openid");
+        Object appidObj =  session.getAttribute("appid");
+
+        if ( !"".equals(openidObj) && openidObj != null && !"".equals(appidObj) && appidObj != null) {
+            WechatMember member = memberService.getObjectByOpenid(openidObj.toString());
+            String[] arr = new String[]{"member_id" + member.getId()};
+            String mystr = "member_id=" + member.getId();
+            JSONObject result = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.USER_MESSAGES, mystr, arr));
+            if (0 == result.getInt("error_code")) {
+                request.setAttribute("msgs",result.get("result"));
+            }
+        }else{
+            request.setAttribute("error", "请在微信中访问");
+        }
+
+//        String[] arr = new String[]{"member_id" + 1};
+//        String mystr = "member_id=" + 1;
+//        JSONObject result = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.USER_MESSAGES, mystr, arr));
+//        if (0 == result.getInt("error_code")) {
+//            request.setAttribute("msgs",result.get("result"));
+//        }
+        return "my/message";
     }
 
     /**

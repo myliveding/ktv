@@ -30,7 +30,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          <div class="shop-detail">
              <h2>小包套餐（邵武区）</h2>
              <p class="gray" >小包厢(5-10人)</p> 
-             <p class="gray">今天<i>(01:00)</i>&nbsp;&nbsp;&nbsp;<i>21:00</i>开唱-<i>次日01:00</i>结束，唱<i>4</i>小时</p> 
+             <p class="gray">今天<i>(01:00)</i>&nbsp;&nbsp;&nbsp;<i>21:00</i>开唱-<i>次日01:00</i>结束，唱<i>4</i>小时</p>
              <p class="gray">小包厢(5-10人)</p> 
              <p class="gray"><i>不足7小时按照7小时计算</i></p> 
          </div>

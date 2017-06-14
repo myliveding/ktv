@@ -17,7 +17,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>ktv</title>   
-    <link rel="stylesheet" href="jsp/resources/css/main.css">
+    <link rel="stylesheet" href="<%=basePath%>jsp/resources/css/main.css">
 </head>
 <body>  
     <!-- <div id="header" style="background: #fbd1c1;">
@@ -28,19 +28,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      </div>  -->
     <div class="main" style="padding-top: 0;">
         <div class="orderselectimg">
-            <img src="jsp/resources/img/5.png" >
+            <img src="<%=basePath%>jsp/resources/img/5.png" >
             <a class="backlast" href="javascript:history.go(-1)"> </a>
-            <h1>盛世欢唱邵武燕林店</h1>
+            <h1>${storeDetail.name}</h1>
             <div class="orderaddress">
-                <h2>福建省南平邵武市燕林广场法院旁</h2>
+                <h2>${storeDetail.address}</h2>
                 <a href="tel:13338888888" class="tel">
-                    <img src="jsp/resources/img/tel.png" >
+                    ${storeDetail.phone}<img src="<%=basePath%>jsp/resources/img/tel.png" >
                 </a>
+                ${storeDetail.data_ur}
             </div>
             <div class="orderaddress">
-                <h2>福建省南平邵武市燕林广场法院旁</h2>
+                <h2>${storeDetail.address}</h2>
                 <a href="" class="navigation">
-                    <img src="jsp/resources/img/go.png">
+                    <img src="<%=basePath%>jsp/resources/img/go.png">
                     <span>导航到这里</span>
                 </a>
             </div>
@@ -84,7 +85,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <span>小包</span>
                             <span>8-10人</span> 
                         </div>
-                        <a href="../room/roominfo.jsp">
+                        <a href="roominfo.jsp">
                             <i>查看包厢 </i>
                             <i>环境照片</i>
                             <em></em>
@@ -96,7 +97,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <span>小包</span>
                             <span>8-10人</span> 
                         </div>
-                        <a href="../room/roominfo.jsp">
+                        <a href="roominfo.jsp">
                             <i>查看包厢 </i>
                             <i>环境照片</i>
                             <em></em>
@@ -108,7 +109,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <span>小包</span>
                             <span>8-10人</span> 
                         </div>
-                        <a href="../room/roominfo.jsp">
+                        <a href="roominfo.jsp">
                             <i>查看包厢 </i>
                             <i>环境照片</i>
                             <em></em>
@@ -120,7 +121,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <span>小包</span>
                             <span>8-10人</span> 
                         </div>
-                        <a href="../room/roominfo.jsp">
+                        <a href="roominfo.jsp">
                             <i>查看包厢 </i>
                             <i>环境照片</i>
                             <em></em>
@@ -132,7 +133,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <span>小包</span>
                             <span>8-10人</span> 
                         </div>
-                        <a href="../room/roominfo.jsp">
+                        <a href="roominfo.jsp">
                             <i>查看包厢 </i>
                             <i>环境照片</i>
                             <em></em>
@@ -144,7 +145,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <span>小包</span>
                             <span>8-10人</span> 
                         </div>
-                        <a href="../room/roominfo.jsp">
+                        <a href="roominfo.jsp">
                             <i>查看包厢 </i>
                             <i>环境照片</i>
                             <em></em>
@@ -156,7 +157,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <span>小包</span>
                             <span>8-10人</span> 
                         </div>
-                        <a href="../room/roominfo.jsp">
+                        <a href="roominfo.jsp">
                             <i>查看包厢 </i>
                             <i>环境照片</i>
                             <em></em>
@@ -168,7 +169,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <span>小包</span>
                             <span>8-10人</span> 
                         </div>
-                        <a href="../room/roominfo.jsp">
+                        <a href="roominfo.jsp">
                             <i>查看包厢 </i>
                             <i>环境照片</i>
                             <em></em>
@@ -180,7 +181,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <span>小包</span>
                             <span>8-10人</span> 
                         </div>
-                        <a href="../room/roominfo.jsp">
+                        <a href="roominfo.jsp">
                             <i>查看包厢 </i>
                             <i>环境照片</i>
                             <em></em>
@@ -192,7 +193,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <span>小包</span>
                             <span>8-10人</span> 
                         </div>
-                        <a href="../room/roominfo.jsp">
+                        <a href="roominfo.jsp">
                             <i>查看包厢 </i>
                             <i>环境照片</i>
                             <em></em>
@@ -204,7 +205,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <span>小包</span>
                             <span>8-10人</span> 
                         </div>
-                        <a href="../room/roominfo.jsp">
+                        <a href="roominfo.jsp">
                             <i>查看包厢 </i>
                             <i>环境照片</i>
                             <em></em>
@@ -216,7 +217,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <span>小包</span>
                             <span>8-10人</span> 
                         </div>
-                        <a href="../room/roominfo.jsp">
+                        <a href="roominfo.jsp">
                             <i>查看包厢 </i>
                             <i>环境照片</i>
                             <em></em>
@@ -227,7 +228,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </div>
         </div>
         <div class="order-hour">
-            <h3>今天(01-18)<i>23:00-次日01:00</i>(1.5小时)</h3>
+            <h3>今天(01-18)<i>19:00-次日02:00</i>(7小时)</h3>
             <h4>欢唱时间不足7小时，按7小时计算</h4>
             <ul>
                 <li>
@@ -251,7 +252,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <li>
                     <span class="endtime">
                     23:00
-                    <img src="jsp/resources/img/ciri.png" >
+                    <img src="<%=basePath%>jsp/resources/img/ciri.png" >
                     </span>
                 </li>
                 <div class="clear"></div>
@@ -280,8 +281,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <p>注：手机号码填写将作为您的联系方式，请认真填写！</p>
     </form>
 </body> 
-<script src='jsp/resources/js/rem.js'></script>
-<script src='jsp/resources/js/jquery.min.js'></script>
+<script src='<%=basePath%>jsp/resources/js/rem.js'></script>
+<script src='<%=basePath%>jsp/resources/js/jquery.min.js'></script>
      <script>
         //选择日期
         $('.ordertimetab a').click(function(){

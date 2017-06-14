@@ -17,98 +17,81 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>ktv</title> 
-    <link rel="stylesheet" href="jsp/resources/css/main.css">
+    <link rel="stylesheet" href="<%=basePath%>jsp/resources/css/main.css">
 </head>
 <body > 
      <div id="header" style="border-bottom:1px solid #ccc;">
          <a href="javascript:history.go(-1);">
-             <img src="jsp/resources/img/b3.png">
+             <img src="<%=basePath%>jsp/resources/img/b3.png">
          </a>
          <h1 class="color-red">盛世在线超市</h1>
      </div> 
      <div class="main">
      	<div class="select-nav">
 	      <div class="select-list select-listtab">
-	      	   <a href="">精选</a>
+	      	   <a href="${pageContext.request.contextPath}/shop/getShopping.do?id=0">精选</a>
 	      </div>
-	      <div class="select-list">
-	      	   <a href="">啤酒饮料</a>
-	      </div>
-	      <div class="select-list">
-	      	   <a href="">小碟/卤味</a>
-	      </div>
-	      <div class="select-list">
-	      	   <a href="">其他酒类</a> 
-	      </div>
-	      <div class="select-list">
-	      	   <a href="">零食</a>
-	      </div> 
+			<c:forEach var = "cate" items ="${cates}">
+                <div class="select-list">
+                    <a href="${pageContext.request.contextPath}/shop/getShopping.do?id=${cate.id}">${cate.name}</a>
+                </div>
+			</c:forEach>
 	      <div class="select-img">
-	      	   <img src="jsp/resources/img/b4.png" >
+	      	   <img src="<%=basePath%>jsp/resources/img/b4.png" >
 	      </div> 
 	  	  <div class="clear"></div>	
 	    </div>
 	    <div class="adv">
-	    	<img src="jsp/resources/img/3.png">
+	    	<img src="<%=basePath%>jsp/resources/img/3.png">
 	    </div>
 	    <div class="service">
 	    	<div class="service-item">
-	    		<img src="jsp/resources/img/s11.png">
+	    		<img src="<%=basePath%>jsp/resources/img/s11.png">
 	    		<span>便捷点单</span>
 	    	</div>
 	    	<div class="service-item">
-	    		<img src="jsp/resources/img/s11.png">
+	    		<img src="<%=basePath%>jsp/resources/img/s11.png">
 	    		<span>快速送达</span> 
 	    	</div>
 	    	<div class="service-item">
-	    		<img src="jsp/resources/img/s11.png">
+	    		<img src="<%=basePath%>jsp/resources/img/s11.png">
 	    		<span>尽享优惠</span>
 	    	</div>
 	    	<div class="clear"></div>
 	    </div>
 	    <div class="goods">
 	    	<ul>
-	    		<li>
-	    			<img src="jsp/resources/img/2.png">
-	    			<p>百威啤酒一箱500ML，美味 啤酒。</p>
-	    			<span>162元</span>
-	    			<em>添加</em>
-	    		</li>
-	    		<li>
-	    			<img src="jsp/resources/img/2.png">
-	    			<p>百威啤酒一箱500ML，美味 啤酒。</p>
-	    			<span>162元</span>
-	    			<em>添加</em>
-	    		</li>
-	    		<li>
-	    			<img src="jsp/resources/img/2.png">
-	    			<p>百威啤酒一箱500ML，美味 啤酒。</p>
-	    			<span>162元</span>
-	    			<em>添加</em>
-	    		</li>
+                <c:forEach var = "good" items ="${goods}">
+                    <li>${good.id}
+                        <img src="${good.image_url}">
+                        <p>${good.title}</p>
+                        <span>${good.price}</span>
+                        <em>添加</em>
+                    </li>
+                </c:forEach>
 	    		<div class="clear"></div>
 	    	</ul>
 	    </div>
      </div>
 
-	 <jsp:include page="/jsp/layouts/foot.jsp" flush="true"/>
+    <jsp:include page="/jsp/layouts/foot.jsp" flush="true"/>
     <div id="trolley">
     	<a href="shoppingtrolley.jsp">
 			<span>
-    			<img src="jsp/resources/img/g2.png">
+    			<img src="<%=basePath%>jsp/resources/img/g2.png">
     		</span>
 			<em><label>23</label>件</em> 
     	</a>
     	<p>
     		<span>
-    			<img src="jsp/resources/img/g1.png">
+    			<img src="<%=basePath%>jsp/resources/img/g1.png">
     		</span>
 			<i>提交</i>  
     	</p>
     </div>
 </body> 
-<script src='jsp/resources/js/jquery.min.js'></script>
-<script src='jsp/resources/js/rem.js'></script>
+<script src='<%=basePath%>jsp/resources/js/jquery.min.js'></script>
+<script src='<%=basePath%>jsp/resources/js/rem.js'></script>
 <script>
 	$(function(){ 
         //购物车加一
@@ -117,7 +100,5 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             $('#trolley').find('label').html($num+1);
         });
     });
-    
-    
 </script>
 </html>

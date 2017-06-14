@@ -17,44 +17,31 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>ktv</title>
-    <link rel="stylesheet" href="jsp/resources/css/main.css">
+    <link rel="stylesheet" href="<%=basePath%>jsp/resources/css/main.css">
 </head>
 <body>  
     <div id="header">
          <a href="javascript:history.go(-1);">
-             <img src="jsp/resources/img/b3.png">
+             <img src="<%=basePath%>jsp/resources/img/b3.png">
          </a>
          <h1 class="color-red">我的消息</h1>
      </div> 
     <div class="main" >
         <div class="message-list"> 
-            <ul> 
+            <ul>
                 <div class="line"></div>
-                <li>
-                    <span>2017-04-05  20：50：31</span>
-                    <p>内容内容内容内容内容内容内容内 内容内容内容内容内容内容</p>
-                </li>
-                <li>
-                    <span>2017-04-05  20：50：31</span>
-                    <p>内容内容内容内容内容内容内容内 内容内容内容内容内容内容</p>
-                </li>
-                <li>
-                    <span>2017-04-05  20：50：31</span>
-                    <p>内容内容内容内容内容内容内容内 内容内容内容内容内容内容</p>
-                </li>
-                <li>
-                    <span>2017-04-05  20：50：31</span>
-                    <p>内容内容内容内容内容内容内容内 内容内容内容内容内容内容</p>
-                </li>
-                <li>
-                    <span>2017-04-05  20：50：31</span>
-                    <p>内容内容内容内容内容内容内容内 内容内容内容内容内容内容</p>
-                </li>
+                <c:forEach var = "msg" items ="${msgs}">
+                    <li>
+                        <%--<a href="${msg.id}"></a>--%>
+                        <span>${msg.create_time}</span>
+                        <p>${msg.content}</p>
+                    </li>
+                </c:forEach>
             </ul>
         </div>
     </div>
 
     <jsp:include page="/jsp/layouts/foot.jsp" flush="true"/>
 </body> 
-<script src='jsp/resources/js/rem.js'></script>
+<script src='<%=basePath%>jsp/resources/js/rem.js'></script>
 </html>

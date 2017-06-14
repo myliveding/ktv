@@ -36,7 +36,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </a>
                 </li>
                 <li>
-                    <a href="shopnowing.html">
+                    <a href="${pageContext.request.contextPath}/shop/getShopping.do">
                         <div class="nav-item nav-item2">
                             <img src="<%=basePath%>jsp/resources/img/s2.png">
                         </div>
@@ -100,7 +100,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <c:forEach var = "data" items ="${storeList}">
                     <li>
                         <a href="roominfo.html">
-                            <img src="<%=basePath%>jsp/resources/img/1.png">
+                            <img src="${data.image_url}">
                             <div class="shop-info">
                                 <h3>${data.name}</h3>
                                 <p>
@@ -113,7 +113,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 </p>
                             </div>
                             <div class="recent">距离我${data.distance}KM</div>
-                            <em>进入预定</em>
+                            <em><a href="${pageContext.request.contextPath}/shop/gotoStoreDetail.do?id=${data.id}">进入预定</a></em>
                         </a>
                     </li>
                 </c:forEach>
