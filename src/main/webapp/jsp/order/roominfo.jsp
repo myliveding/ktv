@@ -17,29 +17,35 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>ktv</title>
-    <link rel="stylesheet" href="jsp/resources/css/main.css">
+    <link rel="stylesheet" href="<%=basePath%>jsp/resources/css/main.css">
 </head>
 <body> 
      <div id="header" class="color-pink">
          <a href="javascript:history.go(-1);">
-             <img src="jsp/resources/img/b2.png">
+             <img src="<%=basePath%>jsp/resources/img/b2.png">
          </a>
          <h1>包厢信息</h1>
      </div> 
      <div class="main"> 
          <div class="shop-detail">
-             <h2>盛世欢唱武夷山西门头店</h2>
-             <p>房间号：小包/B27（8-10人）</p>
-             <span>状态：未被预定</span>
+             <input type="hidden" class="iid" value="${roomInfo.iid}" />
+             <h2>${roomInfo.shop_name}</h2>
+             <p>房间号：${roomInfo.room_type_name}/${roomInfo.room_num}（${roomInfo.room_peoples}人）</p>
+             <span>状态：
+                 <c:if test="${roomInfo.tag == 1}">
+                    未被预定
+                </c:if>
+                <c:if test="${roomInfo.tag != 1}">
+                    已被预定
+                </c:if>
+             </span>
              <a href="../shop/pay.jsp">立即预定</a>
          </div>
          <div class="room-img">
-             <img src="jsp/resources/img/r1.png">
-             <img src="jsp/resources/img/r2.png">
-             <img src="jsp/resources/img/r3.png">
+             ${roomInfo.summary}
          </div>
      </div>
      <jsp:include page="/jsp/layouts/foot.jsp" flush="true"/>
 </body> 
-<script src='jsp/resources/js/rem.js'></script>
+<script src='<%=basePath%>jsp/resources/js/rem.js'></script>
 </html>

@@ -100,7 +100,7 @@ public class ShopController {
     }
 
     /**
-     * 进入超市页面
+     * 进入包厢选择页面
      * @param request
      * @param response
      * @return
@@ -109,16 +109,53 @@ public class ShopController {
     public String gotoStoreDetail(HttpServletRequest request, HttpServletResponse response) {
         String shopId = request.getParameter("id");
         try {
+            //获取门店详情
             String[] arr = new String[]{"shop_id" + shopId};
             String mystr = "shop_id=" + shopId;
             JSONObject goods = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.STORE_DETAIL, mystr, arr));
             if (0 == goods.getInt("error_code")) {
                 request.setAttribute("storeDetail", goods.get("result"));
             }
+            //获取包厢类型
+            JSONObject roomTypes = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.ROOM_TYPE, mystr, arr));
+            if (0 == roomTypes.getInt("error_code")) {
+                request.setAttribute("roomTypes", roomTypes.get("roomTypes"));
+            }
+
+        } catch (Exception e) {
+            logger.error("进入选择包厢出错:" + e.getMessage(), e);
+        }
+        return "order/orderselect";
+    }
+
+
+    /**
+     * 获取某类包厢的内部列表
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping("/getRoomList")
+    public @ResponseBody Object getRoomList(HttpServletRequest request, HttpServletResponse response) throws IOException{
+        String shopId = request.getParameter("shopId");
+        String roomTypeId = request.getParameter("roomTypeId");
+        JSONObject room = null;
+        try {
+            //获取某类包厢的内部列表
+            String[] arr = new String[]{"shop_id" + shopId,"room_type_id" + roomTypeId};
+            String mystr = "shop_id=" + shopId + "&room_type_id=" + roomTypeId;
+            room = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.ROOM_LIST, mystr, arr));
+            if (0 == room.getInt("error_code")) {
+                request.setAttribute("roomList", room.get("result"));
+            }
+
         } catch (Exception e) {
             logger.error("获取门店详情出错:" + e.getMessage(), e);
         }
-        return "order/orderselect";
+        response.setContentType("text/html; charset=utf-8");
+        PrintWriter out = response.getWriter();
+        out.println(room);
+        return null;
     }
 
 }

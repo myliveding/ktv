@@ -1,9 +1,12 @@
-<%@ page language="java" import="com.st.utils.Constant" pageEncoding="utf-8"%>
+<%@ page language="java" pageEncoding="utf-8"%>
 <%@ taglib prefix="fn" uri="/WEB-INF/tld/fn.tld"%>
 <%@ taglib prefix="c" uri="/WEB-INF/tld/c.tld"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+    java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("MM-dd");
+    java.util.Date currentTime = new java.util.Date();//得到当前系统时间
+    String nowTime = formatter.format(currentTime); //将日期时间格式化
 %>
 
 <!doctype html>
@@ -20,23 +23,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link rel="stylesheet" href="<%=basePath%>jsp/resources/css/main.css">
 </head>
 <body>  
-    <!-- <div id="header" style="background: #fbd1c1;">
-         <a href="javascript:history.go(-1);">
-             <img src="img/b2.png">
-         </a>
-         <h1 >选择包厢</h1>
-     </div>  -->
     <div class="main" style="padding-top: 0;">
         <div class="orderselectimg">
+            <input type="hidden" class="shopid" value="${storeDetail.id}" />
             <img src="<%=basePath%>jsp/resources/img/5.png" >
             <a class="backlast" href="javascript:history.go(-1)"> </a>
             <h1>${storeDetail.name}</h1>
             <div class="orderaddress">
                 <h2>${storeDetail.address}</h2>
-                <a href="tel:13338888888" class="tel">
-                    ${storeDetail.phone}<img src="<%=basePath%>jsp/resources/img/tel.png" >
+                <a href="tel:${storeDetail.phone}" class="tel">
+                     <img src="<%=basePath%>jsp/resources/img/tel.png" >
                 </a>
-                ${storeDetail.data_ur}
             </div>
             <div class="orderaddress">
                 <h2>${storeDetail.address}</h2>
@@ -51,31 +48,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="ordertimetab">
                 <a href="javascript:void(0);" class="act">
                     <span>今天</span>
-                    <em>04-13</em>
-                </a>
-                <a href="javascript:void(0);">
-                    <span>周三</span>
-                    <em>04-14</em>
-                </a>
-                <a href="javascript:void(0);">
-                    <span>周四</span>
-                    <em>04-15</em>
-                </a>
-                 <a href="javascript:void(0);">
-                    <span>周五</span>
-                    <em>04-16</em>
-                </a>
-                 <a href="javascript:void(0);">
-                    <span>周六</span>
-                    <em>04-17</em>
+                    <em><%=nowTime%></em>
                 </a>
                 <div class="clear"></div>
             </div>
-            <div class="orderroom"> 
-                <a href="javascript:void(0);" class="act">小包厢(3-5)人</a>
-                <a href="javascript:void(0);">中包厢(6-10)人</a>
-                <a href="javascript:void(0);">大包厢(10-30)人</a> 
-                <div class="clear"></div> 
+            <div class="orderroom">
+                <c:forEach var = "roomType" items="${roomTypes}">
+                    <a href="${pageContext.request.contextPath}/shop/getRoomList.do?shopId=${storeDetail.id}&roomTypeId=${roomType.room_type_id}" class="act">
+                    ${roomType.room_type_name}(${roomType.room_peoples})人</a>
+                </c:forEach>
+                <div class="clear"></div>
             </div>
             <div class="allroom">
                 <ul> 
@@ -85,139 +67,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <span>小包</span>
                             <span>8-10人</span> 
                         </div>
-                        <a href="roominfo.jsp">
-                            <i>查看包厢 </i>
-                            <i>环境照片</i>
-                            <em></em>
-                        </a>
-                    </li>
-                    <li>
-                        <div class="allroomitem">
-                            <span>B26</span>
-                            <span>小包</span>
-                            <span>8-10人</span> 
-                        </div>
-                        <a href="roominfo.jsp">
-                            <i>查看包厢 </i>
-                            <i>环境照片</i>
-                            <em></em>
-                        </a>
-                    </li>
-                    <li>
-                        <div class="allroomitem">
-                            <span>B26</span>
-                            <span>小包</span>
-                            <span>8-10人</span> 
-                        </div>
-                        <a href="roominfo.jsp">
-                            <i>查看包厢 </i>
-                            <i>环境照片</i>
-                            <em></em>
-                        </a>
-                    </li>
-                    <li>
-                        <div class="allroomitem">
-                            <span>B26</span>
-                            <span>小包</span>
-                            <span>8-10人</span> 
-                        </div>
-                        <a href="roominfo.jsp">
-                            <i>查看包厢 </i>
-                            <i>环境照片</i>
-                            <em></em>
-                        </a>
-                    </li>
-                    <li>
-                        <div class="allroomitem">
-                            <span>B26</span>
-                            <span>小包</span>
-                            <span>8-10人</span> 
-                        </div>
-                        <a href="roominfo.jsp">
-                            <i>查看包厢 </i>
-                            <i>环境照片</i>
-                            <em></em>
-                        </a>
-                    </li>
-                    <li>
-                        <div class="allroomitem">
-                            <span>B26</span>
-                            <span>小包</span>
-                            <span>8-10人</span> 
-                        </div>
-                        <a href="roominfo.jsp">
-                            <i>查看包厢 </i>
-                            <i>环境照片</i>
-                            <em></em>
-                        </a>
-                    </li>
-                    <li>
-                        <div class="allroomitem">
-                            <span>B26</span>
-                            <span>小包</span>
-                            <span>8-10人</span> 
-                        </div>
-                        <a href="roominfo.jsp">
-                            <i>查看包厢 </i>
-                            <i>环境照片</i>
-                            <em></em>
-                        </a>
-                    </li>
-                    <li>
-                        <div class="allroomitem">
-                            <span>B26</span>
-                            <span>小包</span>
-                            <span>8-10人</span> 
-                        </div>
-                        <a href="roominfo.jsp">
-                            <i>查看包厢 </i>
-                            <i>环境照片</i>
-                            <em></em>
-                        </a>
-                    </li>
-                    <li>
-                        <div class="allroomitem">
-                            <span>B26</span>
-                            <span>小包</span>
-                            <span>8-10人</span> 
-                        </div>
-                        <a href="roominfo.jsp">
-                            <i>查看包厢 </i>
-                            <i>环境照片</i>
-                            <em></em>
-                        </a>
-                    </li>
-                    <li>
-                        <div class="allroomitem">
-                            <span>B26</span>
-                            <span>小包</span>
-                            <span>8-10人</span> 
-                        </div>
-                        <a href="roominfo.jsp">
-                            <i>查看包厢 </i>
-                            <i>环境照片</i>
-                            <em></em>
-                        </a>
-                    </li>
-                    <li>
-                        <div class="allroomitem">
-                            <span>B26</span>
-                            <span>小包</span>
-                            <span>8-10人</span> 
-                        </div>
-                        <a href="roominfo.jsp">
-                            <i>查看包厢 </i>
-                            <i>环境照片</i>
-                            <em></em>
-                        </a>
-                    </li>
-                    <li>
-                        <div class="allroomitem">
-                            <span>B26</span>
-                            <span>小包</span>
-                            <span>8-10人</span> 
-                        </div>
-                        <a href="roominfo.jsp">
+                        <a href="${pageContext.request.contextPath}/order/gotoRoomInfo.do?iid=${a.iid}">
                             <i>查看包厢 </i>
                             <i>环境照片</i>
                             <em></em>
@@ -230,33 +80,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="order-hour">
             <h3>今天(01-18)<i>19:00-次日02:00</i>(7小时)</h3>
             <h4>欢唱时间不足7小时，按7小时计算</h4>
-            <ul>
-                <li>
-                    <span>18:00</span>
-                </li>
-                 <li>
-                    <span>18:00</span>
-                </li>
-                <li>
-                    <span>18:00</span>
-                </li>
-                <li>
-                    <span>19:00</span>
-                </li> 
-                <li>
-                    <span>20:00</span>
-                </li>
-                <li>
-                    <span class="starttime">21:00</span>
-                </li>
-                <li>
-                    <span class="endtime">
-                    23:00
-                    <img src="<%=basePath%>jsp/resources/img/ciri.png" >
-                    </span>
-                </li>
-                <div class="clear"></div>
-            </ul>
         </div>
         <div class="selectall">
             <p>请核对您选择的内容  </p>
@@ -293,6 +116,41 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          $('.orderroom a').click(function() {
             $('.orderroom a').removeClass('act');
             $(this).addClass('act');
+            //调用去获取
+             shopid
+             $$.ajax({
+                 'url': "${pageContext.request.contextPath}/shop/getRoomList.do",
+                 'type': 'post',
+                 'dataType': 'json',
+                 data: {
+                     shopId: 0,
+                     roomTypeId: 1
+                 },
+                 success: function success(d) {
+                     if (d.error_code == 0) {
+                         var newhtml =
+                                 <c:forEach var="room" items="${d.result}">
+                                     <li>
+                                     <div class="allroomitem">
+                                         <span>${room.room_name}</span>
+                                         <span>${room.room_type_name}</span>
+                                         <span>${room.peoples}人</span>
+                                     </div>
+                                     <a href="${pageContext.request.contextPath}/order/gotoRoomInfo.do?iid=${room.iid}">
+                                         <i>查看包厢 </i>
+                                         <i>环境照片</i>
+                                         <em></em>
+                                     </a>
+                                    </li>
+                                 </c:forEach>;
+
+                         $("#allroom").html('<ul>' + newhtml + '</ul>');
+                     } else {
+                         alert(d.msg);
+                     }
+                 }
+
+             });
          })
 
          //选择包厢

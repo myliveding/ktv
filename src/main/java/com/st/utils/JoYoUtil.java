@@ -81,7 +81,24 @@ public class JoYoUtil {
     /**
      * 门店详情
      */
-    public static final String STORE_DETAIL = Constant.PHP_API_URL + "/api/get_shop";
+    public static final String STORE_DETAIL = Constant.PHP_API_URL + "/api/get_shop_detail";
+
+    /**
+     * 获取包厢类型
+     */
+    public static final String ROOM_TYPE = Constant.PHP_API_URL + "/api/get_room_type";
+
+
+    /**
+     *  获取包厢列表
+     */
+    public static final String ROOM_LIST = Constant.PHP_API_URL + "/api/get_room_list";
+
+
+    /**
+     *  获取包厢详情
+     */
+    public static final String ROOM_DETAIL = Constant.PHP_API_URL + "/api/get_room_detail";
 
 
 
