@@ -225,8 +225,13 @@ public class MemberController {
      */
     @RequestMapping("/checkAndUpdateMobile")
     public @ResponseBody Object checkAndUpdateMobile(HttpServletRequest request,HttpServletResponse response) throws IOException{
+
+        HttpSession session = ContextHolderUtils.getSession();
+        Object openidObj =  session.getAttribute("openid");
+
         String phone = request.getParameter("mobile");//手机号码
-        String openid = request.getParameter("openid");//openid
+//        String openid = openidObj.toString();//openid
+        String openid = "11111111";
         String type = request.getParameter("type");//校验保存和更新手机号码
         JSONObject resultObject = memberService.checkAndUpdateMobile(openid, phone, type);
         response.setContentType("text/html; charset=utf-8");

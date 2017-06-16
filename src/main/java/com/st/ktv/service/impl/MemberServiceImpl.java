@@ -109,7 +109,7 @@ public class MemberServiceImpl implements MemberService {
                 if(wechatMember.getMobile() != null && !"".equals(wechatMember.getMobile())){
                     resultObject = JSONObject.fromObject("{\"status\":0,\"data\":\"已存在\"}");
                 }else{
-                    resultObject =  JSONObject.fromObject("{\"status\":1,\"msg\":\"不存在\"}");
+                    resultObject =  JSONObject.fromObject("{\"status\":1,\"msg\":\"清绑定手机号码\"}");
                 }
             }else if(type.equals("2") || type.equals("3")){
                 if (DataUtil.isNotEmpty(phone)) {

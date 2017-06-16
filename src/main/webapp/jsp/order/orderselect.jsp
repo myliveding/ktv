@@ -83,7 +83,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
         </div>
         <div class="selectall">
-
+            <a href="javascript:void(0);">下一步，选择套餐</a>
         </div>
     </div>
     <jsp:include page="/jsp/layouts/foot.jsp" flush="true"/>
@@ -127,7 +127,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             //$(this).index();
             //调用去获取
             roomTypeId = $(this).find('.room_type_id').val();
-            //alert(roomTypeId + "-" + shopId);
             getRoomList(shopId, roomTypeId);
          })
 
@@ -144,7 +143,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     if (d.error_code == 0) {
                          var str = '';
                          for(var i=0; i< d.result.length; i++){
-                             str = str + '<li><div class="allroomitem"><span>' + d.result[i].room_name + '</span><span>' + d.result[i].room_type_name
+                             str = str + '<li><div class="allroomitem"><span class="name">' + d.result[i].room_name + '</span><span>' + d.result[i].room_type_name
                              + '</span><span>' + d.result[i].peoples + '人</span></div>'
                              + '<a href="' + packageJson.JAVA_DOMAIN  + '/order/gotoRoomInfo.do?iid=' + d.result[i].iid + '">'
                              + '<i>查看包厢 </i><i>环境照片</i><em></em></a></li>';
@@ -164,13 +163,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             time_info += '<h4>欢唱时间不足7小时，按7小时计算</h4>';
                             $(".order-hour").html(time_info);
 
+                            var myDate = new Date();
                             var book_info = '';
                             book_info += '<p>请核对您选择的内容  </p>';
-                            book_info += '<p>开机时间：1月18日18:30</p>';
-                            book_info += '<p>包间类型：大包厢B22</p>';
-                            book_info += '<a href="javascript:void(0);">下一步，选择套餐</a>';
-                            $(".selectall").html(book_info);
-
+                            book_info += '<p>开机时间：' + myDate.getMonth() + "月" + myDate.getDate() + '日</p>';
+                            book_info += '<p>包间类型：' + $(this).find('.name').text() + '</p>';
+                            $(".selectall").prepend(book_info);
                         })
                     } else {
                          alert(d.msg);
@@ -187,9 +185,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
          //tips 绑定手机
          $('.selectall a').click(function(){ 
-            $('form.notel').show();
-            $('#bg').show();
-            $('html,body').css('overflow','hidden');
+            checkIsBindPhone();
          })
 
          //取消绑定手机
@@ -198,5 +194,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             $('form.notel').hide();
             $('html,body').css('overflow','auto');
          })
+
+         //校验是否绑定手机
+         function checkIsBindPhone(){
+            $.ajax({
+                'url': "${pageContext.request.contextPath}/member/checkAndUpdateMobile.do",
+                'type': 'post',
+                'dataType': 'json',
+                'data': {
+                    type: 1
+                },
+                success: function success(d) {
+                    if (d.status == 0) {
+                        //进入下一步
+
+                    } else {
+                        //弹出绑定页面
+                        $('form.notel').show();
+                        $('#bg').show();
+                        $('html,body').css('overflow','hidden');
+                    }
+                 }
+            });
+         }
+
      </script>
 </html>
