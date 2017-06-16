@@ -153,21 +153,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                              + '<a href="' + packageJson.JAVA_DOMAIN  + '/order/gotoRoomInfo.do?iid=' + d.result[i].iid + '">'
                              + '<i>查看包厢 </i><i>环境照片</i><em></em></a></li>';
                          }
-                         $(".allroom ul").html(str);
+                        str += '<div class="clear"></div>';
+                        $(".allroom ul").html(str);
+
+                        //选择包厢
+                        $('.allroom li .allroomitem').click(function(){
+                            $('.allroom li .allroomitem').show();
+                            $('.allroom li a').removeClass('action');
+                            $(this).hide();
+                            $(this).parents('li').find('a').addClass('action');
+                        })
                     } else {
                          alert(d.msg);
                     }
                  }
              });
-        };
-
-         //选择包厢
-         $('.allroom li .allroomitem').click(function(){
-             $('.allroom li .allroomitem').show();
-             $('.allroom li a').removeClass('action');
-             $(this).hide();
-             $(this).parents('li').find('a').addClass('action');
-         })
+        }
 
          //时间选择
          $('.order-hour li').click(function(){
