@@ -145,7 +145,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                              + '<a href="${pageContext.request.contextPath}/order/gotoRoomInfo.do?iid=' + d.result[i].iid + '">'
                              + '<i>查看包厢 </i><i>环境照片</i><em></em></a></li>';
                          }
-                         //${".allroom ul"}.html(str);
+                         $(".allroom ul").html(str);
                     } else {
                          alert(d.msg);
                     }
