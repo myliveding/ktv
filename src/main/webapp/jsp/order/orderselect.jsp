@@ -95,13 +95,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <input class="notel-tel" type="tel">
         <div class="notel-status">
             <span>取消</span> 
-            <button type="submit" onclick="return checkTel()">确定</button>
+            <button type="button" onclick="return checkTel()">确定</button>
             <div class="clear"></div>
         </div>
         <p>注：手机号码填写将作为您的联系方式，请认真填写！</p>
     </form>
-    <iframe id="rfFrame" name="rfFrame" src="about:blank" style="display:none;"></iframe>
-</body> 
+</body>
 <script src='<%=basePath%>jsp/resources/js/rem.js'></script>
 <script src='<%=basePath%>jsp/resources/js/jquery.min.js'></script>
      <script>
@@ -162,16 +161,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             $(this).hide();
                             $(this).parents('li').find('a').addClass('action');
 
+                            var myDate = new Date();
+                            var month = myDate.getMonth() + 1;
                             var time_info = '';
-                            time_info += '<h3>今天(01-18)<i>19:00-次日02:00</i>(7小时)</h3>';
+                            time_info += '<h3>今天(' + month + '-' + myDate.getDate() + ')<i>19:00-次日02:00</i>(7小时)</h3>';
                             time_info += '<h4>欢唱时间不足7小时，按7小时计算</h4>';
                             $(".order-hour").html(time_info);
 
-                            var myDate = new Date();
                             iid = $(this).find('.iid').val();
                             var book_info = '';
                             book_info += '<p>请核对您选择的内容  </p>';
-                            book_info += '<p>开机时间：' + myDate.getMonth() + "月" + myDate.getDate() + '日</p>';
+                            book_info += '<p>开机时间：' + month + "月" + myDate.getDate() + '日</p>';
                             book_info += '<p>包间类型：' + $(this).find('.name').text() + '</p>';
                             $(".selectall").prepend(book_info);
                         })
@@ -189,7 +189,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          })
 
          //tips 绑定手机
-         $('.selectall a').click(function(){ 
+         $('.selectall a').click(function(){
+             if(null == iid || "" == iid){
+                 return false;
+             }
             checkIsBindPhone();
          })
 
@@ -205,7 +208,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 success: function success(d) {
                     if (d.status == 0) {
                         //进入下一步
-                        window.location.href = packageJson.JAVA_DOMAIN  + '/order/gotoRoomInfo.do?iid=' + iid;
+                        window.location.href = packageJson.JAVA_DOMAIN  + '/order/gotoPackages.do?iid=' + iid;
                     } else {
                         //弹出绑定页面
                         $('form.notel').show();
@@ -255,7 +258,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 success: function success(d) {
                     if (d.status == 0) {
                         //进入下一步
-                        window.location.href = packageJson.JAVA_DOMAIN  + '/order/gotoRoomInfo.do?iid=' + iid;
+                        window.location.href = packageJson.JAVA_DOMAIN  + '/order/gotoPackages.do?iid=' + iid;
                     } else {
                         //弹出绑定页面
                         alert(d.msg);

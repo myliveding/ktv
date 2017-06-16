@@ -8,6 +8,11 @@
     <encoder>
       <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n</pattern>
     </encoder>
+      <filter class="ch.qos.logback.classic.filter.LevelFilter">
+          <level>ERROR</level>
+          <onMatch>DENY</onMatch>
+          <onMismatch>ACCEPT</onMismatch>
+      </filter>
   </appender>
   
   <appender name="InfoLogFile" class="ch.qos.logback.core.rolling.RollingFileAppender">   

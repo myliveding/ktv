@@ -39,7 +39,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     已被预定
                 </c:if>
              </span>
-             <a href="../shop/pay.jsp">立即预定</a>
+             <a href="${pageContext.request.contextPath}/order/gotoPackages.do?iid=" + ${roomInfo.iid}>立即预定</a>
          </div>
          <div class="room-img">
              ${roomInfo.summary}

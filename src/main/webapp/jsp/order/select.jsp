@@ -17,39 +17,35 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>ktv</title>
-    <link rel="stylesheet" href="jsp/resources/css/main.css">
+    <link rel="stylesheet" href="<%=basePath%>jsp/resources/css/main.css">
 </head>
 <body> 
      <div id="header" style="background: #fbd1c1;">
          <a href="javascript:history.go(-1);">
-             <img src="jsp/resources/img/b2.png">
+             <img src="<%=basePath%>jsp/resources/img/b2.png">
          </a>
          <h1>套餐选择</h1>
      </div> 
      <div class="main"> 
          <div class="shop-detail">
              <h2>小包套餐（邵武区）</h2>
-             <p class="gray" >小包厢(5-10人)</p> 
+             <p class="gray" >${roomInfo.room_type_name}(${roomInfo.room_peoples}人)</p>
              <p class="gray">今天<i>(01:00)</i>&nbsp;&nbsp;&nbsp;<i>21:00</i>开唱-<i>次日01:00</i>结束，唱<i>4</i>小时</p>
-             <p class="gray">小包厢(5-10人)</p> 
-             <p class="gray"><i>不足7小时按照7小时计算</i></p> 
+             <p class="gray"><i>不足7小时按照7小时计算</i></p>
          </div>
          <div class="select-meal">
              <ul>
-                 <li class="act">
-                     <h1>7小时欢唱+238元酒水套餐</h1>
-                     <p>酒水或饮品(雪花啤酒3瓶或大果粒橙一瓶+大椰汁套餐)2选1+瓜子1份+花生1份</p>
-                     <div class="moneynum">￥190</div>
-                 </li>
-                 <li>
-                     <h1>7小时欢唱+238元酒水套餐</h1>
-                     <p>酒水或饮品(雪花啤酒3瓶或大果粒橙一瓶+大椰汁套餐)2选1+瓜子1份+花生1份</p>
-                     <div class="moneynum">￥190</div>
-                 </li>
+                 <c:forEach var="pack" items="${packages}">
+                     <li class="act">
+                         <h1>${pack.name}</h1>
+                         <p>${pack.summary}</p>
+                         <div class="moneynum">￥${pack.price}</div>
+                     </li>
+                 </c:forEach>
              </ul>
              <a href="">抵用券</a>
              <div class="select-tel">
-                 手机号码<span>13162731111</span>
+                 手机号码<span>${mobile}</span>
              </div>
              <div class="go-pay">
                  <span>￥<i>977.00</i></span>
@@ -60,8 +56,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      </div>
      <jsp:include page="/jsp/layouts/foot.jsp" flush="true"/>
 </body> 
-<script src='jsp/resources/js/rem.js'></script>
-<script src='jsp/resources/js/jquery.min.js'></script>
+<script src='<%=basePath%>jsp/resources/js/rem.js'></script>
+<script src='<%=basePath%>jsp/resources/js/jquery.min.js'></script>
 <script>
     $('.select-meal li').click(function() {
         $('.select-meal li').removeClass('act');

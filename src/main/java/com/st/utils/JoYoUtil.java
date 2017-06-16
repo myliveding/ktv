@@ -100,6 +100,22 @@ public class JoYoUtil {
      */
     public static final String ROOM_DETAIL = Constant.PHP_API_URL + "/api/get_room_detail";
 
+    /**
+     *  获取套餐
+     */
+    public static final String GET_PACKAGES = Constant.PHP_API_URL + "/api/get_packages";
+
+
+    /**
+     *  创建预订订单
+     */
+    public static final String CREATRE_ORDER = Constant.PHP_API_URL + "/api/create_book_order";
+
+
+    /**
+     *  取消预订订单
+     */
+    public static final String CANCLE_ORDER = Constant.PHP_API_URL + "/api/cancel_book_order";
 
 
      /**

@@ -14,10 +14,10 @@
     <filter-name>loginfilter</filter-name>
     <url-pattern>/jsp/my/*</url-pattern>
   </filter-mapping>
-    <filter-mapping>
-        <filter-name>loginfilter</filter-name>
-        <url-pattern>/jsp/order/*</url-pattern>
-    </filter-mapping>
+    <!--<filter-mapping>-->
+        <!--<filter-name>loginfilter</filter-name>-->
+        <!--<url-pattern>/jsp/order/*</url-pattern>-->
+    <!--</filter-mapping>-->
   <filter-mapping>
     <filter-name>loginfilter</filter-name>
     <url-pattern>*.do</url-pattern>
