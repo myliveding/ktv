@@ -54,7 +54,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </div>
             <div class="orderroom">
                 <c:forEach var = "roomType" items="${roomTypes}">
-                    <a href="javascript:void(0);">
+                    <a href="javascript:void(0);" ${roomType.room_type_id}>
                     ${roomType.room_type_name}(${roomType.room_peoples})人</a>
                 </c:forEach>
                 <div class="clear"></div>
@@ -118,16 +118,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             $(this).addClass('act');
         })
 
-        var shopId = $('.shopid').value;
-        var roomTypeId = $('.orderroom a').value;
         //选择包厢类型
          $('.orderroom a').click(function() {
             $('.orderroom a').removeClass('act');
             $(this).addClass('act');
+            //$(this).index();
             //调用去获取
-
-             alert(shopId);
-             alert(roomTypeId);return;
+            var shopId = $('.shopid').val();
+            //var roomTypeId = $('.orderroom a').val();
+            alert($(this).text());
+            var roomTypeId = $('.room_type_id').text();
+            alert(roomTypeId + "-" + shopId);
              $$.ajax({
                  'url': "${pageContext.request.contextPath}/shop/getRoomList.do",
                  'type': 'post',
@@ -147,7 +148,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                              + '<a href="${pageContext.request.contextPath}/order/gotoRoomInfo.do?iid=' + d.result[i].iid + '">'
                              + '<i>查看包厢 </i><i>环境照片</i><em></em></a></li>';
                          }
-                         //$${".allroom ul"}.append(str);
+                         //${".allroom"}.html(str);
                      } else {
                          alert(d.msg);
                      }
