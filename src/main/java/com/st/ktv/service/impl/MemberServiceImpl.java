@@ -102,6 +102,7 @@ public class MemberServiceImpl implements MemberService {
      */
     public JSONObject checkAndUpdateMobile(String openid, String phone, String type){
         JSONObject resultObject = JSONObject.fromObject("{\"status\":0,\"data\":\"OK\"}");
+        logger.info("openid：" + openid + "--phone：" + phone + "--type：" + type);
         Date nowTime = new Date();
         WechatMember wechatMember = wechatMemberMapper.getObjectByOpenid(openid);
         if(null != wechatMember){
@@ -109,27 +110,28 @@ public class MemberServiceImpl implements MemberService {
                 if(wechatMember.getMobile() != null && !"".equals(wechatMember.getMobile())){
                     resultObject = JSONObject.fromObject("{\"status\":0,\"data\":\"已存在\"}");
                 }else{
-                    resultObject =  JSONObject.fromObject("{\"status\":1,\"msg\":\"清绑定手机号码\"}");
+                    resultObject =  JSONObject.fromObject("{\"status\":1,\"msg\":\"请绑定手机号码\"}");
                 }
             }else if(type.equals("2") || type.equals("3")){
                 if (DataUtil.isNotEmpty(phone)) {
                     phone = phone.replaceAll(" ", "");
                     if(!DataUtil.isMobileNo(phone)){
                         resultObject =  JSONObject.fromObject("{\"status\":1,\"msg\":\"手机号格式有误！\"}");
+                    }else{
+                        WechatMember mobile = wechatMemberMapper.getObjectByMobile(phone);
+                        if(mobile != null){
+                            resultObject =  JSONObject.fromObject("{\"status\":1,\"msg\":\"手机号已存在！\"}");
+                        }else{
+                            //更新手机号码
+                            WechatMember member = new WechatMember();
+                            member.setId(wechatMember.getId());
+                            member.setMobile(phone);
+                            member.setUpdateTime(nowTime);
+                            wechatMemberMapper.updateByPrimaryKeySelective(member);
+                        }
                     }
                 }else{
                     resultObject =  JSONObject.fromObject("{\"status\":1,\"msg\":\"输入手机号码为空\"}");
-                }
-                WechatMember mobile = wechatMemberMapper.getObjectByMobile(phone);
-                if(mobile != null){
-                    resultObject =  JSONObject.fromObject("{\"status\":1,\"msg\":\"手机号已存在！\"}");
-                }else{
-                    //更新手机号码
-                    WechatMember member = new WechatMember();
-                    member.setId(wechatMember.getId());
-                    member.setMobile(phone);
-                    member.setUpdateTime(nowTime);
-                    wechatMemberMapper.updateByPrimaryKeySelective(member);
                 }
             }else{
                 resultObject =  JSONObject.fromObject("{\"status\":1,\"msg\":\"输入错误\"}");

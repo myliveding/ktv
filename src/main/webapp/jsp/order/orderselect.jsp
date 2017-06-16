@@ -92,15 +92,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <h4>绑定手机</h4>
         <p>您的账户尚未绑定手机号码，请根据提示绑定手机。</p>
         <h2>手机号码</h2>
-        <input type="tel">
+        <input class="notel-tel" type="tel">
         <div class="notel-status">
             <span>取消</span> 
-            <button type="submit">确定</button>
+            <button type="submit" onclick="return checkTel()">确定</button>
             <div class="clear"></div>
         </div>
-        
         <p>注：手机号码填写将作为您的联系方式，请认真填写！</p>
     </form>
+    <iframe id="rfFrame" name="rfFrame" src="about:blank" style="display:none;"></iframe>
 </body> 
 <script src='<%=basePath%>jsp/resources/js/rem.js'></script>
 <script src='<%=basePath%>jsp/resources/js/jquery.min.js'></script>
@@ -130,6 +130,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             getRoomList(shopId, roomTypeId);
          })
 
+        //获取包厢列表
+        var iid;
         function getRoomList(shopId, roomTypeId){
             $.ajax({
                 'url': "${pageContext.request.contextPath}/shop/getRoomList.do",
@@ -143,7 +145,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     if (d.error_code == 0) {
                          var str = '';
                          for(var i=0; i< d.result.length; i++){
-                             str = str + '<li><div class="allroomitem"><span class="name">' + d.result[i].room_name + '</span><span>' + d.result[i].room_type_name
+                             str = str + '<li><div class="allroomitem"><input type="hidden" class="iid" value="'
+                             + d.result[i].iid + '"/><span class="name">'
+                             + d.result[i].room_name + '</span><span>' + d.result[i].room_type_name
                              + '</span><span>' + d.result[i].peoples + '人</span></div>'
                              + '<a href="' + packageJson.JAVA_DOMAIN  + '/order/gotoRoomInfo.do?iid=' + d.result[i].iid + '">'
                              + '<i>查看包厢 </i><i>环境照片</i><em></em></a></li>';
@@ -164,6 +168,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             $(".order-hour").html(time_info);
 
                             var myDate = new Date();
+                            iid = $(this).find('.iid').val();
                             var book_info = '';
                             book_info += '<p>请核对您选择的内容  </p>';
                             book_info += '<p>开机时间：' + myDate.getMonth() + "月" + myDate.getDate() + '日</p>';
@@ -188,13 +193,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             checkIsBindPhone();
          })
 
-         //取消绑定手机
-         $('.notel-status span').click(function(){
-            $('#bg').hide();
-            $('form.notel').hide();
-            $('html,body').css('overflow','auto');
-         })
-
          //校验是否绑定手机
          function checkIsBindPhone(){
             $.ajax({
@@ -207,7 +205,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 success: function success(d) {
                     if (d.status == 0) {
                         //进入下一步
-
+                        window.location.href = packageJson.JAVA_DOMAIN  + '/order/gotoRoomInfo.do?iid=' + iid;
                     } else {
                         //弹出绑定页面
                         $('form.notel').show();
@@ -218,5 +216,53 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             });
          }
 
+        //取消绑定手机
+        $('.notel-status span').click(function(){
+            $('#bg').hide();
+            $('form.notel').hide();
+            $('html,body').css('overflow','auto');
+        })
+
+        //校验是否绑定手机
+        function checkTel(){
+            $("#f2").attr("target","rfFrame");
+            var tel = $('.notel .notel-tel').val();
+            if (tel == undefined || tel == null || "" == tel){
+                alert("输入项不能为空");
+                //弹出绑定页面
+                return false;
+            }else{
+                if(!isNaN(tel)){
+                    updatePhone(tel);
+                }else{
+                    alert("请输入数字");
+                    //弹出绑定页面
+                    return false;
+                }
+            }
+        }
+
+        //去更新手机号码，成功就跳转
+        function updatePhone(tel){
+            $.ajax({
+                'url': "${pageContext.request.contextPath}/member/checkAndUpdateMobile.do",
+                'type': 'post',
+                'dataType': 'json',
+                'data': {
+                    mobile: tel ,
+                    type: 2
+                },
+                success: function success(d) {
+                    if (d.status == 0) {
+                        //进入下一步
+                        window.location.href = packageJson.JAVA_DOMAIN  + '/order/gotoRoomInfo.do?iid=' + iid;
+                    } else {
+                        //弹出绑定页面
+                        alert(d.msg);
+                        return;
+                    }
+                }
+            });
+        }
      </script>
 </html>
