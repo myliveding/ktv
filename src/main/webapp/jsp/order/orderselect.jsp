@@ -54,7 +54,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </div>
             <div class="orderroom">
                 <c:forEach var = "roomType" items="${roomTypes}">
-                    <a href="javascript:void(0);" ${roomType.room_type_id}>
+                    <a href="javascript:void(0);">
+                    <input type="hidden" class="room_type_id" value="${roomType.room_type_id}" />
                     ${roomType.room_type_name}(${roomType.room_peoples})人</a>
                 </c:forEach>
                 <div class="clear"></div>
@@ -65,7 +66,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <div class="allroomitem">
                             <span>B26</span>
                             <span>小包</span>
-                            <span>8-10人</span> 
+                            <span>8-10人</span>
                         </div>
                         <a href="${pageContext.request.contextPath}/order/gotoRoomInfo.do?iid=${a.iid}">
                             <i>查看包厢 </i>
@@ -125,22 +126,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             //$(this).index();
             //调用去获取
             var shopId = $('.shopid').val();
-            //var roomTypeId = $('.orderroom a').val();
-            alert($(this).text());
-            var roomTypeId = $('.room_type_id').text();
-            alert(roomTypeId + "-" + shopId);
-             $$.ajax({
-                 'url': "${pageContext.request.contextPath}/shop/getRoomList.do",
-                 'type': 'post',
-                 'dataType': 'json',
-                 'data': {
-                     shopId: shopId,
-                     roomTypeId: roomTypeId
-                 },
-                 success: function success(d) {
-                 alert("s");
-                     alert(d.result.length);
-                     if (d.error_code == 0) {
+            var roomTypeId = $(this).find('.room_type_id').val();
+            //alert(roomTypeId + "-" + shopId);
+            $.ajax({
+                'url': "${pageContext.request.contextPath}/shop/getRoomList.do",
+                'type': 'post',
+                'dataType': 'json',
+                'data': {
+                    shopId: shopId,
+                    roomTypeId: roomTypeId
+                },
+                success: function success(d) {
+                    if (d.error_code == 0) {
                          var str = '';
                          for(var i=0; i< d.result.length; i++){
                              str = str + '<li><div class="allroomitem"><span>' + d.result[i].room_name + '</span><span>' + d.result[i].room_type_name
@@ -148,10 +145,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                              + '<a href="${pageContext.request.contextPath}/order/gotoRoomInfo.do?iid=' + d.result[i].iid + '">'
                              + '<i>查看包厢 </i><i>环境照片</i><em></em></a></li>';
                          }
-                         //${".allroom"}.html(str);
-                     } else {
+                         //${".allroom ul"}.html(str);
+                    } else {
                          alert(d.msg);
-                     }
+                    }
                  }
              });
          })
