@@ -80,14 +80,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </div>
         </div>
         <div class="order-hour">
-            <h3>今天(01-18)<i>19:00-次日02:00</i>(7小时)</h3>
-            <h4>欢唱时间不足7小时，按7小时计算</h4>
+
         </div>
         <div class="selectall">
-            <p>请核对您选择的内容  </p>
-            <p>开机时间：1月18日18:30</p>
-            <p>包间类型：大包厢B22</p>
-            <a href="javascript:void(0);">下一步，选择套餐</a>
+
         </div>
     </div>
     <jsp:include page="/jsp/layouts/foot.jsp" flush="true"/>
@@ -162,6 +158,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             $('.allroom li a').removeClass('action');
                             $(this).hide();
                             $(this).parents('li').find('a').addClass('action');
+
+                            var time_info = '';
+                            time_info += '<h3>今天(01-18)<i>19:00-次日02:00</i>(7小时)</h3>';
+                            time_info += '<h4>欢唱时间不足7小时，按7小时计算</h4>';
+                            $(".order-hour").html(time_info);
+
+                            var book_info = '';
+                            book_info += '<p>请核对您选择的内容  </p>';
+                            book_info += '<p>开机时间：1月18日18:30</p>';
+                            book_info += '<p>包间类型：大包厢B22</p>';
+                            book_info += '<a href="javascript:void(0);">下一步，选择套餐</a>';
+                            $(".selectall").html(book_info);
+
                         })
                     } else {
                          alert(d.msg);
