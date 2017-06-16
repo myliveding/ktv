@@ -1,4 +1,4 @@
-<%@ page language="java" pageEncoding="utf-8"%>
+<%@ page language="java"  pageEncoding="utf-8"%>
 <%@ taglib prefix="fn" uri="/WEB-INF/tld/fn.tld"%>
 <%@ taglib prefix="c" uri="/WEB-INF/tld/c.tld"%>
 <%
@@ -18,6 +18,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple fullscreen -->
     <meta name="format-detection" content="telephone=no">
+    <jsp:include page="/jsp/layouts/head.jsp" flush="true"/>
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>ktv</title>   
     <link rel="stylesheet" href="<%=basePath%>jsp/resources/css/main.css">
@@ -108,9 +109,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script src='<%=basePath%>jsp/resources/js/rem.js'></script>
 <script src='<%=basePath%>jsp/resources/js/jquery.min.js'></script>
      <script>
+        var shopId = $('.shopid').val();
+        var roomTypeId = $('.orderroom a:eq(0)').find('.room_type_id').val();
         //初始化页面是选中第一个包厢类型
         $(document).ready(function(){
           $('.orderroom a:eq(0)').addClass('act');
+          //调用第一个包厢类型去获取剩余包厢集合
+          getRoomList(shopId, roomTypeId);
         });
 
         //选择日期
@@ -125,9 +130,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             $(this).addClass('act');
             //$(this).index();
             //调用去获取
-            var shopId = $('.shopid').val();
-            var roomTypeId = $(this).find('.room_type_id').val();
+            roomTypeId = $(this).find('.room_type_id').val();
             //alert(roomTypeId + "-" + shopId);
+            getRoomList(shopId, roomTypeId);
+         })
+
+        function getRoomList(shopId, roomTypeId){
             $.ajax({
                 'url': "${pageContext.request.contextPath}/shop/getRoomList.do",
                 'type': 'post',
@@ -142,7 +150,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                          for(var i=0; i< d.result.length; i++){
                              str = str + '<li><div class="allroomitem"><span>' + d.result[i].room_name + '</span><span>' + d.result[i].room_type_name
                              + '</span><span>' + d.result[i].peoples + '人</span></div>'
-                             + '<a href="${pageContext.request.contextPath}/order/gotoRoomInfo.do?iid=' + d.result[i].iid + '">'
+                             + '<a href="' + packageJson.JAVA_DOMAIN  + '/order/gotoRoomInfo.do?iid=' + d.result[i].iid + '">'
                              + '<i>查看包厢 </i><i>环境照片</i><em></em></a></li>';
                          }
                          $(".allroom ul").html(str);
@@ -151,7 +159,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     }
                  }
              });
-         })
+        };
 
          //选择包厢
          $('.allroom li .allroomitem').click(function(){
