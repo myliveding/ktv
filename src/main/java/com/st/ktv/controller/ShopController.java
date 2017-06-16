@@ -119,7 +119,7 @@ public class ShopController {
             //获取包厢类型
             JSONObject roomTypes = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.ROOM_TYPE, mystr, arr));
             if (0 == roomTypes.getInt("error_code")) {
-                request.setAttribute("roomTypes", roomTypes.get("roomTypes"));
+                request.setAttribute("roomTypes", roomTypes.get("result"));
             }
 
         } catch (Exception e) {

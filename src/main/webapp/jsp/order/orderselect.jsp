@@ -54,7 +54,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </div>
             <div class="orderroom">
                 <c:forEach var = "roomType" items="${roomTypes}">
-                    <a href="${pageContext.request.contextPath}/shop/getRoomList.do?shopId=${storeDetail.id}&roomTypeId=${roomType.room_type_id}" class="act">
+                    <a href="javascript:void(0);">
                     ${roomType.room_type_name}(${roomType.room_peoples})人</a>
                 </c:forEach>
                 <div class="clear"></div>
@@ -107,49 +107,51 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script src='<%=basePath%>jsp/resources/js/rem.js'></script>
 <script src='<%=basePath%>jsp/resources/js/jquery.min.js'></script>
      <script>
+        //初始化页面是选中第一个包厢类型
+        $(document).ready(function(){
+          $('.orderroom a:eq(0)').addClass('act');
+        });
+
         //选择日期
         $('.ordertimetab a').click(function(){
             $('.ordertimetab a').removeClass('act');
             $(this).addClass('act');
         })
+
+        var shopId = $('.shopid').value;
+        var roomTypeId = $('.orderroom a').value;
         //选择包厢类型
          $('.orderroom a').click(function() {
             $('.orderroom a').removeClass('act');
             $(this).addClass('act');
             //调用去获取
-             shopid
+
+             alert(shopId);
+             alert(roomTypeId);return;
              $$.ajax({
                  'url': "${pageContext.request.contextPath}/shop/getRoomList.do",
                  'type': 'post',
                  'dataType': 'json',
-                 data: {
-                     shopId: 0,
-                     roomTypeId: 1
+                 'data': {
+                     shopId: shopId,
+                     roomTypeId: roomTypeId
                  },
                  success: function success(d) {
+                 alert("s");
+                     alert(d.result.length);
                      if (d.error_code == 0) {
-                         var newhtml =
-                                 <c:forEach var="room" items="${d.result}">
-                                     <li>
-                                     <div class="allroomitem">
-                                         <span>${room.room_name}</span>
-                                         <span>${room.room_type_name}</span>
-                                         <span>${room.peoples}人</span>
-                                     </div>
-                                     <a href="${pageContext.request.contextPath}/order/gotoRoomInfo.do?iid=${room.iid}">
-                                         <i>查看包厢 </i>
-                                         <i>环境照片</i>
-                                         <em></em>
-                                     </a>
-                                    </li>
-                                 </c:forEach>;
-
-                         $("#allroom").html('<ul>' + newhtml + '</ul>');
+                         var str = '';
+                         for(var i=0; i< d.result.length; i++){
+                             str = str + '<li><div class="allroomitem"><span>' + d.result[i].room_name + '</span><span>' + d.result[i].room_type_name
+                             + '</span><span>' + d.result[i].peoples + '人</span></div>'
+                             + '<a href="${pageContext.request.contextPath}/order/gotoRoomInfo.do?iid=' + d.result[i].iid + '">'
+                             + '<i>查看包厢 </i><i>环境照片</i><em></em></a></li>';
+                         }
+                         //$${".allroom ul"}.append(str);
                      } else {
                          alert(d.msg);
                      }
                  }
-
              });
          })
 
