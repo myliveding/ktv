@@ -63,19 +63,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </div>
             <div class="allroom">
                 <ul> 
-                    <li>
-                        <div class="allroomitem">
-                            <span>B26</span>
-                            <span>小包</span>
-                            <span>8-10人</span>
-                        </div>
-                        <a href="${pageContext.request.contextPath}/personorder/gotoRoomInfo.do?iid=${a.iid}">
-                            <i>查看包厢 </i>
-                            <i>环境照片</i>
-                            <em></em>
-                        </a>
-                    </li>
-                    <div class="clear"></div>
                 </ul>
             </div>
         </div>
@@ -83,6 +70,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
         </div>
         <div class="selectall">
+            <div class="update">
+
+            </div>
             <a href="javascript:void(0);">下一步，选择套餐</a>
         </div>
     </div>
@@ -142,39 +132,41 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 },
                 success: function success(d) {
                     if (d.error_code == 0) {
-                         var str = '';
-                         for(var i=0; i< d.result.length; i++){
-                             str = str + '<li><div class="allroomitem"><input type="hidden" class="iid" value="'
-                             + d.result[i].iid + '"/><span class="name">'
-                             + d.result[i].room_name + '</span><span>' + d.result[i].room_type_name
-                             + '</span><span>' + d.result[i].peoples + '人</span></div>'
-                             + '<a href="' + packageJson.JAVA_DOMAIN  + '/personorder/gotoRoomInfo.do?iid=' + d.result[i].iid + '">'
-                             + '<i>查看包厢 </i><i>环境照片</i><em></em></a></li>';
-                         }
-                        str += '<div class="clear"></div>';
-                        $(".allroom ul").html(str);
+                        var str = '';
+                        if(typeof(d.result) != "undefined"){
+                            for(var i=0; i< d.result.length; i++){
+                                str = str + '<li><div class="allroomitem"><input type="hidden" class="iid" value="'
+                                        + d.result[i].iid + '"/><span class="name">'
+                                        + d.result[i].room_name + '</span><span>' + d.result[i].room_type_name
+                                        + '</span><span>' + d.result[i].peoples + '人</span></div>'
+                                        + '<a href="' + packageJson.JAVA_DOMAIN  + '/personorder/gotoRoomInfo.do?iid=' + d.result[i].iid + '">'
+                                        + '<i>查看包厢 </i><i>环境照片</i><em></em></a></li>';
+                            }
+                            str += '<div class="clear"></div>';
+                            $(".allroom ul").html(str);
 
-                        //选择包厢
-                        $('.allroom li .allroomitem').click(function(){
-                            $('.allroom li .allroomitem').show();
-                            $('.allroom li a').removeClass('action');
-                            $(this).hide();
-                            $(this).parents('li').find('a').addClass('action');
+                            //选择包厢
+                            $('.allroom li .allroomitem').click(function(){
+                                $('.allroom li .allroomitem').show();
+                                $('.allroom li a').removeClass('action');
+                                $(this).hide();
+                                $(this).parents('li').find('a').addClass('action');
 
-                            var myDate = new Date();
-                            var month = myDate.getMonth() + 1;
-                            var time_info = '';
-                            time_info += '<h3>今天(' + month + '-' + myDate.getDate() + ')<i>19:00-次日02:00</i>(7小时)</h3>';
-                            time_info += '<h4>欢唱时间不足7小时，按7小时计算</h4>';
-                            $(".order-hour").html(time_info);
+                                var myDate = new Date();
+                                var month = myDate.getMonth() + 1;
+                                var time_info = '';
+                                time_info += '<h3>今天(' + month + '-' + myDate.getDate() + ')<i>19:00-次日02:00</i>(7小时)</h3>';
+                                time_info += '<h4>欢唱时间不足7小时，按7小时计算</h4>';
+                                $(".order-hour").html(time_info);
 
-                            iid = $(this).find('.iid').val();
-                            var book_info = '';
-                            book_info += '<p>请核对您选择的内容  </p>';
-                            book_info += '<p>开机时间：' + month + "月" + myDate.getDate() + '日</p>';
-                            book_info += '<p>包间类型：' + $(this).find('.name').text() + '</p>';
-                            $(".selectall").prepend(book_info);
-                        })
+                                iid = $(this).find('.iid').val();
+                                var book_info = '';
+                                book_info += '<p>请核对您选择的内容  </p>';
+                                book_info += '<p>开机时间：' + month + "月" + myDate.getDate() + '日</p>';
+                                book_info += '<p>包间类型：' + $(this).find('.name').text() + '</p>';
+                                $(".selectall .update").html(book_info);
+                            })
+                        }
                     } else {
                          alert(d.msg);
                     }

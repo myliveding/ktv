@@ -182,7 +182,8 @@ public class MemberController {
         String str = httpServletRequest.getQueryString();
         if (DataUtil.isNotEmpty(str)){
         }
-        return "redirect:"+ Constant.URL + "order/myorder";
+        return "redirect:"+Constant.URL+"/personorder/getOrderList.do";
+
     }
 
     /**
@@ -191,7 +192,7 @@ public class MemberController {
      * @return object
      */
     @RequestMapping("/gotoUserCenter")
-    public @ResponseBody String gotoUserCenter(HttpServletRequest request, HttpServletResponse response) {
+    public String gotoUserCenter(HttpServletRequest request, HttpServletResponse response) {
 
         HttpSession session = ContextHolderUtils.getSession();
         Object openidObj =  session.getAttribute("openid");

@@ -15,6 +15,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * @Description
@@ -248,18 +250,12 @@ public class PersonOrderController {
             WechatMember member = memberService.getObjectByOpenid(openidObj.toString());
             if(null != member){
                 memberId = member.getId();
-                request.setAttribute("memberId", memberId);
+                request.setAttribute("member", member);
             }
-            try {
-                //创建订单并跳转到支付页面
-                String[] arr = new String[]{"member_id" + memberId, "order_id" + orderId};
-                String mystr = "member_id=" + memberId + "&order_id=" + orderId;
-                JSONObject packages = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.ORDER_DETAIL, mystr, arr));
-                if(0 == packages.getInt("error_code")){
-                    request.setAttribute("order", packages.get("result"));
-                }
-            } catch (Exception e) {
-                logger.error("去订单详情出错:" + e.getMessage(), e);
+
+            JSONObject order = getOrderDetail(memberId, orderId);
+            if(0 == order.getInt("error_code")){
+                request.setAttribute("order", order.get("result"));
             }
         }else{
             request.setAttribute("error", "请在微信中访问");
@@ -267,5 +263,104 @@ public class PersonOrderController {
         return "order/myorderdetail";
     }
 
+
+    private JSONObject getOrderDetail(Integer memberId, String orderId){
+        JSONObject order = null;
+        try {
+            //创建订单并跳转到支付页面
+            String[] arr = new String[]{"member_id" + memberId, "order_id" + orderId};
+            String mystr = "member_id=" + memberId + "&order_id=" + orderId;
+            order = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.ORDER_DETAIL, mystr, arr));
+        } catch (Exception e) {
+            logger.error("去订单详情出错:" + e.getMessage(), e);
+        }
+        return order;
+    }
+
+    /**
+     * 订单取消或者申请退款
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping("/cancleOrder")
+    public String cancleOrder(HttpServletRequest request, HttpServletResponse response) throws IOException{
+
+        JSONObject resultObject = JSONObject.fromObject("{\"status\":0,\"msg\":\"成功\"}");
+        HttpSession session = ContextHolderUtils.getSession();
+        Object openidObj =  session.getAttribute("openid");
+        openidObj = "11111111";
+        if ( !"".equals(openidObj) && openidObj != null) {
+            String orderId = request.getParameter("orderId");
+            Integer memberId = 0;
+            WechatMember member = memberService.getObjectByOpenid(openidObj.toString());
+            if(null != member){
+                memberId = member.getId();
+                JSONObject order = getOrderDetail(memberId, orderId);
+                if(null != order){
+                    JSONObject info = JSONObject.fromObject(order.get("result"));
+                    //订单状态 1未支付 2已支付 3已确认消费 4取消预订 5系统取消6待退款 7已退款
+                    String[] arr = new String[]{"member_id" + memberId, "order_id" + orderId};
+                    String mystr = "member_id=" + memberId + "&order_id=" + orderId;
+                    String status = info.getString("order_status");
+                    if("1".equals(status) || "2".equals(status)){
+                        if("1".equals(status)){
+                            //取消预定
+                            info = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.CANCLE_ORDER, mystr, arr));
+                        }else if("2".equals(status)){
+                            //退款
+                            info = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.ORDER_REFUND, mystr, arr));
+                        }
+                        if(0 == info.getInt("error_code")){
+                        }else{
+                            resultObject = JSONObject.fromObject("{\"status\":1,\"msg\": " + info.getString("msg") + "}");
+                        }
+                    }else{
+                        resultObject = JSONObject.fromObject("{\"status\":1,\"msg\":\"不合法的申请\"}");
+                    }
+                }
+            }
+        }else{
+            request.setAttribute("error", "请在微信中访问");
+            resultObject = JSONObject.fromObject("{\"status\":1,\"msg\":\"请在微信中访问\"}");
+        }
+        response.setContentType("text/html; charset=utf-8");
+        PrintWriter out = response.getWriter();
+        out.println(resultObject);
+        return null;
+    }
+
+    /**
+     * 确认开机
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping("/confirmBoot")
+    public String confirmBoot(HttpServletRequest request, HttpServletResponse response) throws IOException{
+
+        JSONObject resultObject = JSONObject.fromObject("{\"error_code\":0,\"msg\":\"成功\"}");
+        HttpSession session = ContextHolderUtils.getSession();
+        Object openidObj =  session.getAttribute("openid");
+        if ( !"".equals(openidObj) && openidObj != null) {
+            String orderId = request.getParameter("orderId");
+            Integer memberId = 0;
+            WechatMember member = memberService.getObjectByOpenid(openidObj.toString());
+            if(null != member){
+                memberId = member.getId();
+                //订单状态 1未支付 2已支付 3已确认消费 4取消预订 5系统取消6待退款 7已退款
+                String[] arr = new String[]{"member_id" + memberId, "order_id" + orderId};
+                String mystr = "member_id=" + memberId + "&order_id=" + orderId;
+                resultObject = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.CONFIRM_BOOT, mystr, arr));
+            }
+        }else{
+            request.setAttribute("error", "请在微信中访问");
+            resultObject = JSONObject.fromObject("{\"error_code\":1,\"msg\":\"请在微信中访问\"}");
+        }
+        response.setContentType("text/html; charset=utf-8");
+        PrintWriter out = response.getWriter();
+        out.println(resultObject);
+        return null;
+    }
 
 }

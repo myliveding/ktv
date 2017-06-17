@@ -1,3 +1,10 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
+
 <!doctype html>
 <html style="background: #f8f8f8;">
 <head>
@@ -9,7 +16,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>ktv</title>
-    <link rel="stylesheet" href="jsp/resources/css/main.css">
+    <link rel="stylesheet" href="<%=basePath%>jsp/resources/css/main.css">
 </head>
 <body>  
     <div class="main" style="padding-top: 0;">
@@ -17,16 +24,16 @@
             <div class="user-top">
                 <span>普通会员</span> 
                 <a href="message.jsp">
-                    <img src="jsp/resources/img/message.png">
+                    <img src="<%=basePath%>jsp/resources/img/message.png">
                     <i>2</i>
                 </a>
                 <a href="edit.jsp">
-                    <img src="jsp/resources/img/set.png" >
+                    <img src="<%=basePath%>jsp/resources/img/set.png" >
                 </a>
                 <div class="clear"></div>
             </div>
             <div class="header-img">
-                <img src="jsp/resources/img/1.png">
+                <img src="<%=basePath%>jsp/resources/img/1.png">
             </div>
             <div class="user-account">
                 <ul>
@@ -50,7 +57,7 @@
             <ul>
                 <li>
                     <a href="javascript:void(0);">
-                        <img src="jsp/resources/img/u1.png">
+                        <img src="<%=basePath%>jsp/resources/img/u1.png">
                         <span>我的团队</span> 
                     </a>
                     <div class="user-list-item">
@@ -59,20 +66,20 @@
                     </div> 
                 </li>
                  <li>
-                    <a href="../order/myorder.jsp">
-                        <img src="jsp/resources/img/u2.png">
+                    <a href="${pageContext.request.contextPath}/personorder/getOrderList.do">
+                        <img src="<%=basePath%>jsp/resources/img/u2.png">
                         <span>我的预定</span>
                     </a>
                 </li>
                  <li>
                     <a href="../order/myscoreorder.jsp">
-                        <img src="jsp/resources/img/u3.png">
+                        <img src="<%=basePath%>jsp/resources/img/u3.png">
                         <span>积分订单</span>
                     </a>
                 </li>
                  <li>
                     <a href="../commission/commission.jsp">
-                        <img src="jsp/resources/img/u4.png">
+                        <img src="<%=basePath%>jsp/resources/img/u4.png">
                         <span>佣金提现</span>
                     </a>
                 </li>
@@ -80,19 +87,19 @@
             <ul>
                 <li>
                     <a href="../commission/commissiondetails.jsp">
-                        <img src="jsp/resources/img/u5.png">
+                        <img src="<%=basePath%>jsp/resources/img/u5.png">
                         <span>佣金明细</span>
                     </a>
                 </li>
                  <li>
                     <a href="../shop/myshoporder.jsp">
-                        <img src="jsp/resources/img/u6.png">
+                        <img src="<%=basePath%>jsp/resources/img/u6.png">
                         <span>我的超市订单</span>
                     </a>
                 </li>
                  <li> 
                     <a href="javascript:void(0);">
-                        <img src="jsp/resources/img/u7.png">
+                        <img src="<%=basePath%>jsp/resources/img/u7.png">
                         <span>我的抵用券</span> 
                     </a>
                     <div class="user-list-item">
@@ -102,8 +109,8 @@
                     </div> 
                 </li>
                  <li>
-                    <a href="../ktv/code.jsp">
-                        <img src="jsp/resources/img/u8.png">
+                    <a href="${pageContext.request.contextPath}/jsp/my/code.jsp">
+                        <img src="<%=basePath%>jsp/resources/img/u8.png">
                         <span>我的邀请二维码</span>
                     </a>
                 </li>
@@ -112,8 +119,8 @@
     </div>
     <jsp:include page="/jsp/layouts/foot.jsp" flush="true"/>
 </body> 
-<script src='jsp/resources/js/rem.js'></script>
-<script src='jsp/resources/js/jquery.min.js'></script>
+<script src='<%=basePath%>jsp/resources/js/rem.js'></script>
+<script src='<%=basePath%>jsp/resources/js/jquery.min.js'></script>
 </html>
 <script>
     $('.user-list a').click(function() {

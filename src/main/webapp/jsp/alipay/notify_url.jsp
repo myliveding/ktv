@@ -75,7 +75,7 @@
 			String mystr = "orderNo=" + out_trade_no + "&payType=alipay&serialNo=" + trade_no + "&thirdPayAmt=" + total_amount;
 			Logger.getLogger(this.getClass()).info("notifyUrl mystr=" + mystr);
 			try {
-				resultStr = JSONObject.fromObject(JoYoUtil.sendPost(JoYoUtil.ORDER_CONFIRM, mystr));
+				resultStr = JSONObject.fromObject(JoYoUtil.sendPost(JoYoUtil.PAY_ORDER, mystr));
 			} catch (Exception e) {
 				Logger.getLogger(this.getClass()).error("获取数据出错:" + e.getMessage(), e);
 			}

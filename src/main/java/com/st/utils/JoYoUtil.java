@@ -16,10 +16,6 @@ public class JoYoUtil {
 
     private static Logger logger = LoggerFactory.getLogger(JoYoUtil.class);
 
-    /**
-     * 确认订单 java
-     */
-    public static final String ORDER_CONFIRM = Constant.PHP_API_URL + "/order/payOrder";
 
     /**
      * 公司信息
@@ -120,7 +116,20 @@ public class JoYoUtil {
     public static final String ORDER_DETAIL = Constant.PHP_API_URL + "/api/get_order_detail";
 
 
+    /**
+     *  申请退款
+     */
+    public static final String ORDER_REFUND = Constant.PHP_API_URL + "/api/refund_book_order";
 
+    /**
+     *  确认是否开机
+     */
+    public static final String CONFIRM_BOOT = Constant.PHP_API_URL + "/api/confirm_boot";
+
+    /**
+     *  订单支付后的回掉函数
+     */
+    public static final String PAY_ORDER = Constant.PHP_API_URL + "/api/pay_book_order";
 
 
 

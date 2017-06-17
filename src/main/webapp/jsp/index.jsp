@@ -99,18 +99,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <h2>距离我最近↓</h2>
                 <c:forEach var = "data" items ="${storeList}">
                     <li>
-                        <a href="roominfo.html">
+                        <a href="${pageContext.request.contextPath}/shop/gotoStoreDetail.do?id=${data.id}">
                             <img src="${data.image_url}">
                             <div class="shop-info">
                                 <h3>${data.name}</h3>
-                                <p>
-                                    <span>【剩余小包】${data.smallNum}个</span>
-                                    <span>【剩余VIP包】${data.vipNum}个</span>
-                                </p>
-                                <p>
-                                    <span>【剩余中包】${data.mediumNum}个</span>
-                                    <span>【剩余大包】${data.bigNum}个</span>
-                                </p>
+                                <c:forEach var="room" items="${data.room_type}" varStatus="i" >
+                                    <c:if test="${i.index%2 == 0}">
+                                        <p>
+                                    </c:if>
+                                        <span>【剩余${room.name}】${room.count}个</span>
+                                    <c:if test="${i.index%2 == 1}">
+                                        </p>
+                                    </c:if>
+                                </c:forEach>
                             </div>
                             <div class="recent">距离我${data.distance}KM</div>
                             <em><a href="${pageContext.request.contextPath}/shop/gotoStoreDetail.do?id=${data.id}">进入预定</a></em>

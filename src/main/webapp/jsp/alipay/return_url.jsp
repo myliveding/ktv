@@ -76,7 +76,7 @@
 				//如果有做过处理，不执行商户的业务程序
                 String mystr="orderNo="+out_trade_no+"&payType=alipay&serialNo="+trade_no+"&thirdPayAmt="+total_fee;
                 Logger.getLogger(this.getClass()).info("notifyUrl mystr="+mystr);
-                JSONObject.fromObject(JoYoUtil.sendPost(JoYoUtil.ORDER_CONFIRM, mystr));
+                JSONObject.fromObject(JoYoUtil.sendPost(JoYoUtil.PAY_ORDER, mystr));
 		}
 		
 		//该页面可做页面美工编辑
