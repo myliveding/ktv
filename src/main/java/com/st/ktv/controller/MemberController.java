@@ -270,7 +270,6 @@ public class MemberController {
         HttpSession session = ContextHolderUtils.getSession();
         Object openidObj =  session.getAttribute("openid");
         Object appidObj =  session.getAttribute("appid");
-
         if ( !"".equals(openidObj) && openidObj != null && !"".equals(appidObj) && appidObj != null) {
             WechatMember member = memberService.getObjectByOpenid(openidObj.toString());
             String[] arr = new String[]{"member_id" + member.getId()};
@@ -282,13 +281,6 @@ public class MemberController {
         }else{
             request.setAttribute("error", "请在微信中访问");
         }
-
-//        String[] arr = new String[]{"member_id" + 1};
-//        String mystr = "member_id=" + 1;
-//        JSONObject result = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.USER_MESSAGES, mystr, arr));
-//        if (0 == result.getInt("error_code")) {
-//            request.setAttribute("msgs",result.get("result"));
-//        }
         return "my/message";
     }
 

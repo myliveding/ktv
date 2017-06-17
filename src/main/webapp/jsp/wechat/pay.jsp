@@ -6,7 +6,6 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -14,7 +13,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta charset="utf-8">
     <meta name="keywords" content=""> 
     <meta name="description" content="">
-    <link href="jsp/resources/css/basic.css %>" type="text/css" rel="stylesheet" />
+    <link href="<%=basePath%>jsp/resources/css/basic.css %>" type="text/css" rel="stylesheet" />
   </head>
 <body class="jsb_add1 gray pb40">
 

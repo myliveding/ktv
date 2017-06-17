@@ -69,7 +69,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <span>小包</span>
                             <span>8-10人</span>
                         </div>
-                        <a href="${pageContext.request.contextPath}/order/gotoRoomInfo.do?iid=${a.iid}">
+                        <a href="${pageContext.request.contextPath}/personorder/gotoRoomInfo.do?iid=${a.iid}">
                             <i>查看包厢 </i>
                             <i>环境照片</i>
                             <em></em>
@@ -148,7 +148,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                              + d.result[i].iid + '"/><span class="name">'
                              + d.result[i].room_name + '</span><span>' + d.result[i].room_type_name
                              + '</span><span>' + d.result[i].peoples + '人</span></div>'
-                             + '<a href="' + packageJson.JAVA_DOMAIN  + '/order/gotoRoomInfo.do?iid=' + d.result[i].iid + '">'
+                             + '<a href="' + packageJson.JAVA_DOMAIN  + '/personorder/gotoRoomInfo.do?iid=' + d.result[i].iid + '">'
                              + '<i>查看包厢 </i><i>环境照片</i><em></em></a></li>';
                          }
                         str += '<div class="clear"></div>';
@@ -208,7 +208,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 success: function success(d) {
                     if (d.status == 0) {
                         //进入下一步
-                        window.location.href = packageJson.JAVA_DOMAIN  + '/order/gotoPackages.do?iid=' + iid;
+                        window.location.href = packageJson.JAVA_DOMAIN  + '/personorder/gotoPackages.do?iid=' + iid;
                     } else {
                         //弹出绑定页面
                         $('form.notel').show();
@@ -258,7 +258,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 success: function success(d) {
                     if (d.status == 0) {
                         //进入下一步
-                        window.location.href = packageJson.JAVA_DOMAIN  + '/order/gotoPackages.do?iid=' + iid;
+                        window.location.href = packageJson.JAVA_DOMAIN  + '/personorder/gotoPackages.do?iid=' + iid;
                     } else {
                         //弹出绑定页面
                         alert(d.msg);

@@ -20,6 +20,8 @@ public interface MemberService {
 
     public WechatMember getObjectByOpenid(String openid);
 
+    public JSONObject getJsonByOpenid(String openid);
+
     /**
      * 执行手机号码的校验、新增绑定和修改
      * @param openid

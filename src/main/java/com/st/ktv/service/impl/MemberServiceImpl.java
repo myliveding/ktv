@@ -89,6 +89,12 @@ public class MemberServiceImpl implements MemberService {
         return wechatMemberMapper.getObjectByOpenid(openid);
     }
 
+    public JSONObject getJsonByOpenid(String openid){
+        logger.info("openid：" + openid );
+        JSONObject resultObject = JSONObject.fromObject(wechatMemberMapper.getObjectByOpenid(openid));
+        return resultObject;
+    }
+
     public WechatMember getObjectByMobile(String mobile){
         return wechatMemberMapper.getObjectByMobile(mobile);
     }

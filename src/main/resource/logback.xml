@@ -8,11 +8,6 @@
     <encoder>
       <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n</pattern>
     </encoder>
-      <filter class="ch.qos.logback.classic.filter.LevelFilter">
-          <level>ERROR</level>
-          <onMatch>DENY</onMatch>
-          <onMismatch>ACCEPT</onMismatch>
-      </filter>
   </appender>
   
   <appender name="InfoLogFile" class="ch.qos.logback.core.rolling.RollingFileAppender">   
@@ -51,20 +46,7 @@
 	</filter>
   </appender> 
   
-<!--  <appender name="DubboLogFile" class="ch.qos.logback.core.rolling.RollingFileAppender">   -->
-<!--     <File>/home/wwwlogs/${APP_Name}/dubbo.log</File>  -->
-<!--    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">   -->
-<!--      <fileNamePattern>/home/wwwlogs/${APP_Name}/dubbo.%d{yyyy-MM-dd}.log</fileNamePattern>   -->
-<!--      <maxHistory>30</maxHistory>    -->
-<!--    </rollingPolicy>   -->
-<!--   -->
-<!--    <encoder>   -->
-<!--      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n</pattern>-->
-<!--      <charset>GBK</charset>-->
-<!--    </encoder>   -->
-<!--  </appender> -->
-  
-  <appender name="SQLLogFile" class="ch.qos.logback.core.rolling.RollingFileAppender">   
+  <appender name="SQLLogFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
      <File>/home/wwwlogs/${APP_Name}.mysql.log</File>  
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">   
       <fileNamePattern>/home/wwwlogs/${APP_Name}.mysql.%d{yyyy-MM-dd}.log</fileNamePattern>   
@@ -81,7 +63,7 @@
         <appender-ref ref="SQLLogFile" />
   </logger>   
     
-  <root level="INFO">          
+  <root level="DEBUG">
 	    <appender-ref ref="STDOUT" />
 	    <appender-ref ref="InfoLogFile" />
 	    <appender-ref ref="ErrorLogFile" />

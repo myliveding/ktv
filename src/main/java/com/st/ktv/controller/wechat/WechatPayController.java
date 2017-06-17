@@ -1,5 +1,7 @@
 package com.st.ktv.controller.wechat;
 
+import com.st.ktv.entity.WechatMember;
+import com.st.ktv.service.MemberService;
 import com.st.utils.Constant;
 import com.st.ktv.controller.wechat.common.Configure;
 import com.st.ktv.controller.wechat.common.MD5;
@@ -38,98 +40,116 @@ public class WechatPayController {
 	@SuppressWarnings("unused")
 	@Resource
 	private WechatAPIServiceImpl weixinAPIService;
+    @Resource
+    MemberService memberService;
 	
 	@RequestMapping(value="/index",method=RequestMethod.GET)
 	public  String pay(HttpServletRequest req,Model model) {
 		String openid = (String) req.getSession().getAttribute("openid");
-		String memberId = (String) req.getSession().getAttribute("memberId");
+        openid = "11111111";
 		logger.info("支付调用时获取的openid为：" + openid);
-		String orderNo = req.getParameter("orderNo");
-
-		if (StringUtils.isEmpty(orderNo)) {
-            req.setAttribute("error", "订单号不能为空");
-            return "error";
-		}
-		if (StringUtils.isEmpty(memberId)) {
-			req.setAttribute("error", "获取用户出错了");
-			return "error";
-		}
-		JSONObject resultStr = JSONObject.fromObject("{\"status\":1,\"msg\":\"出错了\"}");
-		String mystr="memberId=" + memberId + "&orderNo=" + orderNo;
-        try {
-            resultStr = JSONObject.fromObject(JoYoUtil.sendGet("", mystr));
-        } catch (Exception e) {
-            logger.error("订单明细查询接口出错:" + e.getMessage(), e);
-        }
-
-		String productName = "盛世订单-"+orderNo;
-		String totalFee = "0";
-		model.addAttribute("orderId", orderNo);
-		if(0 == resultStr.getInt("error_code")){
-			JSONObject message = JSONObject.fromObject(resultStr.getString("result"));
-			double orderAmt = message.getDouble("orderAmt");
-            String payAmt = new java.text.DecimalFormat("#0.00").format(orderAmt);
-            logger.info("ordermoney（元）:" + payAmt);
-            String orderStatus = message.getString("orderStatus");
-            if(!"10".equals(orderStatus)){
-                req.setAttribute("error", "请勿重复支付");
-                return "error：请勿重复支付";
+        if(null == openid || "".equals(openid)){
+            String orderId = req.getParameter("orderId");
+            if (StringUtils.isEmpty(orderId)) {
+                req.setAttribute("error", "订单不能为空");
+                return "error";
             }
-			model.addAttribute("pay_method", "wechatpay");
-			if(StringUtils.isEmpty(payAmt)){
-			    payAmt="0";
-			}else {
-				int index = payAmt.indexOf(".");    
-		        int length = payAmt.length();    
-		        Long amLong = 0l;    
-		        if(index == -1){    
-		            amLong = Long.valueOf(payAmt + "00");
-		        }else if(length - index >= 3){    
-		            amLong = Long.valueOf((payAmt.substring(0, index+3)).replace(".", ""));    
-		        }else if(length - index == 2){    
-		            amLong = Long.valueOf((payAmt.substring(0, index+2)).replace(".", "")+0);    
-		        }else{    
-		            amLong = Long.valueOf((payAmt.substring(0, index+1)).replace(".", "")+"00");    
-		        } 
-		        payAmt = amLong + "";
-//                payAmt="1";
-				logger.info("order_money（分）:" + payAmt);
-			}
-			totalFee = payAmt;
-		}else {
-			req.setAttribute("error", "获取订单详情出错了");
-			return "error";
-		}
-        try {
-			// 参数
-			String nonceStr = RandomStringUtils.random(30, "123456789qwertyuioplkjhgfdsazxcvbnm"); // 8位随机数
-			ReportReqData reportReqData=new ReportReqData(productName, openid, orderNo, getIp(req), totalFee,nonceStr);
-			XStream xStreamForRequestPostData = new XStream(new DomDriver("UTF-8", new XmlFriendlyNameCoder("-_", "_")));
-			Annotations.configureAliases(xStreamForRequestPostData,ReportReqData.class );
-			String postDataXML = xStreamForRequestPostData.toXML(reportReqData);
-			String jsonObject=WeixinUtil.wxpayRequset("https://api.mch.weixin.qq.com/pay/unifiedorder", "POST", postDataXML);
-			logger.info("jsonObject:"+jsonObject);
-			Map<String, String> map=ParseXmlUtil.parseXmlText(jsonObject);
-			String prepayId=map.get("prepay_id");
-			// appId
-			Map<String, String> paymap=new HashMap<String, String>();
-			String paytimeStamp=new Date().getTime()+"";
-			String paynonceStr=RandomStringUtils.random(30, "123456789qwertyuioplkjhgfdsazxcvbnm");
-			paymap.put("appId", Constant.APP_ID);
-			paymap.put("timeStamp", paytimeStamp);
-			paymap.put("nonceStr", paynonceStr);
-			paymap.put("package", "prepay_id="+prepayId);
-			paymap.put("signType", "MD5");
-			String pay2sign = getSign(paymap);
-			model.addAttribute("appid",Constant.APP_ID);
-			model.addAttribute("timeStamp", paytimeStamp);
-			model.addAttribute("nonceStr", paynonceStr);
-			model.addAttribute("_package", "prepay_id="+prepayId);
-			model.addAttribute("paySign", pay2sign);
-		} catch (Exception e) {
-			logger.error(e.getMessage(),e);
-		}
-	return "wechat/pay";
+
+            JSONObject resultStr = JSONObject.fromObject("{\"status\":1,\"msg\":\"出错了\"}");
+            String orderNo = "";
+            WechatMember member = memberService.getObjectByOpenid(openid);
+            if(null != member){
+                try {
+                    String[] arr = new String[]{"member_id" + member.getId(), "order_id" + orderId};
+                    String mystr = "member_id=" + member.getId() + "&order_id=" + orderId;
+                    resultStr = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.ORDER_DETAIL, mystr, arr));
+                    if(0 == resultStr.getInt("error_code")){
+                        JSONObject data = JSONObject.fromObject(resultStr.get("result"));
+                        orderNo = data.getString("order_code");
+                    }else{
+                        req.setAttribute("error", "订单详情不存在");
+                        return "error";
+                    }
+                } catch (Exception e) {
+                    logger.error("订单明细查询接口出错:" + e.getMessage(), e);
+                    req.setAttribute("error", "订单明细查询接口出错");
+                    return "error";
+                }
+            }else{
+                req.setAttribute("error", "用户信息不存在");
+                return "error";
+            }
+
+            //判断订单金额
+            String productName = "盛世订单-"+orderNo;
+            String totalFee = "0";
+            model.addAttribute("orderId", orderNo);
+            if(0 == resultStr.getInt("error_code")){
+                JSONObject message = JSONObject.fromObject(resultStr.getString("result"));
+                double orderAmt = message.getDouble("money");
+                String payAmt = new java.text.DecimalFormat("#0.00").format(orderAmt);
+                logger.info("ordermoney（元）:" + payAmt);
+                String orderStatus = message.getString("order_status");
+                if(!"1".equals(orderStatus)){
+                    req.setAttribute("error", "请勿重复支付");
+                    return "error：请勿重复支付";
+                }
+                model.addAttribute("pay_method", "wechatpay");
+                if(StringUtils.isEmpty(payAmt)){
+                    payAmt="0";
+                }else {
+                    int index = payAmt.indexOf(".");
+                    int length = payAmt.length();
+                    Long amLong = 0l;
+                    if(index == -1){
+                        amLong = Long.valueOf(payAmt + "00");
+                    }else if(length - index >= 3){
+                        amLong = Long.valueOf((payAmt.substring(0, index+3)).replace(".", ""));
+                    }else if(length - index == 2){
+                        amLong = Long.valueOf((payAmt.substring(0, index+2)).replace(".", "")+0);
+                    }else{
+                        amLong = Long.valueOf((payAmt.substring(0, index+1)).replace(".", "")+"00");
+                    }
+                    payAmt = amLong + "";
+                    payAmt="1";
+                    logger.info("order_money（分）:" + payAmt);
+                }
+                totalFee = payAmt;
+            }else {
+                req.setAttribute("error", "获取订单详情出错了");
+                return "error";
+            }
+            //调用微信支付
+            try {
+                String nonceStr = RandomStringUtils.random(30, "123456789qwertyuioplkjhgfdsazxcvbnm"); // 8位随机数
+                ReportReqData reportReqData=new ReportReqData(productName, openid, orderNo, getIp(req), totalFee,nonceStr);
+                XStream xStreamForRequestPostData = new XStream(new DomDriver("UTF-8", new XmlFriendlyNameCoder("-_", "_")));
+                Annotations.configureAliases(xStreamForRequestPostData,ReportReqData.class );
+                String postDataXML = xStreamForRequestPostData.toXML(reportReqData);
+                String jsonObject=WeixinUtil.wxpayRequset("https://api.mch.weixin.qq.com/pay/unifiedorder", "POST", postDataXML);
+                logger.info("jsonObject:"+jsonObject);
+                Map<String, String> map=ParseXmlUtil.parseXmlText(jsonObject);
+                String prepayId=map.get("prepay_id");
+                // appId
+                Map<String, String> paymap=new HashMap<String, String>();
+                String paytimeStamp=new Date().getTime()+"";
+                String paynonceStr=RandomStringUtils.random(30, "123456789qwertyuioplkjhgfdsazxcvbnm");
+                paymap.put("appId", Constant.APP_ID);
+                paymap.put("timeStamp", paytimeStamp);
+                paymap.put("nonceStr", paynonceStr);
+                paymap.put("package", "prepay_id="+prepayId);
+                paymap.put("signType", "MD5");
+                String pay2sign = getSign(paymap);
+                model.addAttribute("appid",Constant.APP_ID);
+                model.addAttribute("timeStamp", paytimeStamp);
+                model.addAttribute("nonceStr", paynonceStr);
+                model.addAttribute("_package", "prepay_id="+prepayId);
+                model.addAttribute("paySign", pay2sign);
+            } catch (Exception e) {
+                logger.error(e.getMessage(),e);
+            }
+        }
+	    return "wechat/pay";
 	}
 
     public  String getSign(Map<String,String> map){

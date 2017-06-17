@@ -16,6 +16,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple fullscreen -->
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <jsp:include page="/jsp/layouts/head.jsp" flush="true"/>
     <title>ktv</title>
     <link rel="stylesheet" href="<%=basePath%>jsp/resources/css/main.css">
 </head>
@@ -26,7 +27,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          </a>
          <h1>套餐选择</h1>
      </div> 
-     <div class="main"> 
+     <div class="main">
+         <input type="hidden" class="iid" value="${iid}" />
          <div class="shop-detail">
              <h2>小包套餐（邵武区）</h2>
              <p class="gray" >${roomInfo.room_type_name}(${roomInfo.room_peoples}人)</p>
@@ -35,11 +37,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          </div>
          <div class="select-meal">
              <ul>
-                 <c:forEach var="pack" items="${packages}">
-                     <li class="act">
-                         <h1>${pack.name}</h1>
-                         <p>${pack.summary}</p>
-                         <div class="moneynum">￥${pack.price}</div>
+                 <c:forEach var="data" items="${packages}">
+                     <li>
+                         <input type="hidden" class="price" value="${data.price}" />
+                         <input type="hidden" class="packageId" value="${data.package_id}" />
+                         <h1>${data.name}</h1>
+                         <p>${data.summary}</p>
+                         <div class="moneynum">￥${data.price}</div>
                      </li>
                  </c:forEach>
              </ul>
@@ -48,7 +52,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                  手机号码<span>${mobile}</span>
              </div>
              <div class="go-pay">
-                 <span>￥<i>977.00</i></span>
+                 <span>￥<i>0.00</i></span>
                  <label>去支付</label>
              </div>
          </div>
@@ -59,9 +63,40 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script src='<%=basePath%>jsp/resources/js/rem.js'></script>
 <script src='<%=basePath%>jsp/resources/js/jquery.min.js'></script>
 <script>
+    var packageId;
+    //初始化页面是选中第一个包厢类型
+    $(document).ready(function(){
+        $('.select-meal li:eq(0)').addClass('act');
+        $('.go-pay span i').html($('.select-meal li:eq(0)').find('.price').val());
+        packageId = $('.select-meal li:eq(0)').find('.packageId').val();
+    });
+
+
     $('.select-meal li').click(function() {
         $('.select-meal li').removeClass('act');
         $(this).addClass('act');
+        $('.go-pay span i').html($(this).find('.price').val());
+        packageId = $(this).find('.packageId').val();
+    })
+
+    $('.go-pay label').click(function() {
+        <%--$.ajax({--%>
+            <%--'url': "${pageContext.request.contextPath}/personorder/gotoPay.do",--%>
+            <%--'type': 'post',--%>
+            <%--'dataType': 'json',--%>
+            <%--'data': {--%>
+                <%--iid: $('.iid').val(),--%>
+                <%--packageId: packageId,--%>
+            <%--},--%>
+            <%--success: function success(d) {--%>
+                <%--if (d.status == 0) {--%>
+                    window.location.href = packageJson.JAVA_DOMAIN  + '/personorder/gotoPay.do?iid='
+                            + $('.iid').val() + "&packageId=" + packageId;
+//                } else {
+//                    alert(d.msg);
+//                }
+//            }
+//        });
     })
 </script>
 </html>

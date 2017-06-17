@@ -17,101 +17,80 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>ktv</title>  
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/pullToRefresh.css">
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="<%=basePath%>jsp/resources/css/reset.css">
+    <link rel="stylesheet" href="<%=basePath%>jsp/resources/css/pullToRefresh.css">
+    <link rel="stylesheet" href="<%=basePath%>jsp/resources/css/main.css">
 </head>
 <body>  
     <div id="header" style="background: #fbd1c1;">
          <a href="javascript:history.go(-1);">
-             <img src="jsp/resources/img/b2.png">
+             <img src="<%=basePath%>jsp/resources/img/b2.png">
          </a>
          <h1 >我的订单</h1>
      </div> 
     <div class="main" >
         <div class="scoreorder" id="wrapper">
             <ul>
-                <li>
-                    <img src="jsp/resources/img/p1.png">
-                    <div class="scoreorder-info">
-                        <p>兑换编号20170218204956545</p>
-                        <h1>小包套餐（邵武区）</h1>
-                        <span>订单金额：<i>6760分</i></span>
-                    </div>
-                    <div class="scoreorder-detail"> 
-                        <a href="">查看详情></a>
-                    </div>
-                    <div class="clear"></div>
-                </li>
-                <li>
-                    <img src="jsp/resources/img/p1.png">
-                    <div class="scoreorder-info">
-                        <p>兑换编号20170218204956545</p>
-                        <h1>小包套餐（邵武区）</h1>
-                        <span>订单金额：<i>6760元</i></span>
-                    </div> 
-                    <div class="scoreorder-detail"> 
-                         <a href="../shop/pay.jsp" class="scoreorder-go">去支付</a>
-                         <a class="noact" href="javascript:void(0);">详情></a>
-                    </div>
-                    <div class="clear"></div>
-                </li>
-                 <li>
-                    <img src="jsp/resources/img/p1.png">
-                    <div class="scoreorder-info">
-                        <p>兑换编号20170218204956545</p>
-                        <h1>小包套餐（邵武区）</h1>
-                        <span>订单金额：<i>6760元</i></span>
-                    </div> 
-                    <div class="scoreorder-detail"> 
-                         <a href="../shop/pay.jsp" class="scoreorder-go">去支付</a>
-                         <a class="noact" href="javascript:void(0);">详情></a>
-                    </div>
-                    <div class="clear"></div>
-                </li>
-                <li>
-                    <img src="jsp/resources/img/p1.png">
-                    <div class="scoreorder-info">
-                        <p>兑换编号20170218204956545</p>
-                        <h1>小包套餐（邵武区）</h1>
-                        <span>订单金额：<i>6760元</i></span>
-                    </div> 
-                    <div class="scoreorder-detail"> 
-                         <a href="../shop/pay.jsp" class="scoreorder-go">去支付</a>
-                         <a class="noact" href="javascript:void(0);">详情></a>
-                    </div>
-                    <div class="clear"></div>
-                </li>
-                <li>
-                    <img src="jsp/resources/img/p1.png">
-                    <div class="scoreorder-info">
-                        <p>兑换编号20170218204956545</p>
-                        <h1>小包套餐（邵武区）</h1>
-                        <span>订单金额：<i>6760元</i></span>
-                    </div> 
-                    <div class="scoreorder-detail"> 
-                         <a href="../shop/pay.jsp" class="scoreorder-go">去支付</a>
-                         <a class="noact" href="javascript:void(0);">详情></a>
-                    </div>
-                    <div class="clear"></div>
-                </li>
+                <c:forEach var="data" items="${orders}">
+                    <li>
+                        <img src="<%=basePath%>jsp/resources/img/p1.png">
+                        <div class="scoreorder-info">
+                            <p>${data.order_code}</p>
+                            <h1>${data.room_type_name}/${data.room_num}</h1>
+                            <span>订单金额：<i>${data.money}元</i></span>
+                            <%--订单状态 1未支付 2已支付 3已确认消费 4取消预订 5系统取消6待退款 7已退款--%>
+                            <span>状态：
+                                <i>
+                                 <c:if test="${data.order_status == 1}">
+                                     未支付
+                                 </c:if>
+                                <c:if test="${data.order_status == 2}">
+                                    已支付
+                                </c:if>
+                                <c:if test="${data.order_status == 3}">
+                                    已确认消费
+                                </c:if>
+                                <c:if test="${data.order_status == 4}">
+                                    取消预订
+                                </c:if>
+                                <c:if test="${data.order_status == 5}">
+                                    系统取消
+                                </c:if>
+                                <c:if test="${data.order_status == 6}">
+                                    待退款
+                                </c:if>
+                                <c:if test="${data.order_status == 7}">
+                                    已退款
+                                </c:if>
+                                </i>
+                            </span>
+                        </div>
+                        <div class="scoreorder-detail">
+                            <c:if test="${data.order_status == 1}">
+                                <a href="${pageContext.request.contextPath}/personorder/gotoPayForList.do?orderId=" + ${data.order_id} class="scoreorder-go">去支付</a>
+                            </c:if>
+                            <a class="noact" href="${pageContext.request.contextPath}/personorder/getOrderDetail.do?orderId=" + ${data.order_id}>详情></a>
+                        </div>
+                        <div class="clear"></div>
+                    </li>
+                </c:forEach>
             </ul>
         </div>
     </div>
     <jsp:include page="/jsp/layouts/foot.jsp" flush="true"/>
 </body> 
-<script src='jsp/resources/js/rem.js'></script>
-<script src='jsp/resources/js/jquery.min.js'></script>
-<script src='jsp/resources/js/iscroll.js'></script>
-<script src='jsp/resources/js/pullToRefresh.js'></script>
+<script src='<%=basePath%>jsp/resources/js/rem.js'></script>
+<script src='<%=basePath%>jsp/resources/js/jquery.min.js'></script>
+<script src='<%=basePath%>jsp/resources/js/iscroll.js'></script>
+<script src='<%=basePath%>jsp/resources/js/pullToRefresh.js'></script>
 <script>
    refresher.init({
-        id:"wrapper",//<------------------------------------------------------------------------------------┐
+        id:"wrapper",
         pullDownAction:Refresh,
         pullUpAction:Load
         });
     function Refresh() {
-        setTimeout(function () {    // <-- Simulate network congestion, remove setTimeout from production!
+        setTimeout(function () {
             var el, li, i;
             el =document.querySelector("#wrapper ul");
             //这里写你的刷新代码

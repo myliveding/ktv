@@ -14,10 +14,10 @@
     <filter-name>loginfilter</filter-name>
     <url-pattern>/jsp/my/*</url-pattern>
   </filter-mapping>
-    <!--<filter-mapping>-->
-        <!--<filter-name>loginfilter</filter-name>-->
-        <!--<url-pattern>/jsp/order/*</url-pattern>-->
-    <!--</filter-mapping>-->
+    <filter-mapping>
+        <filter-name>loginfilter</filter-name>
+        <url-pattern>/jsp/order/*</url-pattern>
+    </filter-mapping>
   <filter-mapping>
     <filter-name>loginfilter</filter-name>
     <url-pattern>*.do</url-pattern>
@@ -29,8 +29,9 @@
     <init-param>
       <param-name>excludedPages</param-name>
       <param-value>
-          scope,other,discount,shop,order,wechat/pay/notify.do,personorder/alipayReturn.do,
-          ,member/gotoIndexDomain.do,member/gotoErrorMsg.do,member/gotoMyMessages.do,member/checkAndUpdateMobile.do
+          scope,other,discount,shop,personorder,wechat/pay/notify.do,personorder/alipayReturn.do,
+          ,member/gotoIndexDomain.do,member/gotoErrorMsg.do,member/gotoMyMessages.do,member/checkAndUpdateMobile.do,
+          ,wechat/pay/index.do
       </param-value>
     </init-param>
   </filter>
