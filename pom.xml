@@ -12,13 +12,20 @@
 	<profiles>
 		<!-- 开发环境 -->
 		<profile>
+			<id>test</id>
+			<properties>
+				<profiles.active>test</profiles.active>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<!-- 生产环境 -->
+		<profile>
             <id>formal</id>
             <properties>
                 <profiles.active>formal</profiles.active>
             </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
         </profile>
 	</profiles>
 
@@ -462,9 +469,11 @@
 					<include>**/*.xml</include>
 				</includes>
 			</resource>
+
 			<resource>
 				<directory>src/main/resource</directory>
 				<excludes>
+                    <exclude>test/*</exclude>
 					<exclude>formal/*</exclude>
 					<exclude>config.properties</exclude>
 					<exclude>application.properties</exclude>

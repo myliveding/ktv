@@ -78,7 +78,7 @@ public class PersonOrderController {
 
         HttpSession session = ContextHolderUtils.getSession();
         Object openidObj =  session.getAttribute("openid");
-        openidObj = "11111111";
+//        openidObj = "11111111";
         if ( !"".equals(openidObj) && openidObj != null) {
             String iid = request.getParameter("iid");
             try {
@@ -126,7 +126,7 @@ public class PersonOrderController {
 
         HttpSession session = ContextHolderUtils.getSession();
         Object openidObj =  session.getAttribute("openid");
-        openidObj = "11111111";
+//        openidObj = "11111111";
         if ( !"".equals(openidObj) && openidObj != null) {
             String iid = request.getParameter("iid");
             String packageId = request.getParameter("packageId");
@@ -167,7 +167,7 @@ public class PersonOrderController {
 
         HttpSession session = ContextHolderUtils.getSession();
         Object openidObj =  session.getAttribute("openid");
-        openidObj = "11111111";
+//        openidObj = "11111111";
         if ( !"".equals(openidObj) && openidObj != null) {
             String orderId = request.getParameter("orderId");
             Integer memberId = 0;
@@ -207,7 +207,7 @@ public class PersonOrderController {
 
         HttpSession session = ContextHolderUtils.getSession();
         Object openidObj =  session.getAttribute("openid");
-        openidObj = "11111111";
+//        openidObj = "11111111";
         if ( !"".equals(openidObj) && openidObj != null) {
             Integer memberId = 0;
             WechatMember member = memberService.getObjectByOpenid(openidObj.toString());
@@ -243,7 +243,7 @@ public class PersonOrderController {
 
         HttpSession session = ContextHolderUtils.getSession();
         Object openidObj =  session.getAttribute("openid");
-        openidObj = "11111111";
+//        openidObj = "11111111";
         if ( !"".equals(openidObj) && openidObj != null) {
             String orderId = request.getParameter("orderId");
             Integer memberId = 0;
@@ -289,7 +289,7 @@ public class PersonOrderController {
         JSONObject resultObject = JSONObject.fromObject("{\"status\":0,\"msg\":\"成功\"}");
         HttpSession session = ContextHolderUtils.getSession();
         Object openidObj =  session.getAttribute("openid");
-        openidObj = "11111111";
+//        openidObj = "11111111";
         if ( !"".equals(openidObj) && openidObj != null) {
             String orderId = request.getParameter("orderId");
             Integer memberId = 0;

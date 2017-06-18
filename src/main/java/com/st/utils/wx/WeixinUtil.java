@@ -670,26 +670,6 @@ private static Logger logger =LoggerFactory.getLogger(WeixinUtil.class);
      return jsonObject;
    }
 
-   /**
-    * 测试方法
-    * @param args
-    */
-   public static void main(String[] args) {
-	   String imgs = "";
-	   String[] picId = {"1","2","3"};
-	   for (int i = 0; i < picId.length; i++) {
-		   if(i == 0){
-			   imgs = picId[i];
-		   }else{
-			   imgs = imgs + "," + picId[i];
-		   }
-	   }
-//	   System.err.println(imgs);
-	   Random r = new Random();
-	   for (int i = 0; i < 2; i++) {
-//		   System.err.println(r.nextInt(5) + "--" + (r.nextInt(5) + 1));
-	   }
-   }
      /*
      * 微信支付在https环境下需要加载微信api安全证书（下载自微信商户平台）
      * */

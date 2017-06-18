@@ -36,11 +36,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <p>${data.content}</p>
                     </li>
                 </c:forEach>
-                    <%--<li>--%>
-                        <%--<h1>盛世欢唱邵武店劳动节活动</h1>--%>
-                        <%--<h2>18-25岁  男女皆可</h2>--%>
-                        <%--<p>五官端正，亲和力强，具有餐饮服务行业经 验者优先。五官端正， 副本</p>--%>
-                    <%--</li>--%>
             </ul>
         </div>
     </div>

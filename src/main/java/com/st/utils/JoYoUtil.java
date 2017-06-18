@@ -184,8 +184,6 @@ public class JoYoUtil {
     public static String getInterface(String urlPath, String mystr, String[] arr) {
         StringBuffer sb = new StringBuffer();
         try {
-//            String signature = SignUtil.getSignature(arr, urlPath, Constant.PHP_APP_SECRET);
-//            mystr += "&signature=" + signature;
             URL url = new URL(urlPath);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);

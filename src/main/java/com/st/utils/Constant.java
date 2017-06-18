@@ -41,11 +41,7 @@ public final class Constant {
      */
     public static final String APP_TOKEN =PropertiesUtils.findPropertiesKey("APP_TOKEN",Constant.CONFIG_FILE_NAME);
     
-    /**
-     * php接口密钥
-     */
-    public static final String PHP_APP_SECRET =PropertiesUtils.findPropertiesKey("PHP_APP_SECRET",Constant.CONFIG_FILE_NAME);
-    
+
     /**
      * php接口api
      */

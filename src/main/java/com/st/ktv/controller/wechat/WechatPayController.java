@@ -46,7 +46,7 @@ public class WechatPayController {
 	@RequestMapping(value="/index",method=RequestMethod.GET)
 	public  String pay(HttpServletRequest req,Model model) {
 		String openid = (String) req.getSession().getAttribute("openid");
-        openid = "11111111";
+//        openid = "11111111";
 		logger.info("支付调用时获取的openid为：" + openid);
         if(null == openid || "".equals(openid)){
             String orderId = req.getParameter("orderId");

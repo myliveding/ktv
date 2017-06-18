@@ -4,7 +4,6 @@ import com.alipay.api.AlipayApiException;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.st.core.ContextHolderUtils;
 import com.st.ktv.controller.alipay.config.AlipayConfig;
-import com.st.ktv.entity.Store;
 import com.st.ktv.entity.WechatMember;
 import com.st.ktv.service.MemberService;
 import com.st.utils.Constant;
@@ -24,8 +23,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.math.BigDecimal;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * @Description
@@ -51,19 +51,6 @@ public class MemberController {
     @RequestMapping("/gotoIndexDomain")
     public String getWeixintoIndex(HttpServletRequest request) {
 
-
-
-//        List<Store> list = new ArrayList<Store>();
-//        for(int i =1 ; i<5 ; i++){
-//            Store store = new Store();
-//            store.setName("test");
-//            store.setBigNum(3);
-//            store.setDistance(BigDecimal.TEN);
-//            store.setMediumNum(7);
-//            store.setSmallNum(3);
-//            store.setVipNum(8);
-//            list.add(store);
-//        }
         String[] arr = new String[]{};
         String mystr = "";
         JSONObject storeList = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.STORES, mystr, arr));
@@ -115,9 +102,6 @@ public class MemberController {
         if (DataUtil.isNotEmpty(str)){
         }
         //去获取积分的数据库集合并返回给页面  礼品、包厢、酒水 分区
-//        request.setAttribute("storeList",list);
-//        request.setAttribute("storeList",list);
-//        request.setAttribute("storeList",list);
         return "redirect:"+ Constant.URL + "my/integralmall";
     }
 
@@ -231,8 +215,8 @@ public class MemberController {
         Object openidObj =  session.getAttribute("openid");
 
         String phone = request.getParameter("mobile");//手机号码
-//        String openid = openidObj.toString();//openid
-        String openid = "11111111";
+        String openid = openidObj.toString();//openid
+//        String openid = "11111111";
         String type = request.getParameter("type");//校验保存和更新手机号码
         JSONObject resultObject = memberService.checkAndUpdateMobile(openid, phone, type);
         response.setContentType("text/html; charset=utf-8");
