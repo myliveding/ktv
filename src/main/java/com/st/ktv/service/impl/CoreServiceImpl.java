@@ -56,8 +56,7 @@ public class CoreServiceImpl {
 			// 默认返回的文本消息内容
 //		    String respContent="如需在线客服帮助，请回复“客服”或者“KF”，也可点击“微服务”菜单中“在线客服”与客服取得联系。客服工作时间：上午9:00-下午6:00，全年无休。";
 //		    String respContent = "HI，请问有什么可以帮助您的吗？<a href=\"http://wybhotline.udesk.cn/im_client/?group_id=18040&channel=wyb\">" +
-			String respContent = "HI，请问有什么可以帮助您的吗？<a href=\"http://joyowo.udesk.cn/im_client?group_id=1608&channel=wyb\">" +
-					"戳这</a>即可联系客服人员，也可拨打客服电话：400-111-8900。客服工作时间是上午9:00-下午5:30。（周末正常上班，法定节假日除外）";
+			String respContent = "HI，请问有什么可以帮助您的吗？";
 
             List<TBWechatMessage> defaultRC = tbWechatMessageService.getMessageListByKeyLike("默认回复内容");
 			if (defaultRC.size()==1){
@@ -165,14 +164,7 @@ public class CoreServiceImpl {
 					// 订阅
 					if (eventType.equals(MessageUtil.EVENT_TYPE_SUBSCRIBE)) {
 						logger.info("用户关注，openid=" + fromUserName);
-						respContent = "缴社保，找无忧保就对了！\n\n"
-								+ "无忧保为你提供社保代缴服务。由中国人社部认证许可，由招商银行进行资金监管，3分钟解决你的社保难题。\n\n"
-								+ "☞买社保，<a href=\"https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + Constant.APP_ID + "&redirect_uri=" + Constant.URL + "/scope/openid.do?next=personsocial/gotoindex.do" + Constant.APP_ID + "&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect\">点击这里！</a>\n"
-								+ "☞算保费，<a href=\"https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + Constant.APP_ID + "&redirect_uri=" + Constant.URL + "/scope/openid.do?next=personsocial/gotojsq.do" + Constant.APP_ID + "&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect\">点击这里！</a>\n"
-								+ "☞学社保，<a href=\"http://mp.weixin.qq.com/mp/getmasssendmsg?__biz=MzAxMzU1Mzg5Ng==#wechat_webview_type=1&wechat_redirect\">点击这里！</a>\n"
-								+ "☞要提问，<a href=\"http://joyowo.udesk.cn/im_client?group_id=1608&channel=wyb\">点击这里！</a>\n\n"
-								+ "查看往期社保干货内容，<a href=\"http://mp.weixin.qq.com/mp/homepage?__biz=MzAxMzU1Mzg5Ng==&hid=1&sn=9e7716381c377e6928a341ca18ef1cf1#wechat_redirect\">点击这里！</a>"
-								+ "成为无忧保社保代理商，<a href=\"http://form.mikecrm.com/EDfP0u\">点击这里！</a>";
+						respContent = "您好，欢迎关注盛世欢唱！";
 						String eventKey = requestMap.get("EventKey");
 						if (DataUtil.isNotEmpty(eventKey) && eventKey.indexOf("qrscene") > -1) {
 							String scene = eventKey.substring(eventKey.indexOf("_") + 1, eventKey.length());
