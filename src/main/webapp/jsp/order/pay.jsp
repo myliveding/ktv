@@ -75,8 +75,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         $(this).addClass('pay-group-act');
     })
 
+    function isWeixnOpen() {
+        var ua = navigator.userAgent.toLowerCase();
+        if (ua.match(/MicroMessenger/i) == "micromessenger") {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     $('.pay-submit').click(function(){
-        if (!util.isWeixnOpen()) {
+        if (!isWeixnOpen()) {
             alert('<div><div><img src="<%=basePath%>jsp/resources/img/10.png"></div><div style="color:#2cca6f;">微信不支持在浏览器端的支付！</div><div style="color:#333;">可通过以下方式完成支付</div><div style="color:#999; text-align:left;">方式一：打开微信，关注“盛世欢唱”公众号，进入“我的>我的订单”中完成交易</div><div style="color:#999; text-align:left;">方式二：选择其他支付方式完成交易</div></div>');
             return false;
         } else {
