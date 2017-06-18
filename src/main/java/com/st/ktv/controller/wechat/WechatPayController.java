@@ -53,6 +53,8 @@ public class WechatPayController {
             if (StringUtils.isEmpty(orderId)) {
                 req.setAttribute("error", "订单不能为空");
                 return "error";
+            }else{
+                model.addAttribute("orderId", orderId);
             }
 
             JSONObject resultStr = JSONObject.fromObject("{\"status\":1,\"msg\":\"出错了\"}");
@@ -83,9 +85,10 @@ public class WechatPayController {
             //判断订单金额
             String productName = "盛世订单-"+orderNo;
             String totalFee = "0";
-            model.addAttribute("orderId", orderNo);
+            model.addAttribute("orderCode", orderNo);
             if(0 == resultStr.getInt("error_code")){
                 JSONObject message = JSONObject.fromObject(resultStr.getString("result"));
+                model.addAttribute("create_time", message.getDouble("create_time"));
                 double orderAmt = message.getDouble("money");
                 String payAmt = new java.text.DecimalFormat("#0.00").format(orderAmt);
                 logger.info("ordermoney（元）:" + payAmt);
@@ -115,6 +118,7 @@ public class WechatPayController {
                     logger.info("order_money（分）:" + payAmt);
                 }
                 totalFee = payAmt;
+                model.addAttribute("order_money", totalFee);
             }else {
                 req.setAttribute("error", "获取订单详情出错了");
                 return "error";
@@ -127,7 +131,7 @@ public class WechatPayController {
                 Annotations.configureAliases(xStreamForRequestPostData,ReportReqData.class );
                 String postDataXML = xStreamForRequestPostData.toXML(reportReqData);
                 String jsonObject=WeixinUtil.wxpayRequset("https://api.mch.weixin.qq.com/pay/unifiedorder", "POST", postDataXML);
-                logger.info("jsonObject:"+jsonObject);
+                logger.info("jsonObject：" + jsonObject);
                 Map<String, String> map=ParseXmlUtil.parseXmlText(jsonObject);
                 String prepayId=map.get("prepay_id");
                 // appId

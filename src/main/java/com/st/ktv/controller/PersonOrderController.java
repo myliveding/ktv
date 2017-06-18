@@ -233,7 +233,7 @@ public class PersonOrderController {
     }
 
     /**
-     * 去支付页面
+     * 订单详情
      * @param request
      * @param response
      * @return
