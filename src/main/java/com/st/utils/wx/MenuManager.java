@@ -70,22 +70,22 @@ public class MenuManager {
 	}
 
     public static void main(String[] args) {
-//        System.err.println(WeixinUtil.getAccessTokenForWXService("wxbb336e8a40b636d6","aa389c3d29c333ebdad2d50b95160d64").getToken());
+        System.err.println(WeixinUtil.getAccessTokenForWXService("wxbb336e8a40b636d6","aa389c3d29c333ebdad2d50b95160d64").getToken());
 
-        String accessToken = "t94DYDIZnGVjMCCa_ZXuMjPN2nixXBmhA6ve2bDrF85FVWxZyMFgEKsqwam_l_0JiOOvO7W5yUCLfAgow4kv-n36Oks4u1sWYsB-0rBLLS4ToKHRh-rXv_E0FO9NSTJeIRAiAEANWF";
-        String url= "http://www.hui75.com";
-        String appId = "wxbb336e8a40b636d6";
+//        String accessToken = "t94DYDIZnGVjMCCa_ZXuMjPN2nixXBmhA6ve2bDrF85FVWxZyMFgEKsqwam_l_0JiOOvO7W5yUCLfAgow4kv-n36Oks4u1sWYsB-0rBLLS4ToKHRh-rXv_E0FO9NSTJeIRAiAEANWF";
+//        String url= "http://www.aimplus.cn";
+//        String appId = "wxbb336e8a40b636d6";
 
-        System.out.println(url+" = "+appId);
+//        System.out.println(url+" = "+appId);
         // 调用接口创建菜单
-        int result =1;
-        result= WeixinUtil.createMenu(getMenu(appId,url), accessToken);
+//        int result =1;
+//        result= WeixinUtil.createMenu(getMenu(appId,url), accessToken);
         // 判断菜单创建结果
-        if (0 == result) {
-            logger.info("菜单创建成功！");
-        }else {
-            logger.info("菜单创建失败，错误码：" + result);
-        }
+//        if (0 == result) {
+//            logger.info("菜单创建成功！");
+//        }else {
+//            logger.info("菜单创建失败，错误码：" + result);
+//        }
     }
 
 }
