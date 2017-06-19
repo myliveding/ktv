@@ -13,7 +13,7 @@
             </a>
         </li>
         <li>
-            <a href="" class="red">
+            <a href="${pageContext.request.contextPath}/other/getCompanyInfo.do" class="red">
                 <img src="<%=basePath%>/jsp/resources/img/h2.png">
                 <span>关于盛世</span>
             </a>
@@ -25,7 +25,7 @@
             </a>
         </li>
         <li>
-            <a href="../my/usercenter.jsp" class="red">
+            <a href="${pageContext.request.contextPath}/member/gotoUserCenter.do" class="red">
                 <img src="<%=basePath%>/jsp/resources/img/h4.png">
                 <span>我的盛世</span>
             </a>
