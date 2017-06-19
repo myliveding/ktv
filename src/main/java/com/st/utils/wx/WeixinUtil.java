@@ -95,7 +95,13 @@ private static Logger logger =LoggerFactory.getLogger(WeixinUtil.class);
     //移动用户分组
     public static final String USER_GROUP_MOVE="https://api.weixin.qq.com/cgi-bin/groups/members/update?access_token=ACCESS_TOKEN";
 
-
+    /**
+     * http 发起微信支付时需要调用
+     * @param requestUrl
+     * @param requestMethod
+     * @param outputStr
+     * @return
+     */
     public static String sentRequset(String requestUrl, String requestMethod, String outputStr) {
 		String jsonObject = null;
 		StringBuffer buffer = new StringBuffer();
@@ -151,7 +157,83 @@ private static Logger logger =LoggerFactory.getLogger(WeixinUtil.class);
 		}
 		return jsonObject;
 	}
-	
+
+    /*
+    * 微信支付在https环境下需要加载微信api安全证书（下载自微信商户平台）
+    */
+    public static String wxpayRequset(String requestUrl, String requestMethod, String outputStr) {
+        String jsonObject = null;
+        StringBuffer buffer = new StringBuffer();
+        try {
+            // 证书文件(微信商户平台-账户设置-API安全-API证书-下载证书)
+            String keyStorePath =WeixinUtil.class.getResource("/").getPath()+"/apiclient_cert.p12";
+            // 证书密码（默认为商户ID）
+            String password = Constant.MCH_ID;
+            // 实例化密钥库
+            KeyStore ks = KeyStore.getInstance("PKCS12");
+            // 获得密钥库文件流
+            FileInputStream fis = new FileInputStream(keyStorePath);
+            // 加载密钥库
+            ks.load(fis, password.toCharArray());
+            // 关闭密钥库文件流
+            fis.close();
+            // 实例化密钥库
+            KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+            // 初始化密钥工厂
+            kmf.init(ks, password.toCharArray());
+
+            // 创建SSLContext对象，并使用我们指定的信任管理器初始化
+            TrustManager[] tm = { new MyX509TrustManager() };
+            SSLContext sslContext = SSLContext.getInstance("SSL", "SunJSSE");
+            sslContext.init(kmf.getKeyManagers(), null, new java.security.SecureRandom());
+            // 从上述SSLContext对象中得到SSLSocketFactory对象
+            SSLSocketFactory ssf = sslContext.getSocketFactory();
+
+            URL url = new URL(requestUrl);
+            HttpsURLConnection httpUrlConn = (HttpsURLConnection) url.openConnection();
+            httpUrlConn.setSSLSocketFactory(ssf);
+
+            httpUrlConn.setDoOutput(true);
+            httpUrlConn.setDoInput(true);
+            httpUrlConn.setUseCaches(false);
+            // 设置请求方式（GET/POST）
+            httpUrlConn.setRequestMethod(requestMethod);
+
+            if ("GET".equalsIgnoreCase(requestMethod))
+                httpUrlConn.connect();
+
+            // 当有数据需要提交时
+            if (null != outputStr) {
+                OutputStream outputStream = httpUrlConn.getOutputStream();
+                // 注意编码格式，防止中文乱码
+                outputStream.write(outputStr.getBytes("UTF-8"));
+                outputStream.close();
+            }
+
+            // 将返回的输入流转换成字符串
+            InputStream inputStream = httpUrlConn.getInputStream();
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "utf-8");
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+            String str = null;
+            while ((str = bufferedReader.readLine()) != null) {
+                buffer.append(str);
+            }
+            bufferedReader.close();
+            inputStreamReader.close();
+            // 释放资源
+            inputStream.close();
+            inputStream = null;
+            httpUrlConn.disconnect();
+            jsonObject = buffer.toString();
+        } catch (ConnectException ce) {
+            logger.error("Weixin server connection timed out.",ce);
+        } catch (Exception e) {
+            logger.error("https request error:{}", e);
+        }
+        return jsonObject;
+    }
+
    /**
 	 * 发起https请求并获取结果
 	 * 
@@ -668,82 +750,6 @@ private static Logger logger =LoggerFactory.getLogger(WeixinUtil.class);
      // 调用接口发送消息
      JSONObject jsonObject = httpRequest(url, "POST", content);
      return jsonObject;
-   }
-
-     /*
-     * 微信支付在https环境下需要加载微信api安全证书（下载自微信商户平台）
-     * */
-   public static String wxpayRequset(String requestUrl, String requestMethod, String outputStr) {
-        String jsonObject = null;
-        StringBuffer buffer = new StringBuffer();
-        try {
-            // 证书文件(微信商户平台-账户设置-API安全-API证书-下载证书)
-            String keyStorePath =WeixinUtil.class.getResource("/").getPath()+"/apiclient_cert.p12";
-            // 证书密码（默认为商户ID）
-            String password = Constant.MCH_ID;
-            // 实例化密钥库
-            KeyStore ks = KeyStore.getInstance("PKCS12");
-            // 获得密钥库文件流
-            FileInputStream fis = new FileInputStream(keyStorePath);
-            // 加载密钥库
-            ks.load(fis, password.toCharArray());
-            // 关闭密钥库文件流
-            fis.close();
-            // 实例化密钥库
-            KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
-            // 初始化密钥工厂
-            kmf.init(ks, password.toCharArray());
-
-            // 创建SSLContext对象，并使用我们指定的信任管理器初始化
-            TrustManager[] tm = { new MyX509TrustManager() };
-            SSLContext sslContext = SSLContext.getInstance("SSL", "SunJSSE");
-            sslContext.init(kmf.getKeyManagers(), null, new java.security.SecureRandom());
-            // 从上述SSLContext对象中得到SSLSocketFactory对象
-            SSLSocketFactory ssf = sslContext.getSocketFactory();
-
-            URL url = new URL(requestUrl);
-            HttpsURLConnection httpUrlConn = (HttpsURLConnection) url.openConnection();
-            httpUrlConn.setSSLSocketFactory(ssf);
-
-            httpUrlConn.setDoOutput(true);
-            httpUrlConn.setDoInput(true);
-            httpUrlConn.setUseCaches(false);
-            // 设置请求方式（GET/POST）
-            httpUrlConn.setRequestMethod(requestMethod);
-
-            if ("GET".equalsIgnoreCase(requestMethod))
-             httpUrlConn.connect();
-
-            // 当有数据需要提交时
-            if (null != outputStr) {
-             OutputStream outputStream = httpUrlConn.getOutputStream();
-             // 注意编码格式，防止中文乱码
-             outputStream.write(outputStr.getBytes("UTF-8"));
-             outputStream.close();
-            }
-
-            // 将返回的输入流转换成字符串
-            InputStream inputStream = httpUrlConn.getInputStream();
-            InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "utf-8");
-            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-
-            String str = null;
-            while ((str = bufferedReader.readLine()) != null) {
-             buffer.append(str);
-            }
-            bufferedReader.close();
-            inputStreamReader.close();
-            // 释放资源
-            inputStream.close();
-            inputStream = null;
-            httpUrlConn.disconnect();
-            jsonObject = buffer.toString();
-        } catch (ConnectException ce) {
-            logger.error("Weixin server connection timed out.",ce);
-        } catch (Exception e) {
-            logger.error("https request error:{}", e);
-        }
-        return jsonObject;
    }
 
     /**

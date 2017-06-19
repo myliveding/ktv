@@ -114,7 +114,9 @@ public class WechatPayController {
                         amLong = Long.valueOf((payAmt.substring(0, index+1)).replace(".", "")+"00");
                     }
                     payAmt = amLong + "";
-                    payAmt="1";
+                    if(Constant.ENVIROMENT.equals("test")){
+                        payAmt = "1";
+                    }
                     logger.info("order_money（分）:" + payAmt);
                 }
                 totalFee = payAmt;
@@ -130,7 +132,7 @@ public class WechatPayController {
                 XStream xStreamForRequestPostData = new XStream(new DomDriver("UTF-8", new XmlFriendlyNameCoder("-_", "_")));
                 Annotations.configureAliases(xStreamForRequestPostData,ReportReqData.class );
                 String postDataXML = xStreamForRequestPostData.toXML(reportReqData);
-                String jsonObject=WeixinUtil.wxpayRequset("https://api.mch.weixin.qq.com/pay/unifiedorder", "POST", postDataXML);
+                String jsonObject=WeixinUtil.sentRequset("https://api.mch.weixin.qq.com/pay/unifiedorder", "POST", postDataXML);
                 logger.info("jsonObject：" + jsonObject);
                 Map<String, String> map=ParseXmlUtil.parseXmlText(jsonObject);
                 String prepayId=map.get("prepay_id");
