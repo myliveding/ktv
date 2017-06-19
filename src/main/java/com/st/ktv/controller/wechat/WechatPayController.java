@@ -46,7 +46,7 @@ public class WechatPayController {
     MemberService memberService;
 	
 	@RequestMapping(value="/index",method=RequestMethod.GET)
-	public  String pay(HttpServletRequest req,Model model) {
+	public  String pay(HttpServletRequest req, Model model) {
 
         HttpSession session = ContextHolderUtils.getSession();
         Object openidObj =  session.getAttribute("openid");
@@ -54,8 +54,9 @@ public class WechatPayController {
 //        String openid = (String) req.getSession().getAttribute("openid");
 //        openid = "11111111";
 		logger.info("支付调用时获取的openid为：" + openid);
-        if(null == openid || "".equals(openid)){
+        if(null != openid && !"".equals(openid)){
             String orderId = req.getParameter("orderId");
+            logger.info("获取的订单ID为：" + orderId);
             if (StringUtils.isEmpty(orderId)) {
                 req.setAttribute("error", "订单不能为空");
                 return "error";
@@ -84,22 +85,24 @@ public class WechatPayController {
                     return "error";
                 }
             }else{
+                logger.info("用户信息不存在");
                 req.setAttribute("error", "用户信息不存在");
                 return "error";
             }
 
             //判断订单金额
-            String productName = "盛世订单-"+orderNo;
+            String productName = "order-"+orderNo;
             String totalFee = "0";
             model.addAttribute("orderCode", orderNo);
             if(0 == resultStr.getInt("error_code")){
                 JSONObject message = JSONObject.fromObject(resultStr.getString("result"));
-                model.addAttribute("create_time", message.getDouble("create_time"));
+                model.addAttribute("create_time", message.getString("create_time"));
                 double orderAmt = message.getDouble("money");
                 String payAmt = new java.text.DecimalFormat("#0.00").format(orderAmt);
                 logger.info("ordermoney（元）:" + payAmt);
                 String orderStatus = message.getString("order_status");
                 if(!"1".equals(orderStatus)){
+                    logger.info("订单状态为：" + orderStatus + "请勿重复支付");
                     req.setAttribute("error", "请勿重复支付");
                     return "error：请勿重复支付";
                 }
@@ -128,24 +131,26 @@ public class WechatPayController {
                 totalFee = payAmt;
                 model.addAttribute("order_money", totalFee);
             }else {
+                logger.info("获取订单详情出错了");
                 req.setAttribute("error", "获取订单详情出错了");
                 return "error";
             }
             //调用微信支付
             try {
                 String nonceStr = RandomStringUtils.random(30, "123456789qwertyuioplkjhgfdsazxcvbnm"); // 8位随机数
-                ReportReqData reportReqData=new ReportReqData(productName, openid, orderNo, getIp(req), totalFee,nonceStr);
+                ReportReqData reportReqData = new ReportReqData(productName, openid, orderNo, getIp(req), totalFee, nonceStr);
                 XStream xStreamForRequestPostData = new XStream(new DomDriver("UTF-8", new XmlFriendlyNameCoder("-_", "_")));
                 Annotations.configureAliases(xStreamForRequestPostData,ReportReqData.class );
                 String postDataXML = xStreamForRequestPostData.toXML(reportReqData);
-                String jsonObject=WeixinUtil.sentRequset("https://api.mch.weixin.qq.com/pay/unifiedorder", "POST", postDataXML);
-                logger.info("jsonObject：" + jsonObject);
-                Map<String, String> map=ParseXmlUtil.parseXmlText(jsonObject);
+                logger.info("wechat send postDataXML：" + postDataXML);
+                String jsonObject = WeixinUtil.sentRequset("https://api.mch.weixin.qq.com/pay/unifiedorder", "POST", postDataXML);
+                logger.info("wechat return jsonObject：" + jsonObject);
+                Map<String, String> map = ParseXmlUtil.parseXmlText(jsonObject);
                 String prepayId=map.get("prepay_id");
                 // appId
-                Map<String, String> paymap=new HashMap<String, String>();
+                Map<String, String> paymap = new HashMap<String, String>();
                 String paytimeStamp=new Date().getTime()+"";
-                String paynonceStr=RandomStringUtils.random(30, "123456789qwertyuioplkjhgfdsazxcvbnm");
+                String paynonceStr = RandomStringUtils.random(30, "123456789qwertyuioplkjhgfdsazxcvbnm");
                 paymap.put("appId", Constant.APP_ID);
                 paymap.put("timeStamp", paytimeStamp);
                 paymap.put("nonceStr", paynonceStr);
