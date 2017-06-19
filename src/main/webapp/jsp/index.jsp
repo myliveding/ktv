@@ -17,7 +17,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-    <title>ktv</title> 
+    <title>盛世欢唱ktv</title> 
     <link rel="stylesheet" href="<%=basePath%>jsp/resources/css/reset.css">
     <link rel="stylesheet" href="<%=basePath%>jsp/resources/css/pullToRefresh.css">
     <link rel="stylesheet" href="<%=basePath%>jsp/resources/css/main.css">
@@ -113,8 +113,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                     </c:if>
                                 </c:forEach>
                             </div>
-                            <div class="recent">距离我${data.distance}KM</div>
-                            <em><a href="${pageContext.request.contextPath}/shop/gotoStoreDetail.do?id=${data.id}">进入预定</a></em>
+                            <!-- <div class="recent">距离我${data.distance}KM</div> -->
+                            <em>进入预定</em>
                         </a>
                     </li>
                 </c:forEach>
