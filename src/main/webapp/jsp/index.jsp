@@ -32,7 +32,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <div class="nav-item nav-item1">
                             <img src="<%=basePath%>jsp/resources/img/s1.png">
                         </div>
-                        <span>在线预定</span>
+                        <span>在线预订</span>
                     </a>
                 </li>
                 <li>
@@ -76,7 +76,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </a>
                 </li>
                 <li>
-                    <a href="select.html">
+                    <a href="tel:111">
                         <div class="nav-item nav-item7">
                             <img src="<%=basePath%>jsp/resources/img/s7.png">
                         </div>

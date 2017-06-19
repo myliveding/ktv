@@ -36,13 +36,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                      <img src="<%=basePath%>jsp/resources/img/tel.png" >
                 </a>
             </div>
-            <div class="orderaddress">
+            <!-- <div class="orderaddress">
                 <h2>${storeDetail.address}</h2>
                 <a href="" class="navigation">
                     <img src="<%=basePath%>jsp/resources/img/go.png">
                     <span>导航到这里</span>
                 </a>
-            </div>
+            </div> -->
         </div>
         <div class="ordertime">
             <h2>选择预定时间</h2>
