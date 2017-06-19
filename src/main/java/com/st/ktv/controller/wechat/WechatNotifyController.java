@@ -40,14 +40,11 @@ public class WechatNotifyController {
 				String thirdPayAmt = "0";//订单金额
 				if("SUCCESS".equals(returnCode)){
 				for (String key : requestMap.keySet()) {
-					System.out.println("key=------- "+ key + " and value=---- " + requestMap.get(key));
 					logger.info("key=------- "+ key + " and value=---- " + requestMap.get(key));
 					if("transaction_id".equals(key)){
 						serialNo = requestMap.get(key);
 					} else if("out_trade_no".equals(key)){
 						orderNo = requestMap.get(key);
-                    } else if("order_id".equals(key)){
-                        orderId = requestMap.get(key);
 					} else if("total_fee".equals(key)){
 						thirdPayAmt = requestMap.get(key);
 						try {
@@ -76,19 +73,16 @@ public class WechatNotifyController {
 				logger.info("交易流水号serialNo:"+serialNo);
 				logger.info("订单号orderNo:"+orderNo);
 				logger.info("订单金额thirdPayAmt:"+thirdPayAmt);
-				//	Map<String, String> map=ParseXmlUtil.parseXmlText(return_msg);
-				//String orderid=map.get("out_trade_no");
-				logger.info("orderid：" + orderId);
+
 				/**
 				 * 订单业务
 				 */
 				String userId="";
 				if(!DataUtil.isEmpty(orderNo)){
-					JSONObject resultStr = JSONObject.fromObject("{\"status\":1,\"msg\":\"出错了\"}");
 					thirdPayAmt=thirdPayAmt.replaceAll(",", "");
-                    String[] arr = new String[]{"member_id" + openidObj.toString(), "order_id" + orderId};
-                    String mystr ="member_id=" + openidObj.toString() + "&order_id=" + orderId;
-                    resultStr = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.PAY_ORDER, mystr, arr));
+                    String[] arr = new String[]{"member_id" + openidObj.toString(), "order_code" + orderNo, "serial_no" + serialNo};
+                    String mystr ="member_id=" + openidObj.toString() + "&order_code=" + orderNo + "&serial_no=" + serialNo;
+					JSONObject resultStr = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.PAY_ORDER, mystr, arr));
 					if(resultStr.containsKey("error_code") && 0 == resultStr.getInt("error_code")){
 						logger.info("微信支付确认订单完成:" + orderNo);
 					}else{
