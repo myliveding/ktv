@@ -11,7 +11,7 @@ var refresher = {
 		"pullingDownLable": "释放立即刷新",
 		"pullUpLable": "上拉加载更多",
 		"pullingUpLable": "释放加载更多",
-		"loadingLable": "<img src='img/load.gif'/>"
+		"loadingLable": "<img src='/jsp/resources/img/load.gif'/>"
 	},
 	init: function(parameter) {
 		var wrapper = document.getElementById(parameter.id);

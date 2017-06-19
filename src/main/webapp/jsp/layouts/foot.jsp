@@ -9,7 +9,7 @@
         <li>
             <a href="<%=basePath%>member/gotoIndexDomain.do" class="footer-now red">
                 <img src="<%=basePath%>/jsp/resources/img/h1.png">
-                <span>在线定包</span>
+                <span>在线预订</span>
             </a>
         </li>
         <li>

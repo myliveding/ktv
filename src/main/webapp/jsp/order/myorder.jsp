@@ -16,7 +16,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple fullscreen -->
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <title>ktv</title>  
+    <title>盛世欢唱ktv</title>  
     <link rel="stylesheet" href="<%=basePath%>jsp/resources/css/reset.css">
     <link rel="stylesheet" href="<%=basePath%>jsp/resources/css/pullToRefresh.css">
     <link rel="stylesheet" href="<%=basePath%>jsp/resources/css/main.css">

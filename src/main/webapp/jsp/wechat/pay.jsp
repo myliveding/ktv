@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE html>
 <html style="background: #fbd1c1;">
   <head>
-    <title>盛世欢唱</title>
+    <title>盛世欢唱ktv</title>
     <meta charset="utf-8">
     <meta name="keywords" content=""> 
     <meta name="description" content="">
