@@ -100,6 +100,7 @@ public class WechatPayController {
                 double orderAmt = message.getDouble("money");
                 String payAmt = new java.text.DecimalFormat("#0.00").format(orderAmt);
                 logger.info("ordermoney（元）:" + payAmt);
+                model.addAttribute("order_money", payAmt);
                 String orderStatus = message.getString("order_status");
                 if(!"1".equals(orderStatus)){
                     logger.info("订单状态为：" + orderStatus + "请勿重复支付");
@@ -107,29 +108,29 @@ public class WechatPayController {
                     return "error：请勿重复支付";
                 }
                 model.addAttribute("pay_method", member.getMobile());
-//                if(StringUtils.isEmpty(payAmt)){
-//                    payAmt="0";
-//                }else {
-//                    int index = payAmt.indexOf(".");
-//                    int length = payAmt.length();
-//                    Long amLong = 0l;
-//                    if(index == -1){
-//                        amLong = Long.valueOf(payAmt + "00");
-//                    }else if(length - index >= 3){
-//                        amLong = Long.valueOf((payAmt.substring(0, index+3)).replace(".", ""));
-//                    }else if(length - index == 2){
-//                        amLong = Long.valueOf((payAmt.substring(0, index+2)).replace(".", "")+0);
-//                    }else{
-//                        amLong = Long.valueOf((payAmt.substring(0, index+1)).replace(".", "")+"00");
-//                    }
-//                    payAmt = amLong + "";
-//                    logger.info("order_money（分）:" + payAmt);
+                if(StringUtils.isEmpty(payAmt)){
+                    payAmt="0";
+                }else {
+                    int index = payAmt.indexOf(".");
+                    int length = payAmt.length();
+                    Long amLong = 0l;
+                    if(index == -1){
+                        amLong = Long.valueOf(payAmt + "00");
+                    }else if(length - index >= 3){
+                        amLong = Long.valueOf((payAmt.substring(0, index+3)).replace(".", ""));
+                    }else if(length - index == 2){
+                        amLong = Long.valueOf((payAmt.substring(0, index+2)).replace(".", "")+0);
+                    }else{
+                        amLong = Long.valueOf((payAmt.substring(0, index+1)).replace(".", "")+"00");
+                    }
+                    payAmt = amLong + "";
+                    logger.info("order_money（分）:" + payAmt);
 //                    if(Constant.ENVIROMENT.equals("test")){
-                        //payAmt = "0.01";
+//                        payAmt = "0.01";
 //                    }
-//                }
+                }
                 totalFee = payAmt;
-                model.addAttribute("order_money", totalFee);
+//                model.addAttribute("order_money", totalFee );
             }else {
                 logger.info("获取订单详情出错了");
                 req.setAttribute("error", "获取订单详情出错了");
