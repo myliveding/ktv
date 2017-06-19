@@ -16,9 +16,7 @@ public class JsapiTicketServiceImpl implements JsapiTicketService {
 
 	@Resource
 	private JsapiTicketMapper jsapiTicketMapper;
-	@Resource
-	private WechatMemberMapper wechatMemberMapper;
-	
+
 	@Override
 	public int insertSelective(JsapiTicket record) {
 		return jsapiTicketMapper.insertSelective(record);

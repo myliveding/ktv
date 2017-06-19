@@ -13,6 +13,6 @@ public class JsapiTicket {
     private String ticket;
 
 
-    private Date creatTime;
+    private Date createTime;
 
 }

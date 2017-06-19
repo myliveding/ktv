@@ -110,14 +110,14 @@ public class WechatAPIServiceImpl {
         Date date = new Date();//创建现在的日期
         if (!"".equals(jsapiTicket) && jsapiTicket != null) {
             if (!"".equals(jsapiTicket.getTicket()) && jsapiTicket.getTicket() != null) {
-                long timeDB = jsapiTicket.getCreatTime().getTime();
+                long timeDB = jsapiTicket.getCreateTime().getTime();
                 long timeService = date.getTime();//获得毫秒数
                 if ((timeService - timeDB) > 5000000) {
                     JSONObject jSONObject = WeixinUtil.getJSAPITicket(accessToken);
                     if (jSONObject.getInt("errcode") == 0) {
                         ticket = jSONObject.getString("ticket");
                         jsapiTicket.setTicket(ticket);
-                        jsapiTicket.setCreatTime(date);
+                        jsapiTicket.setCreateTime(date);
                         jsapiTicketService.updateByPrimaryKeySelective(jsapiTicket);
                     }
 
@@ -130,7 +130,7 @@ public class WechatAPIServiceImpl {
                 if (jSONObject.getInt("errcode") == 0) {
                     ticket = jSONObject.getString("ticket");
                     jsapiTicket.setTicket(ticket);
-                    jsapiTicket.setCreatTime(date);
+                    jsapiTicket.setCreateTime(date);
                     jsapiTicketService.updateByPrimaryKeySelective(jsapiTicket);
                 }
             }
@@ -141,7 +141,7 @@ public class WechatAPIServiceImpl {
             if (jSONObject.getInt("errcode") == 0) {
                 ticket = jSONObject.getString("ticket");
                 jsapiTicket.setTicket(ticket);
-                jsapiTicket.setCreatTime(date);
+                jsapiTicket.setCreateTime(date);
                 jsapiTicket.setAppid(appid);
                 jsapiTicketService.insertSelective(jsapiTicket);
             }
@@ -170,7 +170,7 @@ public class WechatAPIServiceImpl {
         if (jSONObject.getInt("errcode") == 0) {
             ticket = jSONObject.getString("ticket");
             jsapiTicket.setTicket(ticket);
-            jsapiTicket.setCreatTime(date);
+            jsapiTicket.setCreateTime(date);
             jsapiTicket.setAppid(appid);
             jsapiTicketService.updateByPrimaryKeySelective(jsapiTicket);
         }

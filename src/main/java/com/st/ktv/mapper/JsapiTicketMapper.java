@@ -4,6 +4,7 @@ import com.st.ktv.entity.JsapiTicket;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+@Repository
 public interface JsapiTicketMapper {
 
     int deleteByPrimaryKey(String appid);

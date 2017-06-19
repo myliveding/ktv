@@ -1,7 +1,9 @@
 package com.st.ktv.mapper;
 
 import com.st.ktv.entity.WechatMember;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface WechatMemberMapper {
 
     int deleteByPrimaryKey(Integer id);
