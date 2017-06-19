@@ -510,7 +510,7 @@
 					<url>http://127.0.0.1/manager/html</url>
 					<path>/ktv</path>
 					<server>tomcat7</server>
-					<port>80</port>
+					<port>8080</port>
 					<uriEncoding>utf-8</uriEncoding>
 					<ignorePackaging>true</ignorePackaging>
 				</configuration>
