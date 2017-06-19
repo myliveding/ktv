@@ -66,6 +66,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             </span>
                         </div>
                         <div class="scoreorder-detail">
+                            <c:if test="${data.order_status == 2 &&  (data.arrival_time eq 'null' || data.arrival_time eq '')}">
+                                <a onclick="confirmBoot(${data.order_id});" id ="boot" class="scoreorder-go">确认开机</a>
+                            </c:if>
                             <c:if test="${data.order_status == 1}">
                                 <a href="${pageContext.request.contextPath}/personorder/gotoPayForList.do?orderId=${data.order_id}" class="scoreorder-go">去支付</a>
                             </c:if>
@@ -115,6 +118,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 }, 
             });
         },2000);
-    } 
+    }
+
+function confirmBoot(orderId){
+    $.ajax({
+        'url': "${pageContext.request.contextPath}/personorder/confirmBoot.do",
+        'type': 'post',
+        'dataType': 'json',
+        'data': {
+            orderId: orderId,
+        },
+        success: function success(d) {
+            if (d.error_code == 0) {
+                alert(d.msg);
+                window.location.reload();
+                //$(this).find('.scoreorder-detail a').hide();
+            } else {
+                alert(d.msg);
+            }
+        }
+    });
+}
 </script>
 </html>

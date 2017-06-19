@@ -78,7 +78,7 @@ public class PersonOrderController {
 
         HttpSession session = ContextHolderUtils.getSession();
         Object openidObj =  session.getAttribute("openid");
-//        openidObj = "11111111";
+//        openidObj = "oyAM9vwa6FN6trSrUweXCdK0Jh8s";
         if ( !"".equals(openidObj) && openidObj != null) {
             String iid = request.getParameter("iid");
             try {
@@ -207,7 +207,7 @@ public class PersonOrderController {
 
         HttpSession session = ContextHolderUtils.getSession();
         Object openidObj =  session.getAttribute("openid");
-//        openidObj = "11111111";
+//        openidObj = "oyAM9vwa6FN6trSrUweXCdK0Jh8s";
         if ( !"".equals(openidObj) && openidObj != null) {
             Integer memberId = 0;
             WechatMember member = memberService.getObjectByOpenid(openidObj.toString());
@@ -342,6 +342,7 @@ public class PersonOrderController {
         JSONObject resultObject = JSONObject.fromObject("{\"error_code\":0,\"msg\":\"成功\"}");
         HttpSession session = ContextHolderUtils.getSession();
         Object openidObj =  session.getAttribute("openid");
+//        openidObj = "oyAM9vwa6FN6trSrUweXCdK0Jh8s";
         if ( !"".equals(openidObj) && openidObj != null) {
             String orderId = request.getParameter("orderId");
             Integer memberId = 0;

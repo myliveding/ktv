@@ -107,27 +107,27 @@ public class WechatPayController {
                     return "error：请勿重复支付";
                 }
                 model.addAttribute("pay_method", member.getMobile());
-                if(StringUtils.isEmpty(payAmt)){
-                    payAmt="0";
-                }else {
-                    int index = payAmt.indexOf(".");
-                    int length = payAmt.length();
-                    Long amLong = 0l;
-                    if(index == -1){
-                        amLong = Long.valueOf(payAmt + "00");
-                    }else if(length - index >= 3){
-                        amLong = Long.valueOf((payAmt.substring(0, index+3)).replace(".", ""));
-                    }else if(length - index == 2){
-                        amLong = Long.valueOf((payAmt.substring(0, index+2)).replace(".", "")+0);
-                    }else{
-                        amLong = Long.valueOf((payAmt.substring(0, index+1)).replace(".", "")+"00");
-                    }
-                    payAmt = amLong + "";
-                    logger.info("order_money（分）:" + payAmt);
-                    if(Constant.ENVIROMENT.equals("test")){
+//                if(StringUtils.isEmpty(payAmt)){
+//                    payAmt="0";
+//                }else {
+//                    int index = payAmt.indexOf(".");
+//                    int length = payAmt.length();
+//                    Long amLong = 0l;
+//                    if(index == -1){
+//                        amLong = Long.valueOf(payAmt + "00");
+//                    }else if(length - index >= 3){
+//                        amLong = Long.valueOf((payAmt.substring(0, index+3)).replace(".", ""));
+//                    }else if(length - index == 2){
+//                        amLong = Long.valueOf((payAmt.substring(0, index+2)).replace(".", "")+0);
+//                    }else{
+//                        amLong = Long.valueOf((payAmt.substring(0, index+1)).replace(".", "")+"00");
+//                    }
+//                    payAmt = amLong + "";
+//                    logger.info("order_money（分）:" + payAmt);
+//                    if(Constant.ENVIROMENT.equals("test")){
                         //payAmt = "0.01";
-                    }
-                }
+//                    }
+//                }
                 totalFee = payAmt;
                 model.addAttribute("order_money", totalFee);
             }else {
