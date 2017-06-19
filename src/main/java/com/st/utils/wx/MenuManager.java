@@ -72,7 +72,7 @@ public class MenuManager {
     public static void main(String[] args) {
 //        System.err.println(WeixinUtil.getAccessTokenForWXService("wxbb336e8a40b636d6","aa389c3d29c333ebdad2d50b95160d64").getToken());
 
-        String accessToken = "CQBBDxN0s2-zfilgr6WMKZGfUEIJkvNUGDzcHOyZ2Lnv_zC8aXDPfuPg0KoZ0b1vZynEBq0PRQs8LQaMP66pZp0gSsmfXaomz3_xzJQOsEVIZrHykWaFRDvhixh9uCYuRJKjAAAHZA";
+        String accessToken = "rIC1Cd6GoS5fPYRAtqk1g8jlId-y5YXJP0_flSrfGy7_yLff9rEmOauQYvp3kjWHCQOrcjd3k7tRH3xjrUOuJJMrCsOa4qTcvgTdYa4R1RCq7QKvTcETfva6uE9VrC47ITMaACABMF";
         String url= "http://www.aimplus.cn";
         String appId = "wxbb336e8a40b636d6";
 
