@@ -7,7 +7,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 %>
 
 <!DOCTYPE html>
-<html>
+<html style="background: #fbd1c1;">
   <head>
     <title>盛世欢唱</title>
     <meta charset="utf-8">
@@ -15,7 +15,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta name="description" content="">
     <link href="<%=basePath%>jsp/resources/css/basic.css %>" type="text/css" rel="stylesheet" />
   </head>
-<body class="jsb_add1 gray pb40">
+<body>
 
 <style>
 	.bgorange{
@@ -26,16 +26,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	}
 </style>
 
-<section class="bgorange p10">
+<section class="main" style="background: #f2f2f4;">
     <div class="box">
-        <label class="fl">订单号：<em class="orderCode"></em></label>
-        <span class="fr">待支付</span>
+        <label class="about-item-box1">订单号：<em class="orderCode"></em></label>
+        <span class="about-item-box1">待支付</span>
     </div>
-    <div class="box c">总金额：￥<em class="zjine"></em></div>
+    <div class="pay-submit">总金额：￥<em class="zjine"></em></div>
 </section>
-<div class="c mt10 p10 tgray white bt bb">
-    <P class="mb10">支付方式：<em class="payMethod"></em></P>
-    <P class="mb10">订单提交时间：<em class="ddtime"></em></P>
+<div class="pay-group">
+    <P class="payment">支付方式：<em class="payMethod"></em></P>
+    <P class="payment">订单提交时间：<em class="ddtime"></em></P>
 </div>
 
 <script type="text/javascript" src="<%=basePath%>jsp/recoruces/js/jquery-1.8.0.js" ></script>

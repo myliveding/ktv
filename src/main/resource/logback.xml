@@ -19,7 +19,7 @@
    
     <encoder>   
       <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n</pattern>
-      <charset>GBK</charset>
+      <charset>UTF-8</charset>
     </encoder>
     <filter class="ch.qos.logback.classic.filter.LevelFilter">  
     	<level>ERROR</level>  
@@ -37,7 +37,7 @@
    
     <encoder>   
       <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n</pattern>
-      <charset>GBK</charset>
+      <charset>UTF-8</charset>
     </encoder>
     <filter class="ch.qos.logback.classic.filter.LevelFilter">  
     	<level>ERROR</level>  
@@ -55,7 +55,7 @@
    
     <encoder>   
       <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n</pattern>
-      <charset>GBK</charset>
+      <charset>UTF-8</charset>
     </encoder>   
   </appender>
   

@@ -1,5 +1,6 @@
 package com.st.ktv.controller.wechat;
 
+import com.st.core.ContextHolderUtils;
 import com.st.ktv.entity.WechatMember;
 import com.st.ktv.service.MemberService;
 import com.st.utils.Constant;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.*;
 
 
@@ -45,7 +47,11 @@ public class WechatPayController {
 	
 	@RequestMapping(value="/index",method=RequestMethod.GET)
 	public  String pay(HttpServletRequest req,Model model) {
-		String openid = (String) req.getSession().getAttribute("openid");
+
+        HttpSession session = ContextHolderUtils.getSession();
+        Object openidObj =  session.getAttribute("openid");
+        String openid = openidObj.toString();
+//        String openid = (String) req.getSession().getAttribute("openid");
 //        openid = "11111111";
 		logger.info("支付调用时获取的openid为：" + openid);
         if(null == openid || "".equals(openid)){
