@@ -123,10 +123,10 @@ public class WechatPayController {
                         amLong = Long.valueOf((payAmt.substring(0, index+1)).replace(".", "")+"00");
                     }
                     payAmt = amLong + "";
-                    if(Constant.ENVIROMENT.equals("test")){
-                        payAmt = "1";
-                    }
                     logger.info("order_money（分）:" + payAmt);
+                    if(Constant.ENVIROMENT.equals("test")){
+                        //payAmt = "0.01";
+                    }
                 }
                 totalFee = payAmt;
                 model.addAttribute("order_money", totalFee);
