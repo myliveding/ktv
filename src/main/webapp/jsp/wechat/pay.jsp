@@ -11,7 +11,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <title>盛世欢唱ktv</title>
     <meta charset="utf-8">
-    <meta name="keywords" content=""> 
+    <meta name="keywords" content="">
     <meta name="description" content="">
     <link href="<%=basePath%>jsp/resources/css/basic.css %>" type="text/css" rel="stylesheet" />
   </head>
@@ -34,14 +34,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="box">总金额：￥<em class="zjine"></em></div>
 </section>
 <div class="bgorange">
-    <P class="box">支付方式：<em class="payMethod"></em></P>
+    <P class="box">手机号：<em class="payMethod"></em></P>
     <P class="box">订单提交时间：<em class="ddtime"></em></P>
 </div>
 
-<script type="text/javascript" src="<%=basePath%>jsp/recoruces/js/jquery-1.8.0.js" ></script>
+<script type="text/javascript" src="<%=basePath%>jsp/resources/js/jquery-1.8.0.js" ></script>
 <script type="text/javascript">
     function loadinfom(){
-       var orderCode ="${orderCode}";
+        var orderCode ="${orderCode}";
         var order_money="${order_money}";
         var create_time = "${create_time}";
         var pay_method="${pay_method}";
@@ -49,11 +49,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         $(".orderCode").html(orderCode);
         $(".zjine").html(order_money);
         $(".ddtime").html(create_time);
-        if(pay_method=="wechatpay"){
-            $(".payMethod").html("微信支付");
-        }else{
-            $(".payMethod").html("未支付");
-        }
+        $(".payMethod").html(pay_method);
     }
     loadinfom();
 
@@ -70,6 +66,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
            function(res){
                alert(res.err_msg);
+               alert(JSON.stringify(res));
                var orderId = "${orderId}";
                if(res.err_msg == "get_brand_wcpay_request:ok" ) {
                   alert("付款成功，正在跳转到首页");

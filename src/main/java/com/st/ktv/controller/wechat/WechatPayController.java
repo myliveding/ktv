@@ -91,7 +91,7 @@ public class WechatPayController {
             }
 
             //判断订单金额
-            String productName = "order-"+orderNo;
+            String productName = "盛世KTV-"+orderNo;
             String totalFee = "0";
             model.addAttribute("orderCode", orderNo);
             if(0 == resultStr.getInt("error_code")){
@@ -106,7 +106,7 @@ public class WechatPayController {
                     req.setAttribute("error", "请勿重复支付");
                     return "error：请勿重复支付";
                 }
-                model.addAttribute("pay_method", "wechatpay");
+                model.addAttribute("pay_method", member.getMobile());
                 if(StringUtils.isEmpty(payAmt)){
                     payAmt="0";
                 }else {
@@ -162,6 +162,7 @@ public class WechatPayController {
                 model.addAttribute("nonceStr", paynonceStr);
                 model.addAttribute("_package", "prepay_id="+prepayId);
                 model.addAttribute("paySign", pay2sign);
+                logger.info("下一步返回页面..." + prepayId);
             } catch (Exception e) {
                 logger.error(e.getMessage(),e);
             }

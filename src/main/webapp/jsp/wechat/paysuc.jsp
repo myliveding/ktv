@@ -6,8 +6,6 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 
-
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -15,7 +13,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta charset="utf-8">
     <meta name="keywords" content=""> 
     <meta name="description" content="">
-    <link href="jsp/resources/css/basic.css" type="text/css" rel="stylesheet" />
+    <link href="<%=basePath%>jsp/resources/css/basic.css" type="text/css" rel="stylesheet" />
   </head>
 <body class="gray" >
 <div class="statusbar-overlay"></div>
@@ -43,11 +41,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								</div>
 							</div>
 						</section>
-						<a href="${pageContext.request.contextPath}/weixin/getweixin.do?name=user/updateuserinfo" class="setEmail external js-setEmail">邮箱未设置，电子账单无法获取，请先设置</a>
 						<div class="list-block">
 			                <ul>
 			                   <li>
-			                		<a href="${pageContext.request.contextPath}/101410/" class="item-link item-content external">
+			                		<a href="" class="item-link item-content external">
 			                    		<div class="item-inner">
 			                        		<div class="item-title">了解首次参保需准备的资料</div>
 			                      		</div>
@@ -92,7 +89,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	line-height: .86rem;
 }
 .list-block .item-title {
-	background-image: url(jsp/resources/css/img/1.png);
+	background-image: url(<%=basePath%>jsp/resources/css/img/1.png);
 	background-repeat: no-repeat;
 	background-size: .38rem .44rem;
 	background-position: .56rem center;
@@ -112,8 +109,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 
 
-<script type="text/javascript" src="<%=JsonUtil.getJsonFile("js/jquery/jquery-1.8.0.js") %>"></script>
-<script type="text/javascript" src="<%=JsonUtil.getJsonFile("js/app.js") %>"></script>
+<script type="text/javascript" src="<%=basePath%>jsp/resources/js/jquery/jquery-1.8.0.js"></script>
 <script src="//res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script type="text/javascript">
 var myApp = new Framework7();
@@ -206,6 +202,5 @@ dplus.track("支付成功", {"用户名" : packageJson.userName});//dplus埋点-
 
 
 <jsp:include page="/jsp/layouts/foot.jsp" flush="true"/>
-<jsp:include page="/jsp/layouts/pv.jsp" flush="true"/>
 </body>
 </html>
