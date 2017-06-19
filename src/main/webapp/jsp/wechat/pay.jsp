@@ -26,16 +26,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	}
 </style>
 
-<section class="main" style="background: #f2f2f4;">
+<section class="bgorange" style="background: #f2f2f4;">
     <div class="box">
         <label class="about-item-box1">订单号：<em class="orderCode"></em></label>
         <span class="about-item-box1">待支付</span>
     </div>
-    <div class="pay-submit">总金额：￥<em class="zjine"></em></div>
+    <div class="box">总金额：￥<em class="zjine"></em></div>
 </section>
-<div class="pay-group">
-    <P class="payment">支付方式：<em class="payMethod"></em></P>
-    <P class="payment">订单提交时间：<em class="ddtime"></em></P>
+<div class="bgorange">
+    <P class="box">支付方式：<em class="payMethod"></em></P>
+    <P class="box">订单提交时间：<em class="ddtime"></em></P>
 </div>
 
 <script type="text/javascript" src="<%=basePath%>jsp/recoruces/js/jquery-1.8.0.js" ></script>
