@@ -8,6 +8,7 @@ import com.st.ktv.entity.WechatMember;
 import com.st.ktv.service.MemberService;
 import com.st.utils.Constant;
 import com.st.utils.DataUtil;
+import com.st.utils.ImagesUtil;
 import com.st.utils.JoYoUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -18,16 +19,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 /**
@@ -315,10 +316,9 @@ public class MemberController {
                 // 这个路径相对当前应用的目录
                 // 上传文件存储目录
                 String UPLOAD_DIRECTORY = "/jsp/upload";
-
-//                String uploadPath = Constant.URL + UPLOAD_DIRECTORY;
                 String uploadPath = request.getSession().getServletContext().getRealPath("") + UPLOAD_DIRECTORY;
                 String savePath = Constant.URL + UPLOAD_DIRECTORY;
+                String fileName = "";
                 // 如果目录不存在则创建
                 File uploadDir = new File(uploadPath);
                 if (!uploadDir.exists()) {
@@ -332,14 +332,15 @@ public class MemberController {
                         for (FileItem item : formItems) {
                             // 处理不在表单中的字段
                             if (!item.isFormField()) {
-                                String fileName = new File(item.getName()).getName();
+                                fileName = new File(item.getName()).getName();
                                 if(null != fileName && !"".equals(fileName)){
                                     String[] name = fileName.split("\\.");
                                     if(name.length > 0){
                                         String form = name[name.length - 1];
                                         logger.info("获取的图片格式为：" + form);
-                                        uploadPath = uploadPath + "/" + UUID.randomUUID().toString() + "." + form;
-                                        savePath = savePath + "/" + UUID.randomUUID().toString() + "." + form;
+                                        fileName = UUID.randomUUID().toString() + "." + form;
+                                        uploadPath = uploadPath + "/" + fileName;
+                                        savePath = savePath + "/" + fileName;
                                     }
                                     File storeFile = new File(uploadPath);
                                     // 在控制台输出文件的上传路径
@@ -356,6 +357,20 @@ public class MemberController {
                 }
                 //存储到相应的用户属性中
                 memberService.updateHeadPortrait(openidObj.toString(), savePath);
+
+                //调用去进行图片的压缩
+                if(!fileName.equals("")){
+                    //获得文件源
+                    File file = new File(uploadPath);
+                    if(!file.exists()){
+                    }else{
+                        logger.info("即将压缩的图片文件名：" + file.getName() + ",文件大小：" + file.length()/1024 + "KB");
+                    }
+                    //只有大于50KB的才会去压缩
+                    if(file.length()/1024 > 50){
+                        ImagesUtil.scaleImageWithParams(uploadPath, uploadPath, 70, 70, true, "png");
+                    }
+                }
             }
         }
 //        return "";
