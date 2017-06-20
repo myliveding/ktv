@@ -32,7 +32,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <div class="nav-item nav-item1">
                             <img src="jsp/resources/img/s1.png">
                         </div>
-                        <span>在线预定</span>
+                        <span>在线预订</span>
                     </a>
                 </li>
                 <li>
@@ -114,7 +114,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                     </p>
                                 </div>
                                 <div class="recent">距离我${data.distance}KM</div>
-                                <em>进入预定</em>
+                                <em>进入预订</em>
                             </a>
                         </li>
                     </c:forEach>

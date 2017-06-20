@@ -114,7 +114,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 </c:forEach>
                             </div>
                             <!-- <div class="recent">距离我${data.distance}KM</div> -->
-                            <em>进入预定</em>
+                            <em>进入预订</em>
                         </a>
                     </li>
                 </c:forEach>

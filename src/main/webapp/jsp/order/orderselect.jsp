@@ -45,7 +45,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </div> -->
         </div>
         <div class="ordertime">
-            <h2>选择预定时间</h2>
+            <h2>选择预订时间</h2>
             <div class="ordertimetab">
                 <a href="javascript:void(0);" class="act">
                     <span>今天</span>
