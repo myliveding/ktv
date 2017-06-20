@@ -36,7 +36,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
              <h1>${detail.title}</h1>
              <img src=${detail.image_url} >
              <h2>${detail.summary}</h2>
-             <h1>活动内容介绍</h1>
+             <!-- <h1>活动内容介绍</h1> -->
              <p>${detail.content}</p>
          </div>
     </div>
