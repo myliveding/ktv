@@ -32,14 +32,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
              <h2>${roomInfo.shop_name}</h2>
              <p>房间号：${roomInfo.room_type_name}/${roomInfo.room_num}（${roomInfo.room_peoples}人）</p>
              <span>状态：
-                 <c:if test="${roomInfo.tag == 1}">
+                <c:if test="${roomInfo.tag == 1}">
                     未被预订
                 </c:if>
                 <c:if test="${roomInfo.tag != 1}">
                     已被预订
                 </c:if>
              </span>
-             <a href="${pageContext.request.contextPath}/personorder/gotoPackages.do?iid=${roomInfo.iid}">立即预订</a>
+             <c:if test="${roomInfo.tag == 1}">
+                <a href="${pageContext.request.contextPath}/personorder/gotoPackages.do?iid=${roomInfo.iid}">立即预订</a>
+             </c:if>
          </div>
          <div class="room-img">
              ${roomInfo.summary}
