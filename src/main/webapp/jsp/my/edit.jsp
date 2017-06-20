@@ -41,12 +41,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </c:if>
             <span>上传新头像</span>
         </div>
-        <form method="post" action="${pageContext.request.contextPath}/member/fileUpload.do" enctype="multipart/form-data">
-            选择一个文件:
-            <input type="file" name="uploadFile" />
-            <br/><br/>
-            <input type="submit" value="上传" />
-        </form>
+        <%--<form method="post" action="${pageContext.request.contextPath}/member/fileUpload.do" enctype="multipart/form-data">--%>
+            <%--选择一个文件:--%>
+            <%--<input type="file" name="uploadFile" />--%>
+            <%--<br/><br/>--%>
+            <%--<input type="submit" value="上传" />--%>
+        <%--</form>--%>
         <%-- <p>
             <span>线下会员绑定</span>
             <a href="">修改</a>  
