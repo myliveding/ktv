@@ -279,13 +279,10 @@ public class MemberController {
     @RequestMapping(value = "/fileUpload")
     public String fileUpload(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        // 上传文件存储目录
-        String UPLOAD_DIRECTORY = "/jsp/upload";
-
         // 上传配置
-        int MEMORY_THRESHOLD   = 1024 * 1024 * 1;  // 3MB
-        int MAX_FILE_SIZE      = 1024 * 1024 * 3; // 40MB
-        int MAX_REQUEST_SIZE   = 1024 * 1024 * 3; // 50MB
+        int MEMORY_THRESHOLD   = 1024 * 1024 * 3;  // 3MB
+        int MAX_FILE_SIZE      = 1024 * 1024 * 5; // 40MB
+        int MAX_REQUEST_SIZE   = 1024 * 1024 * 10; // 50MB
 
         // 检测是否为多媒体上传
         if (!ServletFileUpload.isMultipartContent(request)) {
@@ -316,7 +313,12 @@ public class MemberController {
                 upload.setHeaderEncoding("UTF-8");
                 // 构造临时路径来存储上传的文件
                 // 这个路径相对当前应用的目录
-                String uploadPath = Constant.URL + UPLOAD_DIRECTORY;
+                // 上传文件存储目录
+                String UPLOAD_DIRECTORY = "/jsp/upload";
+
+//                String uploadPath = Constant.URL + UPLOAD_DIRECTORY;
+                String uploadPath = request.getSession().getServletContext().getRealPath("") + UPLOAD_DIRECTORY;
+                String savePath = Constant.URL + UPLOAD_DIRECTORY;
                 // 如果目录不存在则创建
                 File uploadDir = new File(uploadPath);
                 if (!uploadDir.exists()) {
@@ -333,12 +335,15 @@ public class MemberController {
                                 String fileName = new File(item.getName()).getName();
                                 if(null != fileName && !"".equals(fileName)){
                                     String[] name = fileName.split("\\.");
-                                    String form = name[name.length - 1];
-                                    logger.info("获取的图片格式为：" + form);
-                                    uploadPath = uploadPath + "/" + UUID.randomUUID().toString() + "." + form;
+                                    if(name.length > 0){
+                                        String form = name[name.length - 1];
+                                        logger.info("获取的图片格式为：" + form);
+                                        uploadPath = uploadPath + "\\" + UUID.randomUUID().toString() + "." + form;
+                                        savePath = savePath + "/" + UUID.randomUUID().toString() + "." + form;
+                                    }
                                     File storeFile = new File(uploadPath);
                                     // 在控制台输出文件的上传路径
-                                    logger.info("文件上传路径为：" + uploadPath);
+                                    logger.info("文件上传路径为：" + uploadPath + "--保存路径：" + savePath);
                                     // 保存文件到硬盘
                                     item.write(storeFile);
                                     request.setAttribute("message", "文件上传成功!");
@@ -350,9 +355,10 @@ public class MemberController {
                     request.setAttribute("message", "错误信息: " + ex.getMessage());
                 }
                 //存储到相应的用户属性中
-                memberService.updateHeadPortrait(openidObj.toString(), uploadPath);
+                memberService.updateHeadPortrait(openidObj.toString(), savePath);
             }
         }
+//        return "";
         return "redirect:"+Constant.URL+"/member/gotoUserSet.do";
     }
 
