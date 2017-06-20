@@ -26,7 +26,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          <a href="javascript:history.go(-1);">
              <img src="<%=basePath%>jsp/resources/img/b2.png">
          </a>
-         <h1 >我的订单</h1>
+         <h1>我的预订</h1>
      </div> 
     <div class="main" >
         <div class="scoreorder" id="wrapper">

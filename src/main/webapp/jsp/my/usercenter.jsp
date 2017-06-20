@@ -73,7 +73,7 @@
                  <li>
                     <a href="${pageContext.request.contextPath}/personorder/getOrderList.do">
                         <img src="<%=basePath%>jsp/resources/img/u2.png">
-                        <span>我的预定</span>
+                        <span>我的预订</span>
                     </a>
                 </li>
                 <%-- <li>
