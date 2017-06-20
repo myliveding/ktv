@@ -11,22 +11,24 @@ import com.st.utils.DataUtil;
 import com.st.utils.JoYoUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.io.*;
+import java.util.*;
 
 /**
  * @Description
@@ -187,10 +189,11 @@ public class MemberController {
         HttpSession session = ContextHolderUtils.getSession();
         Object openidObj =  session.getAttribute("openid");
         Object appidObj =  session.getAttribute("appid");
-        openidObj = "oyAM9vwa6FN6trSrUweXCdK0Jh8s";
-        appidObj = "wxbb336e8a40b636d6";
+//        openidObj = "oyAM9vwa6FN6trSrUweXCdK0Jh8s";
+//        appidObj = "wxbb336e8a40b636d6";
         if ( !"".equals(openidObj) && openidObj != null && !"".equals(appidObj) && appidObj != null) {
             memberService.checkLogin(openidObj.toString(), appidObj.toString());
+
             WechatMember member = memberService.getObjectByOpenid(openidObj.toString());
             request.setAttribute("member",member);
 
@@ -231,7 +234,6 @@ public class MemberController {
 
         String phone = request.getParameter("mobile");//手机号码
         String openid = openidObj.toString();//openid
-//        String openid = "11111111";
         String type = request.getParameter("type");//校验保存和更新手机号码
         JSONObject resultObject = memberService.checkAndUpdateMobile(openid, phone, type);
         response.setContentType("text/html; charset=utf-8");
@@ -250,14 +252,108 @@ public class MemberController {
 
         HttpSession session = ContextHolderUtils.getSession();
         Object openidObj =  session.getAttribute("openid");
-        openidObj = "oyAM9vwa6FN6trSrUweXCdK0Jh8s";
+//        openidObj = "oyAM9vwa6FN6trSrUweXCdK0Jh8s";
         if ( !"".equals(openidObj) && openidObj != null) {
             WechatMember member = memberService.getObjectByOpenid(openidObj.toString());
             request.setAttribute("member",member);
+
+            String[] arr = new String[]{"member_id" + member.getId()};
+            String mystr = "member_id=" + member.getId();
+            JSONObject result = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.USER_MESSAGES, mystr, arr));
+            if(0 == result.getInt("error_code")){
+                JSONArray array = JSONArray.fromObject(result.getString("result"));
+                request.setAttribute("num", array.size());
+            }
         }else{
             request.setAttribute("error", "请在微信中访问");
         }
         return "my/edit";
+    }
+
+    /**
+     * 文件上传方式二
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/fileUpload")
+    public String fileUpload(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        // 上传文件存储目录
+        String UPLOAD_DIRECTORY = "/jsp/upload";
+
+        // 上传配置
+        int MEMORY_THRESHOLD   = 1024 * 1024 * 1;  // 3MB
+        int MAX_FILE_SIZE      = 1024 * 1024 * 3; // 40MB
+        int MAX_REQUEST_SIZE   = 1024 * 1024 * 3; // 50MB
+
+        // 检测是否为多媒体上传
+        if (!ServletFileUpload.isMultipartContent(request)) {
+            // 如果不是则停止
+            PrintWriter writer = response.getWriter();
+            writer.println("Error: 表单必须包含 enctype=multipart/form-data");
+            writer.flush();
+            logger.info("Error: 表单必须包含 enctype=multipart/form-data");
+        }else{
+            HttpSession session = ContextHolderUtils.getSession();
+            Object openidObj =  session.getAttribute("openid");
+//            openidObj = "oyAM9vwa6FN6trSrUweXCdK0Jh8s";
+            if ( !"".equals(openidObj) && openidObj != null) {
+
+                // 配置上传参数
+                DiskFileItemFactory factory = new DiskFileItemFactory();
+                // 设置内存临界值 - 超过后将产生临时文件并存储于临时目录中
+                factory.setSizeThreshold(MEMORY_THRESHOLD);
+                // 设置临时存储目录
+                factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
+                ServletFileUpload upload = new ServletFileUpload(factory);
+
+                // 设置最大文件上传值
+                upload.setFileSizeMax(MAX_FILE_SIZE);
+                // 设置最大请求值 (包含文件和表单数据)
+                upload.setSizeMax(MAX_REQUEST_SIZE);
+                // 中文处理
+                upload.setHeaderEncoding("UTF-8");
+                // 构造临时路径来存储上传的文件
+                // 这个路径相对当前应用的目录
+                String uploadPath = Constant.URL + UPLOAD_DIRECTORY;
+                // 如果目录不存在则创建
+                File uploadDir = new File(uploadPath);
+                if (!uploadDir.exists()) {
+                    uploadDir.mkdir();
+                }
+                try {
+                    // 解析请求的内容提取文件数据
+                    List<FileItem> formItems = upload.parseRequest(request);
+                    if (!formItems.isEmpty()) {
+                        // 迭代表单数据
+                        for (FileItem item : formItems) {
+                            // 处理不在表单中的字段
+                            if (!item.isFormField()) {
+                                String fileName = new File(item.getName()).getName();
+                                if(null != fileName && !"".equals(fileName)){
+                                    String[] name = fileName.split("\\.");
+                                    String form = name[name.length - 1];
+                                    logger.info("获取的图片格式为：" + form);
+                                    uploadPath = uploadPath + "/" + UUID.randomUUID().toString() + "." + form;
+                                    File storeFile = new File(uploadPath);
+                                    // 在控制台输出文件的上传路径
+                                    logger.info("文件上传路径为：" + uploadPath);
+                                    // 保存文件到硬盘
+                                    item.write(storeFile);
+                                    request.setAttribute("message", "文件上传成功!");
+                                }
+                            }
+                        }
+                    }
+                } catch (Exception ex) {
+                    request.setAttribute("message", "错误信息: " + ex.getMessage());
+                }
+                //存储到相应的用户属性中
+                memberService.updateHeadPortrait(openidObj.toString(), uploadPath);
+            }
+        }
+        return "redirect:"+Constant.URL+"/member/gotoUserSet.do";
     }
 
     /**
@@ -269,8 +365,8 @@ public class MemberController {
         HttpSession session = ContextHolderUtils.getSession();
         Object openidObj =  session.getAttribute("openid");
         Object appidObj =  session.getAttribute("appid");
-        openidObj = "oyAM9vwa6FN6trSrUweXCdK0Jh8s";
-        appidObj = "wxbb336e8a40b636d6";
+//        openidObj = "oyAM9vwa6FN6trSrUweXCdK0Jh8s";
+//        appidObj = "wxbb336e8a40b636d6";
         if ( !"".equals(openidObj) && openidObj != null && !"".equals(appidObj) && appidObj != null) {
             WechatMember member = memberService.getObjectByOpenid(openidObj.toString());
             String[] arr = new String[]{"member_id" + member.getId()};

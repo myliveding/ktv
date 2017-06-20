@@ -3,6 +3,7 @@ package com.st.ktv.service.impl;
 import com.st.ktv.entity.WechatMember;
 import com.st.ktv.mapper.WechatMemberMapper;
 import com.st.ktv.service.MemberService;
+import com.st.utils.Constant;
 import com.st.utils.DataUtil;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
@@ -12,9 +13,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Description
@@ -56,6 +63,12 @@ public class MemberServiceImpl implements MemberService {
         }
         WechatMember wechatMember = wechatMemberMapper.getObjectByOpenid(openid);
         if(null != wechatMember){
+            //判断是否存在自定义的，存在就不更新头像字段
+            if(null != wechatMember.getHeadPortrait() && !"".equals(wechatMember.getHeadPortrait())){
+                if(wechatMember.getHeadPortrait().startsWith(Constant.URL)){
+                    updateMember.setHeadPortrait(null);
+                }
+            }
             updateMember.setId(wechatMember.getId());
             updateMember.setLastLoginTime(nowTime);
             updateMember.setLastLoginIp(getRemoteAddr());
@@ -85,8 +98,28 @@ public class MemberServiceImpl implements MemberService {
         return remoteAddr;
     }
 
+    /**
+     * 获取用户的基本信息
+     * @param openid
+     * @return
+     */
     public WechatMember getObjectByOpenid(String openid){
-        return wechatMemberMapper.getObjectByOpenid(openid);
+        WechatMember wechatMember = wechatMemberMapper.getObjectByOpenid(openid);
+        return wechatMember;
+    }
+
+    /**
+     * 更新头像
+     * @param openid
+     * @param filePath
+     */
+    public void updateHeadPortrait(String openid, String filePath){
+        Date nowTime = new Date();
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("openid", openid);
+        map.put("filePath", filePath);
+        map.put("nowTime", nowTime);
+        wechatMemberMapper.updateHeadPortrait(map);
     }
 
     public JSONObject getJsonByOpenid(String openid){

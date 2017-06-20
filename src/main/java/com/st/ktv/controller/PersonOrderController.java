@@ -78,7 +78,7 @@ public class PersonOrderController {
 
         HttpSession session = ContextHolderUtils.getSession();
         Object openidObj =  session.getAttribute("openid");
-        openidObj = "oyAM9vwa6FN6trSrUweXCdK0Jh8s";
+//        openidObj = "oyAM9vwa6FN6trSrUweXCdK0Jh8s";
         if ( !"".equals(openidObj) && openidObj != null) {
             String iid = request.getParameter("iid");
             try {
@@ -204,8 +204,8 @@ public class PersonOrderController {
     public String getOrderList(HttpServletRequest request, HttpServletResponse response) {
 
         HttpSession session = ContextHolderUtils.getSession();
-        Object openidObj =  session.getAttribute("openid");
-        openidObj = "oyAM9vwa6FN6trSrUweXCdK0Jh8s";
+        Object openidObj = session.getAttribute("openid");
+//        openidObj = "oyAM9vwa6FN6trSrUweXCdK0Jh8s";
         if ( !"".equals(openidObj) && openidObj != null) {
             Integer memberId = 0;
             WechatMember member = memberService.getObjectByOpenid(openidObj.toString());

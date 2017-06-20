@@ -30,7 +30,7 @@
       <param-name>excludedPages</param-name>
       <param-value>
           scope,other,discount,shop,wechat/pay/notify.do,memeber/alipayReturn.do,
-          ,member/gotoIndexDomain.do,member/gotoErrorMsg.do,member,
+          ,member/gotoIndexDomain.do,member/gotoErrorMsg.do,
           ,personorder,member/gotoMyMessages.do,member/checkAndUpdateMobile.do,wechat/pay/index.do
       </param-value>
     </init-param>

@@ -3,6 +3,8 @@ package com.st.ktv.mapper;
 import com.st.ktv.entity.WechatMember;
 import org.springframework.stereotype.Repository;
 
+import java.util.Map;
+
 @Repository
 public interface WechatMemberMapper {
 
@@ -21,5 +23,7 @@ public interface WechatMemberMapper {
     WechatMember getObjectByOpenid(String openid);
 
     WechatMember getObjectByMobile(String mobile);
+
+    int updateHeadPortrait(Map<String, Object> map);
 
 }

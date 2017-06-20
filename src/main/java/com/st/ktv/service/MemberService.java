@@ -31,4 +31,11 @@ public interface MemberService {
      */
     public JSONObject checkAndUpdateMobile(String openid, String phone, String type);
 
+    /**
+     * 更新头像
+     * @param openid
+     * @param filePath
+     */
+    public void updateHeadPortrait(String openid, String filePath);
+
 }

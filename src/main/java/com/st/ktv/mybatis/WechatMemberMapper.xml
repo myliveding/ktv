@@ -258,4 +258,13 @@
     where mobile = #{mobile}
   </select>
 
+  <update id="updateHeadPortrait" parameterType="java.util.HashMap">
+      update member
+      set
+      head_portrait = #{filePath},
+      update_time = #{nowTime}
+      where openid = #{openid}
+    </update>
+
+
   </mapper>

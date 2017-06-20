@@ -45,6 +45,9 @@ public final class Constant {
     //生成签名的时间戳10位，一般是取时间里面的一段,生成签名的随机串
     public static final String NONCESTR = PropertiesUtils.findPropertiesKey("NONCESTR",Constant.CONFIG_FILE_NAME);
 
+    //上传文件路径
+    public static final String FILE_PATH = PropertiesUtils.findPropertiesKey("FILE_PATH",Constant.CONFIG_FILE_NAME);
+
     //百度的ip地址解析接口
     public static final String BAIDU_IP = "http://api.map.baidu.com/location/ip?ak=AK&ip=IP";
 
