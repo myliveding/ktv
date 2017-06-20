@@ -136,8 +136,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         if(typeof(d.result) != "undefined"){
                             for(var i=0; i< d.result.length; i++){
                                 str = str + '<li><div class="allroomitem"><input type="hidden" class="iid" value="'
-                                        + d.result[i].iid + '"/><span class="name">'
-                                        + d.result[i].room_name + '</span><span>' + d.result[i].room_type_name
+                                        + d.result[i].iid + '"/><span>'
+                                        + d.result[i].room_name + '</span><span class="name">' + d.result[i].room_type_name
                                         + '</span><span>' + d.result[i].peoples + '人</span></div>'
                                         + '<a href="' + packageJson.JAVA_DOMAIN  + '/personorder/gotoRoomInfo.do?iid=' + d.result[i].iid + '">'
                                         + '<i>查看包厢 </i><i>环境照片</i><em></em></a></li>';

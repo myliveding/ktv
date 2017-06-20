@@ -78,7 +78,7 @@ public class PersonOrderController {
 
         HttpSession session = ContextHolderUtils.getSession();
         Object openidObj =  session.getAttribute("openid");
-//        openidObj = "oyAM9vwa6FN6trSrUweXCdK0Jh8s";
+        openidObj = "oyAM9vwa6FN6trSrUweXCdK0Jh8s";
         if ( !"".equals(openidObj) && openidObj != null) {
             String iid = request.getParameter("iid");
             try {
@@ -145,8 +145,6 @@ public class PersonOrderController {
                     request.setAttribute("orderId", packages.get("order_id"));
                     request.setAttribute("money", packages.get("money"));
                 }
-//                request.setAttribute("orderId", "3");
-//                request.setAttribute("money", "136.00");
             } catch (Exception e) {
                 logger.error("去支付页面出错:" + e.getMessage(), e);
             }
@@ -207,7 +205,7 @@ public class PersonOrderController {
 
         HttpSession session = ContextHolderUtils.getSession();
         Object openidObj =  session.getAttribute("openid");
-//        openidObj = "oyAM9vwa6FN6trSrUweXCdK0Jh8s";
+        openidObj = "oyAM9vwa6FN6trSrUweXCdK0Jh8s";
         if ( !"".equals(openidObj) && openidObj != null) {
             Integer memberId = 0;
             WechatMember member = memberService.getObjectByOpenid(openidObj.toString());

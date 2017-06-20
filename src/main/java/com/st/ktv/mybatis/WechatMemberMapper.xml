@@ -12,6 +12,7 @@
     <result column="available_score" jdbcType="INTEGER" property="availableScore" />
     <result column="total_score" jdbcType="INTEGER" property="totalScore" />
     <result column="commission" jdbcType="DOUBLE" property="commission" />
+    <result column="balance" jdbcType="DOUBLE" property="balance" />
     <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime" />
     <result column="last_login_ip" jdbcType="VARCHAR" property="lastLoginIp" />
     <result column="status" jdbcType="TINYINT" property="status" />
@@ -22,7 +23,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     id, nick_name, head_portrait, mobile, email, level, openid, available_score, total_score, 
-    commission, last_login_time, last_login_ip, status, create_time, update_time, delete_time, 
+    commission, balance, last_login_time, last_login_ip, status, create_time, update_time, delete_time,
     is_delete
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -39,13 +40,13 @@
     insert into member (id, nick_name, head_portrait, 
       mobile, email, level, 
       openid, available_score, total_score, 
-      commission, last_login_time, last_login_ip, 
+      commission, balance, last_login_time, last_login_ip,
       status, create_time, update_time, 
       delete_time, is_delete)
     values (#{id,jdbcType=INTEGER}, #{nickName,jdbcType=VARCHAR}, #{headPortrait,jdbcType=VARCHAR}, 
       #{mobile,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}, 
       #{openid,jdbcType=VARCHAR}, #{availableScore,jdbcType=INTEGER}, #{totalScore,jdbcType=INTEGER}, 
-      #{commission,jdbcType=DOUBLE}, #{lastLoginTime,jdbcType=TIMESTAMP}, #{lastLoginIp,jdbcType=VARCHAR}, 
+      #{commission,jdbcType=DOUBLE}, #{balance,jdbcType=DOUBLE}, #{lastLoginTime,jdbcType=TIMESTAMP}, #{lastLoginIp,jdbcType=VARCHAR},
       #{status,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{deleteTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=BIT})
   </insert>
@@ -81,6 +82,9 @@
       </if>
       <if test="commission != null">
         commission,
+      </if>
+      <if test="balance != null">
+          balance,
       </if>
       <if test="lastLoginTime != null">
         last_login_time,
@@ -135,6 +139,9 @@
       <if test="commission != null">
         #{commission,jdbcType=DOUBLE},
       </if>
+      <if test="balance != null">
+          #{balance,jdbcType=DOUBLE},
+      </if>
       <if test="lastLoginTime != null">
         #{lastLoginTime,jdbcType=TIMESTAMP},
       </if>
@@ -188,6 +195,9 @@
       <if test="commission != null">
         commission = #{commission,jdbcType=DOUBLE},
       </if>
+      <if test="balance != null">
+          balance = #{balance,jdbcType=DOUBLE},
+      </if>
       <if test="lastLoginTime != null">
         last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
       </if>
@@ -223,6 +233,7 @@
       available_score = #{availableScore,jdbcType=INTEGER},
       total_score = #{totalScore,jdbcType=INTEGER},
       commission = #{commission,jdbcType=DOUBLE},
+      balance = #{balance,jdbcType=DOUBLE},
       last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
       last_login_ip = #{lastLoginIp,jdbcType=VARCHAR},
       status = #{status,jdbcType=TINYINT},

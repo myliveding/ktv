@@ -9,6 +9,7 @@ import com.st.ktv.service.MemberService;
 import com.st.utils.Constant;
 import com.st.utils.DataUtil;
 import com.st.utils.JoYoUtil;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,18 +51,23 @@ public class MemberController {
      */
     @RequestMapping("/gotoIndexDomain")
     public String getWeixintoIndex(HttpServletRequest request) {
-
-        String[] arr = new String[]{};
-        String mystr = "";
-        JSONObject storeList = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.STORES, mystr, arr));
-        if(storeList.getInt("error_code") == 0){
-            request.setAttribute("storeList",storeList.get("result"));
-        }
-
-        //获取轮播图
-        String[] arr1 = new String[]{"type" + 1};
-        String mystr1 = "type=" + 1;
         try {
+            String[] arr = new String[]{};
+            String mystr = "";
+            JSONObject storeList = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.STORES, mystr, arr));
+            if(storeList.getInt("error_code") == 0){
+                request.setAttribute("storeList",storeList.get("result"));
+            }
+
+            //获取网站参数
+            JSONObject web = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.WEB_PARAMS, mystr, arr));
+            if(web.getInt("error_code") == 0){
+                request.setAttribute("web",web.get("result"));
+            }
+
+            //获取轮播图
+            String[] arr1 = new String[]{"type" + 1};
+            String mystr1 = "type=" + 1;
             JSONObject result = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.INDEX_BANNERS, mystr1, arr1));
             if(result.getInt("error_code") == 0){
                 request.setAttribute("recruits",result.get("result"));
@@ -181,11 +187,20 @@ public class MemberController {
         HttpSession session = ContextHolderUtils.getSession();
         Object openidObj =  session.getAttribute("openid");
         Object appidObj =  session.getAttribute("appid");
-
+        openidObj = "oyAM9vwa6FN6trSrUweXCdK0Jh8s";
+        appidObj = "wxbb336e8a40b636d6";
         if ( !"".equals(openidObj) && openidObj != null && !"".equals(appidObj) && appidObj != null) {
             memberService.checkLogin(openidObj.toString(), appidObj.toString());
             WechatMember member = memberService.getObjectByOpenid(openidObj.toString());
             request.setAttribute("member",member);
+
+            String[] arr = new String[]{"member_id" + member.getId()};
+            String mystr = "member_id=" + member.getId();
+            JSONObject result = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.USER_MESSAGES, mystr, arr));
+            if(0 == result.getInt("error_code")){
+                JSONArray array = JSONArray.fromObject(result.getString("result"));
+                request.setAttribute("num", array.size());
+            }
         }else{
             request.setAttribute("error", "请在微信中访问");
         }
@@ -235,9 +250,8 @@ public class MemberController {
 
         HttpSession session = ContextHolderUtils.getSession();
         Object openidObj =  session.getAttribute("openid");
-        Object appidObj =  session.getAttribute("appid");
-
-        if ( !"".equals(openidObj) && openidObj != null && !"".equals(appidObj) && appidObj != null) {
+        openidObj = "oyAM9vwa6FN6trSrUweXCdK0Jh8s";
+        if ( !"".equals(openidObj) && openidObj != null) {
             WechatMember member = memberService.getObjectByOpenid(openidObj.toString());
             request.setAttribute("member",member);
         }else{
@@ -255,6 +269,8 @@ public class MemberController {
         HttpSession session = ContextHolderUtils.getSession();
         Object openidObj =  session.getAttribute("openid");
         Object appidObj =  session.getAttribute("appid");
+        openidObj = "oyAM9vwa6FN6trSrUweXCdK0Jh8s";
+        appidObj = "wxbb336e8a40b636d6";
         if ( !"".equals(openidObj) && openidObj != null && !"".equals(appidObj) && appidObj != null) {
             WechatMember member = memberService.getObjectByOpenid(openidObj.toString());
             String[] arr = new String[]{"member_id" + member.getId()};

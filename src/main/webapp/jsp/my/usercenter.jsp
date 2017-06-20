@@ -23,31 +23,36 @@
         <div class="user">
             <div class="user-top">
                 <span>普通会员</span> 
-                <a href="message.jsp">
+                <a href="${pageContext.request.contextPath}/member/gotoMyMessages.do">
                     <img src="<%=basePath%>jsp/resources/img/message.png">
-                    <i>2</i>
+                    <i>${num}</i>
                 </a>
-                <a href="edit.jsp">
+                <a href="${pageContext.request.contextPath}/member/gotoUserSet.do">
                     <img src="<%=basePath%>jsp/resources/img/set.png" >
                 </a>
                 <div class="clear"></div>
             </div>
             <div class="header-img">
+            <c:if test="${member.headPortrait eq 'null' || member.headPortrait eq ''}">
                 <img src="<%=basePath%>jsp/resources/img/1.png">
+            </c:if>
+            <c:if test="${member.headPortrait ne 'null' && member.headPortrait ne ''}">
+                <img src="${member.headPortrait}">
+            </c:if>
             </div>
             <div class="user-account">
                 <ul>
                     <li>
                         <span>余额：</span>
-                        <em>1234</em>
+                        <em>${member.balance}</em>
                     </li>
                     <li>
                         <span>佣金：</span>
-                        <em>45353</em>
+                        <em>${member.commission}</em>
                     </li>
                     <li>
-                        <span>总积分/下线积分：</span>
-                        <em>789/80</em>
+                        <span>总积分/可用积分：</span>
+                        <em>${member.totalScore}/${member.availableScore}</em>
                     </li>
                     <div class="clear"></div>
                 </ul>
@@ -55,7 +60,7 @@
         </div>
         <div class="user-list">
             <ul>
-                <li>
+                <%-- <li>
                     <a href="javascript:void(0);">
                         <img src="<%=basePath%>jsp/resources/img/u1.png">
                         <span>我的团队</span> 
@@ -64,14 +69,14 @@
                         <em><i>●</i>一级用户(2人)</em>
                         <em><i>●</i>二级用户(3人)</em>
                     </div> 
-                </li>
+                </li> --%>
                  <li>
                     <a href="${pageContext.request.contextPath}/personorder/getOrderList.do">
                         <img src="<%=basePath%>jsp/resources/img/u2.png">
                         <span>我的预定</span>
                     </a>
                 </li>
-                 <li>
+                <%-- <li>
                     <a href="../order/myscoreorder.jsp">
                         <img src="<%=basePath%>jsp/resources/img/u3.png">
                         <span>积分订单</span>
@@ -82,10 +87,10 @@
                         <img src="<%=basePath%>jsp/resources/img/u4.png">
                         <span>佣金提现</span>
                     </a>
-                </li>
+                </li> --%>
             </ul>
             <ul>
-                <li>
+                <%-- <li>
                     <a href="../commission/commissiondetails.jsp">
                         <img src="<%=basePath%>jsp/resources/img/u5.png">
                         <span>佣金明细</span>
@@ -107,7 +112,7 @@
                         <em><i>●</i>已使用(7张)</em>
                         <em><i>●</i>未使用(7张)</em>
                     </div> 
-                </li>
+                </li> --%>
                  <li>
                     <a href="${pageContext.request.contextPath}/jsp/my/code.jsp">
                         <img src="<%=basePath%>jsp/resources/img/u8.png">

@@ -47,7 +47,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                      </li>
                  </c:forEach>
              </ul>
-             <a href="">抵用券</a>
+             <%-- <a href="">抵用券</a> --%>
              <div class="select-tel">
                  手机号码<span>${mobile}</span>
              </div>

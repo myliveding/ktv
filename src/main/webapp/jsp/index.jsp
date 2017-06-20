@@ -28,7 +28,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div id="nav">
             <ul>
                 <li>
-                    <a href="orderselect.html">
+                    <a href="${pageContext.request.contextPath}/member/gotoIndexDomain.do">
                         <div class="nav-item nav-item1">
                             <img src="<%=basePath%>jsp/resources/img/s1.png">
                         </div>
@@ -76,7 +76,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </a>
                 </li>
                 <li>
-                    <a href="tel:111">
+                    <a href="tel:${web.mobile}">
                         <div class="nav-item nav-item7">
                             <img src="<%=basePath%>jsp/resources/img/s7.png">
                         </div>

@@ -27,6 +27,8 @@ public class WechatMember {
 
     private Double commission;
 
+    private Double balance;
+
     private Date lastLoginTime;
 
     private String lastLoginIp;
