@@ -132,6 +132,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 },
                 success: function success(d) {
                     if (d.error_code == 0) {
+                        $(".allroom ul").html('');
                         var str = '';
                         if(typeof(d.result) != "undefined"){
                             for(var i=0; i< d.result.length; i++){
