@@ -5,6 +5,7 @@ import com.st.ktv.mapper.WechatMemberMapper;
 import com.st.ktv.service.MemberService;
 import com.st.utils.Constant;
 import com.st.utils.DataUtil;
+import com.st.utils.FileUtil;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -114,12 +115,30 @@ public class MemberServiceImpl implements MemberService {
      * @param filePath
      */
     public void updateHeadPortrait(String openid, String filePath){
+
+        WechatMember old = wechatMemberMapper.getObjectByOpenid(openid);
         Date nowTime = new Date();
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("openid", openid);
         map.put("filePath", filePath);
         map.put("nowTime", nowTime);
-        wechatMemberMapper.updateHeadPortrait(map);
+        int res = wechatMemberMapper.updateHeadPortrait(map);
+        if(res > 0){
+            //删除旧的图片
+            if(null != old.getHeadPortrait() && !"".equals(old.getHeadPortrait())
+                    && !old.getHeadPortrait().startsWith("http://wx.qlogo.cn/mmopen/")){
+                //只支持当前删除相对路径下的文件http://www.aimplus.cn/ jsp/upload/custom-pic-fa1934e3-4cf4-4fcd-8a1d-8338829397ff.jpg
+                String path = "";
+                try{
+                    path = old.getHeadPortrait().replace(Constant.URL,"");
+                    if(!"".equals(path)){
+                        FileUtil.deleteFile(path);
+                    }
+                }catch (IOException e){
+                    logger.error("删除文件：" + old.getHeadPortrait() + "出错！删除路径为：" + path);
+                }
+            }
+        }
     }
 
     public JSONObject getJsonByOpenid(String openid){

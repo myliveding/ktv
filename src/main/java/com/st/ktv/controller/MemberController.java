@@ -348,25 +348,26 @@ public class MemberController {
                                 }
                             }
                         }
+
+                        //存储到相应的用户属性中
+                        memberService.updateHeadPortrait(openidObj.toString(), savePath);
+
+                        //调用去进行图片的压缩
+                        if(!fileName.equals("")){
+                            //获得文件源
+                            File file = new File(uploadPath);
+                            if(!file.exists()){
+                            }else{
+                                logger.info("即将压缩的图片文件名：" + file.getName() + ",文件大小：" + file.length()/1024 + "KB");
+                            }
+                            //只有大于50KB的才会去压缩
+                            if(file.length()/1024 > 50){
+                                ImagesUtil.scaleImageWithParams(uploadPath, uploadPath, 70, 70, true, "png");
+                            }
+                        }
                     }
                 } catch (Exception ex) {
                     request.setAttribute("message", "错误信息: " + ex.getMessage());
-                }
-                //存储到相应的用户属性中
-                memberService.updateHeadPortrait(openidObj.toString(), savePath);
-
-                //调用去进行图片的压缩
-                if(!fileName.equals("")){
-                    //获得文件源
-                    File file = new File(uploadPath);
-                    if(!file.exists()){
-                    }else{
-                        logger.info("即将压缩的图片文件名：" + file.getName() + ",文件大小：" + file.length()/1024 + "KB");
-                    }
-                    //只有大于50KB的才会去压缩
-                    if(file.length()/1024 > 50){
-                        ImagesUtil.scaleImageWithParams(uploadPath, uploadPath, 70, 70, true, "png");
-                    }
                 }
             }
         }

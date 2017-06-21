@@ -62,7 +62,7 @@ public class FileUtil {
 	 */
 	public static boolean deleteFile(String filePath) throws IOException {
 		boolean bool = false;
-		File file = new File(_getRootFolderDiskPath() + filePath);
+		File file = new File(_getRootFolderDiskPath1() + filePath);
 		if (!file.exists()) return false;
 		if (file.isFile())file.delete();
 		return bool;
@@ -122,5 +122,11 @@ public class FileUtil {
 				.getRequestAttributes()).getRequest();
 		return request.getSession().getServletContext().getRealPath("") + "/";
 	}
-	
+
+	// 获得根目录的硬盘目录
+	private static String _getRootFolderDiskPath1() {
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder
+				.getRequestAttributes()).getRequest();
+		return request.getSession().getServletContext().getRealPath("");
+	}
 }
