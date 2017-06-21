@@ -33,12 +33,19 @@
                 <div class="clear"></div>
             </div>
             <div class="header-img">
-            <c:if test="${member.headPortrait eq 'null' || member.headPortrait eq ''}">
-                <img src="<%=basePath%>jsp/resources/img/1.png">
-            </c:if>
-            <c:if test="${member.headPortrait ne 'null' && member.headPortrait ne ''}">
-                <img src="${member.headPortrait}">
-            </c:if>
+                <c:choose>
+                    <c:when test="${member.headPortrait eq 'null' || member.headPortrait eq ''">
+                        <img src="<%=basePath%>jsp/resources/img/1.png">
+                    </c:when>
+                    <c:otherwise>
+                        <c:if test="${fn:contains(member.headPortrait, 'http://w')}">
+                            <img src="${member.headPortrait}">
+                        </c:if>
+                        <c:otherwise>
+                            <img src="${pageContext.request.contextPath}/member/showHeadPortrait.do">
+                        </c:otherwise>
+                    </c:otherwise>
+                </c:choose>
             </div>
             <div class="user-account">
                 <ul>

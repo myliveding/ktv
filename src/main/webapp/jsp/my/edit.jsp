@@ -33,18 +33,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
     <div class="edit-info">
         <div class="edit-header">
-            <c:if test="${member.headPortrait eq 'null' || member.headPortrait eq ''}">
-                <img src="<%=basePath%>jsp/resources/img/1.png">
-            </c:if>
-            <c:if test="${member.headPortrait ne 'null' && member.headPortrait ne ''}">
-                <c:if test="${fn:contains(member.headPortrait, 'http://wx.qlogo.cn/mmopen')}">
-                </c:if>
-                <c:if test="${fn:contains(member.headPortrait, 'http://wx.qlogo.cn/mmopen')}">
-                </c:if>
-                <c:if test="${fn:contains(member.headPortrait, 'http://wx.qlogo.cn/mmopen')}">
-                </c:if>
-                <img src="${member.headPortrait}">
-            </c:if>
+            <c:choose>
+                <c:when test="${member.headPortrait eq 'null' || member.headPortrait eq ''">
+                    <img src="<%=basePath%>jsp/resources/img/1.png">
+                </c:when>
+                <c:otherwise>
+                    <c:if test="${fn:contains(member.headPortrait, 'http://w')}">
+                        <img src="${member.headPortrait}">
+                    </c:if>
+                    <c:otherwise>
+                        <img src="${pageContext.request.contextPath}/member/showHeadPortrait.do">
+                    </c:otherwise>
+                </c:otherwise>
+            </c:choose>
             <span>上传新头像</span>
         </div>
         <%--<form method="post" action="${pageContext.request.contextPath}/member/fileUpload.do" enctype="multipart/form-data">--%>
