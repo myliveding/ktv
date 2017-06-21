@@ -25,10 +25,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -373,8 +370,48 @@ public class MemberController {
                 }
             }
         }
-//        return "";
         return "redirect:"+Constant.URL+"/member/gotoUserSet.do";
+    }
+
+    /**
+     * 从本地磁盘中读取图片
+     * @param request
+     * @param response
+     */
+    @RequestMapping("/showHeadPortrait")
+    public void showHeadPortrait(HttpServletRequest request,HttpServletResponse response){
+
+        HttpSession session = ContextHolderUtils.getSession();
+        Object openidObj =  session.getAttribute("openid");
+//        openidObj = "oyAM9vwa6FN6trSrUweXCdK0Jh8s";
+        if ( !"".equals(openidObj) && openidObj != null) {
+            WechatMember member = memberService.getObjectByOpenid(openidObj.toString());
+            if(null != member && null != member.getHeadPortrait()){
+                String filePath = Constant.FILE_PATH + member.getHeadPortrait();
+//                filePath = "D:\\upload\\1.jpg";
+                FileInputStream in;
+                response.setContentType("application/octet-stream;charset=UTF-8");
+                try {
+                    //图片读取路径
+                    in = new FileInputStream(filePath);
+                    int i = in.available();
+                    byte[]data = new byte[i];
+                    in.read(data);
+                    in.close();
+                    //写图片
+                    OutputStream outputStream = new BufferedOutputStream(response.getOutputStream());
+                    outputStream.write(data);
+                    outputStream.flush();
+                    outputStream.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }else{
+                logger.info("用户不存在，请从微信端重新登录");
+            }
+        }else{
+            request.setAttribute("error", "请在微信中访问");
+        }
     }
 
     /**

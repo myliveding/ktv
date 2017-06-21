@@ -37,6 +37,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <img src="<%=basePath%>jsp/resources/img/1.png">
             </c:if>
             <c:if test="${member.headPortrait ne 'null' && member.headPortrait ne ''}">
+                <c:if test="${fn:contains(member.headPortrait, 'http://wx.qlogo.cn/mmopen')}">
+                </c:if>
+                <c:if test="${fn:contains(member.headPortrait, 'http://wx.qlogo.cn/mmopen')}">
+                </c:if>
+                <c:if test="${fn:contains(member.headPortrait, 'http://wx.qlogo.cn/mmopen')}">
+                </c:if>
                 <img src="${member.headPortrait}">
             </c:if>
             <span>上传新头像</span>
