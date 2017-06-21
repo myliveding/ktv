@@ -8,6 +8,7 @@ import com.st.ktv.entity.WechatMember;
 import com.st.ktv.service.MemberService;
 import com.st.utils.Constant;
 import com.st.utils.DataUtil;
+import com.st.utils.ImagesUtil;
 import com.st.utils.JoYoUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -18,10 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -315,10 +313,9 @@ public class MemberController {
                 // 这个路径相对当前应用的目录
                 // 上传文件存储目录
                 String UPLOAD_DIRECTORY = "/jsp/upload";
-
-//                String uploadPath = Constant.URL + UPLOAD_DIRECTORY;
                 String uploadPath = request.getSession().getServletContext().getRealPath("") + UPLOAD_DIRECTORY;
                 String savePath = Constant.URL + UPLOAD_DIRECTORY;
+                String fileName = "";
                 // 如果目录不存在则创建
                 File uploadDir = new File(uploadPath);
                 if (!uploadDir.exists()) {
@@ -332,14 +329,15 @@ public class MemberController {
                         for (FileItem item : formItems) {
                             // 处理不在表单中的字段
                             if (!item.isFormField()) {
-                                String fileName = new File(item.getName()).getName();
+                                fileName = new File(item.getName()).getName();
                                 if(null != fileName && !"".equals(fileName)){
                                     String[] name = fileName.split("\\.");
                                     if(name.length > 0){
                                         String form = name[name.length - 1];
                                         logger.info("获取的图片格式为：" + form);
-                                        uploadPath = uploadPath + "/" + UUID.randomUUID().toString() + "." + form;
-                                        savePath = savePath + "/" + UUID.randomUUID().toString() + "." + form;
+                                        fileName =  Constant.NAME_START + UUID.randomUUID().toString() + "." + form;
+                                        uploadPath = uploadPath + "/" + fileName;
+                                        savePath = savePath + "/" + fileName;
                                     }
                                     File storeFile = new File(uploadPath);
                                     // 在控制台输出文件的上传路径
@@ -356,10 +354,64 @@ public class MemberController {
                 }
                 //存储到相应的用户属性中
                 memberService.updateHeadPortrait(openidObj.toString(), savePath);
+
+                //调用去进行图片的压缩
+                if(!fileName.equals("")){
+                    //获得文件源
+                    File file = new File(uploadPath);
+                    if(!file.exists()){
+                    }else{
+                        logger.info("即将压缩的图片文件名：" + file.getName() + ",文件大小：" + file.length()/1024 + "KB");
+                    }
+                    //只有大于50KB的才会去压缩
+                    if(file.length()/1024 > 50){
+                        ImagesUtil.scaleImageWithParams(uploadPath, uploadPath, 70, 70, true, "png");
+                    }
+                }
             }
         }
-//        return "";
         return "redirect:"+Constant.URL+"/member/gotoUserSet.do";
+    }
+
+    /**
+     * 从本地磁盘中读取图片
+     * @param request
+     * @param response
+     */
+    @RequestMapping("/showHeadPortrait")
+    public void showHeadPortrait(HttpServletRequest request,HttpServletResponse response){
+
+        HttpSession session = ContextHolderUtils.getSession();
+        Object openidObj =  session.getAttribute("openid");
+//        openidObj = "oyAM9vwa6FN6trSrUweXCdK0Jh8s";
+        if ( !"".equals(openidObj) && openidObj != null) {
+            WechatMember member = memberService.getObjectByOpenid(openidObj.toString());
+            if(null != member && null != member.getHeadPortrait()){
+                String filePath = Constant.FILE_PATH + member.getHeadPortrait();
+//                filePath = "D:\\upload\\1.jpg";
+                FileInputStream in;
+                response.setContentType("application/octet-stream;charset=UTF-8");
+                try {
+                    //图片读取路径
+                    in = new FileInputStream(filePath);
+                    int i = in.available();
+                    byte[]data = new byte[i];
+                    in.read(data);
+                    in.close();
+                    //写图片
+                    OutputStream outputStream = new BufferedOutputStream(response.getOutputStream());
+                    outputStream.write(data);
+                    outputStream.flush();
+                    outputStream.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }else{
+                logger.info("用户不存在，请从微信端重新登录");
+            }
+        }else{
+            request.setAttribute("error", "请在微信中访问");
+        }
     }
 
     /**

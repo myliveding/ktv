@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -33,12 +34,19 @@
                 <div class="clear"></div>
             </div>
             <div class="header-img">
-            <c:if test="${member.headPortrait eq 'null' || member.headPortrait eq ''}">
-                <img src="<%=basePath%>jsp/resources/img/1.png">
-            </c:if>
-            <c:if test="${member.headPortrait ne 'null' && member.headPortrait ne ''}">
-                <img src="${member.headPortrait}">
-            </c:if>
+                <c:choose>
+                    <c:when test="${member.headPortrait eq 'null' || member.headPortrait eq ''}">
+                        <img src="<%=basePath%>jsp/resources/img/1.png">
+                    </c:when>
+                    <c:otherwise>
+                        <c:if test="${fn:startsWith(member.headPortrait, 'http://w')}">
+                            <img src="${member.headPortrait}">
+                        </c:if>
+                        <c:if test="${!fn:startsWith(member.headPortrait, 'http://w')}">
+                            <img src="${pageContext.request.contextPath}/member/showHeadPortrait.do">
+                        </c:if>
+                    </c:otherwise>
+                </c:choose>
             </div>
             <div class="user-account">
                 <ul>

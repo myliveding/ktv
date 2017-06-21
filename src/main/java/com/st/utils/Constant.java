@@ -35,7 +35,6 @@ public final class Constant {
     //微信token
     public static final String APP_TOKEN = PropertiesUtils.findPropertiesKey("APP_TOKEN",Constant.CONFIG_FILE_NAME);
     
-
     //php接口api
     public static final String PHP_API_URL = PropertiesUtils.findPropertiesKey("PHP_API_URL",Constant.CONFIG_FILE_NAME);
 
@@ -46,7 +45,9 @@ public final class Constant {
     public static final String NONCESTR = PropertiesUtils.findPropertiesKey("NONCESTR",Constant.CONFIG_FILE_NAME);
 
     //上传文件路径
-    public static final String FILE_PATH = PropertiesUtils.findPropertiesKey("FILE_PATH",Constant.CONFIG_FILE_NAME);
+    public static final String FILE_PATH = PropertiesUtils.findPropertiesKey("FILE_UPLOAD_PATH",Constant.CONFIG_FILE_NAME);
+    //自定义上传图片名称开始字符
+    public static final String NAME_START = PropertiesUtils.findPropertiesKey("NAME_START",Constant.CONFIG_FILE_NAME);
 
     //百度的ip地址解析接口
     public static final String BAIDU_IP = "http://api.map.baidu.com/location/ip?ak=AK&ip=IP";

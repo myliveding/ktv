@@ -1,5 +1,5 @@
 <%@ page language="java" import="com.st.utils.Constant" pageEncoding="utf-8"%>
-<%@ taglib prefix="fn" uri="/WEB-INF/tld/fn.tld"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="/WEB-INF/tld/c.tld"%>
 <%
 String path = request.getContextPath();
@@ -33,20 +33,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
     <div class="edit-info">
         <div class="edit-header">
-            <c:if test="${member.headPortrait eq 'null' || member.headPortrait eq ''}">
-                <img src="<%=basePath%>jsp/resources/img/1.png">
-            </c:if>
-            <c:if test="${member.headPortrait ne 'null' && member.headPortrait ne ''}">
-                <img src="${member.headPortrait}">
-            </c:if>
+            <c:choose>
+                <c:when test="${member.headPortrait eq 'null' || member.headPortrait eq ''}">
+                    <img src="<%=basePath%>jsp/resources/img/1.png">
+                </c:when>
+                <c:otherwise>
+                    <c:if test="${fn:startsWith(member.headPortrait, 'http://w')}">
+                        <img src="${member.headPortrait}">
+                    </c:if>
+                    <c:if test="${!fn:startsWith(member.headPortrait, 'http://w')}">
+                        <img src="${pageContext.request.contextPath}/member/showHeadPortrait.do">
+                    </c:if>
+                </c:otherwise>
+            </c:choose>
             <span>上传新头像</span>
         </div>
-        <form method="post" action="${pageContext.request.contextPath}/member/fileUpload.do" enctype="multipart/form-data">
-            选择一个文件:
-            <input type="file" name="uploadFile" />
-            <br/><br/>
-            <input type="submit" value="上传" />
-        </form>
+        <%--<form method="post" action="${pageContext.request.contextPath}/member/fileUpload.do" enctype="multipart/form-data">--%>
+            <%--选择一个文件:--%>
+            <%--<input type="file" name="uploadFile" />--%>
+            <%--<br/><br/>--%>
+            <%--<input type="submit" value="上传" />--%>
+        <%--</form>--%>
         <%-- <p>
             <span>线下会员绑定</span>
             <a href="">修改</a>  
