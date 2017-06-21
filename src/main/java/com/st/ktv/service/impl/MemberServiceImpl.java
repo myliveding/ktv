@@ -65,7 +65,7 @@ public class MemberServiceImpl implements MemberService {
         if(null != wechatMember){
             //判断是否存在自定义的，存在就不更新头像字段
             if(null != wechatMember.getHeadPortrait() && !"".equals(wechatMember.getHeadPortrait())){
-                if(wechatMember.getHeadPortrait().startsWith(Constant.URL)){
+                if(wechatMember.getHeadPortrait().contains(Constant.NAME_START)){
                     updateMember.setHeadPortrait(null);
                 }
             }

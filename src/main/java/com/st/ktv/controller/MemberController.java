@@ -335,7 +335,7 @@ public class MemberController {
                                     if(name.length > 0){
                                         String form = name[name.length - 1];
                                         logger.info("获取的图片格式为：" + form);
-                                        fileName = UUID.randomUUID().toString() + "." + form;
+                                        fileName =  Constant.NAME_START + UUID.randomUUID().toString() + "." + form;
                                         uploadPath = uploadPath + "/" + fileName;
                                         savePath = savePath + "/" + fileName;
                                     }

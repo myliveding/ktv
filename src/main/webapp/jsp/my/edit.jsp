@@ -1,5 +1,5 @@
 <%@ page language="java" import="com.st.utils.Constant" pageEncoding="utf-8"%>
-<%@ taglib prefix="fn" uri="/WEB-INF/tld/fn.tld"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="/WEB-INF/tld/c.tld"%>
 <%
 String path = request.getContextPath();
@@ -34,16 +34,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="edit-info">
         <div class="edit-header">
             <c:choose>
-                <c:when test="${member.headPortrait eq 'null' || member.headPortrait eq ''">
+                <c:when test="${member.headPortrait eq 'null' || member.headPortrait eq ''}">
                     <img src="<%=basePath%>jsp/resources/img/1.png">
                 </c:when>
                 <c:otherwise>
                     <c:if test="${fn:startsWith(member.headPortrait, 'http://w')}">
                         <img src="${member.headPortrait}">
                     </c:if>
-                    <c:otherwise>
+                    <c:if test="${!fn:startsWith(member.headPortrait, 'http://w')}">
                         <img src="${pageContext.request.contextPath}/member/showHeadPortrait.do">
-                    </c:otherwise>
+                    </c:if>
                 </c:otherwise>
             </c:choose>
             <span>上传新头像</span>
