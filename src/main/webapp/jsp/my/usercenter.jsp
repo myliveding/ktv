@@ -38,7 +38,7 @@
                         <img src="<%=basePath%>jsp/resources/img/1.png">
                     </c:when>
                     <c:otherwise>
-                        <c:if test="${fn:contains(member.headPortrait, 'http://w')}">
+                        <c:if test="${fn:startsWith(member.headPortrait, 'http://w')}">
                             <img src="${member.headPortrait}">
                         </c:if>
                         <c:otherwise>
