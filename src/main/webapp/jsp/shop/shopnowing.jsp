@@ -29,11 +29,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      <div class="main">
      	<div class="select-nav">
 	      <div class="select-list select-listtab">
-	      	   <a href="${pageContext.request.contextPath}/shop/getShopping.do?id=0">精选</a>
+	      	   <a href="javascript:void(0);">
+                   <input type="hidden" class="cate_id" value="0" />
+                   精选
+               </a>
 	      </div>
 			<c:forEach var = "cate" items ="${cates}">
                 <div class="select-list">
-                    <a href="${pageContext.request.contextPath}/shop/getShopping.do?id=${cate.id}">${cate.name}</a>
+                    <a href="javascript:void(0);">
+                        <input type="hidden" class="cate_id" value="${cate.id}" />
+                    ${cate.name}
+                    </a>
                 </div>
 			</c:forEach>
 	      <div class="select-img">
@@ -62,7 +68,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    <div class="goods">
 	    	<ul>
                 <c:forEach var = "good" items ="${goods}">
-                    <li>${good.id}
+                    <li>
                         <img src="${good.image_url}">
                         <p>${good.title}</p>
                         <span>${good.price}</span>
@@ -80,7 +86,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<span>
     			<img src="<%=basePath%>jsp/resources/img/g2.png">
     		</span>
-			<em><label>23</label>件</em> 
+			<em><label>0</label>件</em>
     	</a>
     	<p>
     		<span>
@@ -93,12 +99,56 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script src='<%=basePath%>jsp/resources/js/jquery.min.js'></script>
 <script src='<%=basePath%>jsp/resources/js/rem.js'></script>
 <script>
-	$(function(){ 
+	$(function(){
+        updateTrollerNum();
+    });
+
+    function updateTrollerNum(){
         //购物车加一
         $('.goods li em').click(function(){
-            var $num=parseFloat($('#trolley').find('label').html()); 
+            var $num = parseFloat($('#trolley').find('label').html());
             $('#trolley').find('label').html($num+1);
         });
-    });
+    }
+
+    //选择超市分类
+    $('.select-nav .select-list').click(function() {
+        $('.select-nav .select-list').removeClass('select-listtab');
+        $(this).addClass('select-listtab');
+        //调用去获取
+        cateId = $(this).find('.cate_id').val();
+        getGoods(cateId);
+    })
+
+	function getGoods(cateId){
+		$.ajax({
+			'url': "${pageContext.request.contextPath}/shop/getCateGoods.do",
+			'type': 'post',
+			'dataType': 'json',
+			'data': {
+                id: cateId,
+			},
+			success: function success(d) {
+				if (d.error_code == 0) {
+					$(".goods ul").html('');
+					var str = '';
+					if(typeof(d.result) != "undefined"){
+						for(var i=0; i< d.result.length; i++){
+							str = str + '<li><input type="hidden" class="id" value="' + d.result[i].id + '"/>'
+                                    + '<img src="' + d.result[i].image_url + '">'
+									+ '<p>' + d.result[i].title + '</p><span>'
+                                    + d.result[i].price + '</span><em>添加</em></li>';
+						}
+						str += '<div class="clear"></div>';
+						$(".goods ul").html(str);
+                        updateTrollerNum();
+					}
+				} else {
+					alert(d.msg);
+				}
+			}
+		});
+	}
+
 </script>
 </html>
