@@ -113,8 +113,9 @@ public class MemberServiceImpl implements MemberService {
      * 更新头像
      * @param openid
      * @param filePath
+     * @param type 0代表相对路径下 1代表绝对路径
      */
-    public void updateHeadPortrait(String openid, String filePath){
+    public void updateHeadPortrait(String openid, String filePath, Integer type){
 
         WechatMember old = wechatMemberMapper.getObjectByOpenid(openid);
         Date nowTime = new Date();
@@ -127,15 +128,22 @@ public class MemberServiceImpl implements MemberService {
             //删除旧的图片
             if(null != old.getHeadPortrait() && !"".equals(old.getHeadPortrait())
                     && !old.getHeadPortrait().startsWith("http://wx.qlogo.cn/mmopen/")){
-                //只支持当前删除相对路径下的文件http://www.aimplus.cn/ jsp/upload/custom-pic-fa1934e3-4cf4-4fcd-8a1d-8338829397ff.jpg
-                String path = "";
                 try{
-                    path = old.getHeadPortrait().replace(Constant.URL,"");
-                    if(!"".equals(path)){
-                        FileUtil.deleteFile(path);
+                    String path = "";
+                    if(0 == type){
+                        //相对路径，并且原来的不是微信的头像
+                        path = old.getHeadPortrait().replace(Constant.URL,"");
+                        if(!"".equals(path)){
+                            FileUtil.deleteFile(path);
+                        }
+                    }else{
+                        path = Constant.FILE_PATH + old.getHeadPortrait();
+                        if(!"".equals(path)){
+                            FileUtil.deleteDiskFile(path);
+                        }
                     }
                 }catch (IOException e){
-                    logger.error("删除文件：" + old.getHeadPortrait() + "出错！删除路径为：" + path);
+                    logger.error("删除文件：" + old.getHeadPortrait() + "出错！删除文件名为：" + old.getHeadPortrait());
                 }
             }
         }

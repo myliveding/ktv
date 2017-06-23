@@ -23,36 +23,6 @@ public class OtherInfoController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
-     * demo
-     * @param request
-     * @param response
-     * @return
-     * @throws IOException
-     */
-//    public void gotorenewal(HttpServletRequest request, HttpServletResponse response) {
-//        String[] arr = new String[]{"openid" + openid};
-//        String mystr = "openid=" + openid;
-//        JSONObject result = JSONObject.fromObject("{\"status\":1,\"msg\":\"出错了\"}");
-//        try {
-//            //根据openid判断是否绑定
-//            result = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.PERSONSOCIAL_LOGIN_URL, mystr, arr));
-//        } catch (Exception e) {
-//            logger.error("获取登录出错:" + e.getMessage(), e);
-//        }
-//        if (0 == result.getInt("status")) {
-//            JSONObject data = JSONObject.fromObject(result.getString("data"));
-//            String userId = data.getString("user_id");
-//            String memberTruename = data.getString("member_truename");
-//            session.setAttribute("userId", userId);
-//            String isMobileBind = data.getString("is_mobile_bind");
-//            session.setAttribute("isMobileBind", isMobileBind);
-//            return "my/myinsured";
-//        } else {
-//            return "redirect:" + Constant.URL + "/weixin/getweixin.do?name=account/login";
-//        }
-//    }
-
-    /**
      * 获取公司信息
      * @param request
      * @param response

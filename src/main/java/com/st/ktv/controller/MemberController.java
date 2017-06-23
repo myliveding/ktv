@@ -269,7 +269,7 @@ public class MemberController {
     }
 
     /**
-     * 文件上传方式二
+     * 文件上传方式一
      * @param request
      * @return
      * @throws Exception
@@ -348,23 +348,10 @@ public class MemberController {
                                 }
                             }
                         }
-
                         //存储到相应的用户属性中
-                        memberService.updateHeadPortrait(openidObj.toString(), savePath);
-
+                        memberService.updateHeadPortrait(openidObj.toString(), savePath, 0);
                         //调用去进行图片的压缩
-                        if(!fileName.equals("")){
-                            //获得文件源
-                            File file = new File(uploadPath);
-                            if(!file.exists()){
-                            }else{
-                                logger.info("即将压缩的图片文件名：" + file.getName() + ",文件大小：" + file.length()/1024 + "KB");
-                            }
-                            //只有大于50KB的才会去压缩
-                            if(file.length()/1024 > 50){
-                                ImagesUtil.scaleImageWithParams(uploadPath, uploadPath, 70, 70, true, "png");
-                            }
-                        }
+                        ImagesUtil.compressed(fileName, uploadPath);
                     }
                 } catch (Exception ex) {
                     request.setAttribute("message", "错误信息: " + ex.getMessage());
@@ -413,6 +400,99 @@ public class MemberController {
         }else{
             request.setAttribute("error", "请在微信中访问");
         }
+    }
+
+    /**
+     * 文件上传方式二
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/fileDiskUpload")
+    public String fileDiskUpload(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        // 上传配置
+        int MEMORY_THRESHOLD   = 1024 * 1024 * 3;  // 3MB
+        int MAX_FILE_SIZE      = 1024 * 1024 * 8; // 8MB
+        int MAX_REQUEST_SIZE   = 1024 * 1024 * 10; // 10MB
+
+        // 检测是否为多媒体上传
+        if (!ServletFileUpload.isMultipartContent(request)) {
+            // 如果不是则停止
+            PrintWriter writer = response.getWriter();
+            writer.println("Error: 表单必须包含 enctype=multipart/form-data");
+            writer.flush();
+            logger.info("Error: 表单必须包含 enctype=multipart/form-data");
+        }else{
+            HttpSession session = ContextHolderUtils.getSession();
+            Object openidObj =  session.getAttribute("openid");
+//            openidObj = "oyAM9vwa6FN6trSrUweXCdK0Jh8s";
+            if ( !"".equals(openidObj) && openidObj != null) {
+
+                // 配置上传参数
+                DiskFileItemFactory factory = new DiskFileItemFactory();
+                // 设置内存临界值 - 超过后将产生临时文件并存储于临时目录中
+                factory.setSizeThreshold(MEMORY_THRESHOLD);
+                // 设置临时存储目录
+                factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
+                ServletFileUpload upload = new ServletFileUpload(factory);
+
+                // 设置最大文件上传值
+                upload.setFileSizeMax(MAX_FILE_SIZE);
+                // 设置最大请求值 (包含文件和表单数据)
+                upload.setSizeMax(MAX_REQUEST_SIZE);
+                // 中文处理
+                upload.setHeaderEncoding("UTF-8");
+
+                // 存储文件到指定的目录
+                String uploadPath = Constant.FILE_PATH ;
+                //包含路径的
+
+                // 如果目录不存在则创建
+                File uploadDir = new File(uploadPath);
+                if (!uploadDir.exists()) {
+                    uploadDir.mkdir();
+                }
+                try {
+                    String fileName = "";
+                    // 解析请求的内容提取文件数据
+                    List<FileItem> formItems = upload.parseRequest(request);
+                    if (!formItems.isEmpty()) {
+                        // 迭代表单数据
+                        for (FileItem item : formItems) {
+                            // 处理不在表单中的字段
+                            if (!item.isFormField()) {
+                                fileName = new File(item.getName()).getName();
+                                logger.info("上传文件：" + fileName + "的大小为：" + item.getSize() + "ContentType：" + item.getContentType());
+                                if(null != fileName && !"".equals(fileName)){
+                                    String[] name = fileName.split("\\.");
+                                    if(name.length > 0){
+                                        String form = name[name.length - 1];
+                                        logger.info("获取的图片格式为：" + form);
+                                        fileName =  Constant.NAME_START + UUID.randomUUID().toString() + "." + form;
+                                        uploadPath = uploadPath +  fileName;
+                                    }
+                                    File storeFile = new File(uploadPath);
+                                    // 在控制台输出文件的上传路径
+                                    logger.info("文件上传路径为：" + uploadPath + "--保存文件名为：" + fileName);
+                                    // 保存文件到硬盘
+                                    item.write(storeFile);
+                                    request.setAttribute("message", "文件上传成功!");
+                                }
+                            }
+                        }
+                        //存储到相应的用户属性中
+                        memberService.updateHeadPortrait(openidObj.toString(), fileName, 1);
+                        //调用去进行图片的压缩
+                        ImagesUtil.compressed(fileName, uploadPath);
+                    }
+                } catch (Exception ex) {
+                    request.setAttribute("message", "错误信息: " + ex.getMessage());
+                    logger.error("上传异常" + ex.getMessage());
+                }
+            }
+        }
+        return "redirect:"+Constant.URL+"/member/gotoUserSet.do";
     }
 
     /**

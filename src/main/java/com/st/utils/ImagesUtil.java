@@ -134,6 +134,27 @@ public class ImagesUtil {
             return double1;
        }
 
+        /**
+         * 压缩文件
+         * @param fileName
+         * @param pathFileName
+         */
+        public static void compressed(String fileName, String pathFileName){
+            if(!fileName.equals("")){
+                //获得文件源
+                File file = new File(pathFileName);
+                if(!file.exists()){
+                }else{
+                    logger.info("即将压缩的图片文件名：" + file.getName() + ",文件大小：" + file.length()/1024 + "KB");
+                }
+                //只有大于50KB的才会去压缩
+                if(file.length()/1024 > 50){
+                    scaleImageWithParams(pathFileName, pathFileName, 70, 70, true, "png");
+                }
+            }
+        }
+
+
         public static void main(String[] args) {
             File file = new File("e:/filein/DSC_0016.jpg");
             if(!file.exists()){

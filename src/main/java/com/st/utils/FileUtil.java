@@ -67,6 +67,22 @@ public class FileUtil {
 		if (file.isFile())file.delete();
 		return bool;
 	}
+
+	/**
+	 * 删除文件
+	 * @author sunju
+	 * @creationDate. 2013-12-11 上午11:53:34
+	 * @param filePath 文件相对路径
+	 * @return 布尔
+	 * @throws IOException
+	 */
+	public static boolean deleteDiskFile(String filePath) throws IOException {
+		boolean bool = false;
+		File file = new File(filePath);
+		if (!file.exists()) return false;
+		if (file.isFile())file.delete();
+		return bool;
+	}
 	
 	/**
 	 * 获得年月日格式上传目录（上传目录 + 年/月/日）

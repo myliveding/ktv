@@ -48,7 +48,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </c:choose>
             <span>上传新头像</span>
         </div>
-        <%--<form method="post" action="${pageContext.request.contextPath}/member/fileUpload.do" enctype="multipart/form-data">--%>
+        <%--<form method="post" action="${pageContext.request.contextPath}/member/fileDiskUpload.do" enctype="multipart/form-data">--%>
             <%--选择一个文件:--%>
             <%--<input type="file" name="uploadFile" />--%>
             <%--<br/><br/>--%>

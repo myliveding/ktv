@@ -35,7 +35,8 @@ public interface MemberService {
      * 更新头像
      * @param openid
      * @param filePath
+     * @param type 0代表相对路径下 1代表绝对路径
      */
-    public void updateHeadPortrait(String openid, String filePath);
+    public void updateHeadPortrait(String openid, String filePath, Integer type);
 
 }
