@@ -13,6 +13,8 @@ import com.st.utils.JoYoUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadBase;
+import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.slf4j.Logger;
@@ -486,6 +488,10 @@ public class MemberController {
                         //调用去进行图片的压缩
                         ImagesUtil.compressed(fileName, uploadPath);
                     }
+                }catch (FileUploadBase.FileSizeLimitExceededException slee) {
+                    logger.error("上传异常exceeds_permitted_file_size" + slee.getMessage());
+                }catch (FileUploadException fue) {
+                    logger.error("上传异常file_upload_error_occured" + fue.getMessage());
                 } catch (Exception ex) {
                     request.setAttribute("message", "错误信息: " + ex.getMessage());
                     logger.error("上传异常" + ex.getMessage());
