@@ -31,7 +31,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          <input type="hidden" class="iid" value="${iid}" />
          <div class="shop-detail">
              <h2>${roomInfo.shop_name}</h2>
-             <p class="gray" >${roomInfo.room_type_name}(${roomInfo.room_peoples}人)</p>
+             <p class="gray" >${roomInfo.room_type_name}(${roomInfo.room_peoples})</p>
              <p class="gray">今天&nbsp;<i>19:00</i>开唱-<i>次日02:00</i>结束，唱<i>7</i>小时</p>
              <p class="gray"><i>不足7小时按照7小时计算</i></p>
          </div>

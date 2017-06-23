@@ -30,7 +30,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          <div class="shop-detail">
              <input type="hidden" class="iid" value="${roomInfo.iid}" />
              <h2>${roomInfo.shop_name}</h2>
-             <p>房间号：${roomInfo.room_type_name}/${roomInfo.room_num}（${roomInfo.room_peoples}人）</p>
+             <p>房间号：${roomInfo.room_type_name}/${roomInfo.room_num}（${roomInfo.room_peoples}）</p>
              <span>状态：
                 <c:if test="${roomInfo.tag == 1}">
                     未被预订
