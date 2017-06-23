@@ -57,7 +57,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <c:forEach var = "roomType" items="${roomTypes}">
                     <a href="javascript:void(0);">
                     <input type="hidden" class="room_type_id" value="${roomType.room_type_id}" />
-                    ${roomType.room_type_name}(${roomType.room_peoples})人</a>
+                    ${roomType.room_type_name}(${roomType.room_peoples})</a>
                 </c:forEach>
                 <div class="clear"></div>
             </div>
@@ -137,9 +137,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         if(typeof(d.result) != "undefined"){
                             for(var i=0; i< d.result.length; i++){
                                 str = str + '<li><div class="allroomitem"><input type="hidden" class="iid" value="'
-                                        + d.result[i].iid + '"/><span>'
-                                        + d.result[i].room_name + '</span><span class="name">' + d.result[i].room_type_name
-                                        + '</span><span>' + d.result[i].peoples + '人</span></div>'
+                                        + d.result[i].iid + '"/><input type="hidden" class="name" value="'
+                                        + d.result[i].room_type_name + '"/><span>'
+                                        + d.result[i].room_name + '</span></div>'
                                         + '<a href="' + packageJson.JAVA_DOMAIN  + '/personorder/gotoRoomInfo.do?iid=' + d.result[i].iid + '">'
                                         + '<i>查看包厢 </i><i>环境照片</i><em></em></a></li>';
                             }
@@ -163,8 +163,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 iid = $(this).find('.iid').val();
                                 var book_info = '';
                                 book_info += '<p>请核对您选择的内容  </p>';
-                                book_info += '<p>开机时间：' + month + "月" + myDate.getDate() + '日</p>';
-                                book_info += '<p>包间类型：' + $(this).find('.name').text() + '</p>';
+                                // book_info += '<p>开机时间：' + month + "月" + myDate.getDate() + '日</p>';
+                                book_info += '<p>包间类型：' + $(this).find('.name').val() + '</p>';
                                 $(".selectall .update").html(book_info);
                             })
                         }
