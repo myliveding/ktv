@@ -57,13 +57,14 @@ public class ShopController {
             //获取购物车里面的数量
             HttpSession session = ContextHolderUtils.getSession();
             Object memberId =  session.getAttribute("memberId");
-            memberId = "4";
+//            memberId = "4";
             if ( !"".equals(memberId) && memberId != null) {
                 arr = new String[]{"member_id" + memberId.toString()};
                 mystr = "member_id=" + memberId.toString();
                 JSONObject cartNum = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.SHOP_CART_COUNT, mystr, arr));
                 if (0 == cartNum.getInt("error_code")) {
-                    request.setAttribute("cart", cartNum.get("result"));
+                    JSONObject msg = JSONObject.fromObject(cartNum.get("result"));
+                    request.setAttribute("cartNum", null == msg.get("goods_count") ? 0 : msg.get("goods_count"));
                 }
             }else{
                 request.setAttribute("error", "请先登录");
@@ -184,7 +185,7 @@ public class ShopController {
      */
     @RequestMapping("/addShop")
     public @ResponseBody Object addShop(HttpServletRequest request, HttpServletResponse response) throws IOException{
-
+        JSONObject cart = JSONObject.fromObject("{\"status\":1,\"msg\":\"添加不成功\"}");
         //获取购物车里面的数量
         HttpSession session = ContextHolderUtils.getSession();
         Object openidObj =  session.getAttribute("openid");
@@ -192,7 +193,6 @@ public class ShopController {
 //        memberId = "4";
 //        openidObj = "oyAM9vwa6FN6trSrUweXCdK0Jh8s";
 
-        JSONObject cart = null;
         if ( !"".equals(memberId) && memberId != null && !"".equals(openidObj) && openidObj != null) {
             String goodsId = request.getParameter("goodsId");
             String type = request.getParameter("type");

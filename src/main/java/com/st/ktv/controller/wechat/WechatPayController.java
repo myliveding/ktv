@@ -57,12 +57,18 @@ public class WechatPayController {
         if(null != openid && !"".equals(openid)){
             String orderId = req.getParameter("orderId");
             String type = req.getParameter("type");
-            logger.info("获取的订单ID为：" + orderId);
+            logger.info("获取的订单ID为：" + orderId + "-type（1代表预定2代表超市）：" + type);
             if (StringUtils.isEmpty(orderId)) {
                 req.setAttribute("error", "订单不能为空");
                 return "error";
             }else{
                 model.addAttribute("orderId", orderId);
+            }
+            if (StringUtils.isEmpty(type)) {
+                req.setAttribute("error", "订单类型不能为空");
+                return "error";
+            }else{
+                model.addAttribute("type", type);
             }
 
             JSONObject resultStr = JSONObject.fromObject("{\"status\":1,\"msg\":\"出错了\"}");

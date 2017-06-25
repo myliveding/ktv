@@ -45,7 +45,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <h3>包厢号：${order.room_num}</h3>
                         <h2>
                             <p>订单编号：${order.order_code}</p>
-                            <c:if test="${data.order_status == 1}">
+                            <c:if test="${order.order_status == 1}">
                                 <span href="${pageContext.request.contextPath}/personorder/gotoPayForList.do?orderId=${order.order_id}&type=2" class="shop-order-go">去支付</span>
                                 <span onclick="handelShopOrder(${order.order_id},2);" class="shop-order-no">取消订单</span>
                                 <span onclick="handelShopOrder(${order.order_id},3);" class="shop-order-no">删除订单</span>

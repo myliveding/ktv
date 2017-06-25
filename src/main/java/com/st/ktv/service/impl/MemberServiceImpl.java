@@ -60,12 +60,13 @@ public class MemberServiceImpl implements MemberService {
             updateMember.setHeadPortrait(headPortrait);
             updateMember.setUpdateTime(nowTime);
         }else{
-            logger.info("openid：" + openid + "还未关注公众号，所以获取不到头像信息");
+            logger.info("checkLogin接口openid：" + openid + "还未关注公众号，所以获取不到头像信息");
         }
         WechatMember wechatMember = wechatMemberMapper.getObjectByOpenid(openid);
         String memberId = "";
         if(null != wechatMember){
             memberId = wechatMember.getId().toString();
+            logger.info("checkLogin接口openid：" + openid + "存在在数据库中，获取的用户ID为：" + memberId);
             //判断是否存在自定义的，存在就不更新头像字段
             if(null != wechatMember.getHeadPortrait() && !"".equals(wechatMember.getHeadPortrait())){
                 if(wechatMember.getHeadPortrait().contains(Constant.NAME_START)){
@@ -77,7 +78,7 @@ public class MemberServiceImpl implements MemberService {
             updateMember.setLastLoginIp(getRemoteAddr());
             wechatMemberMapper.updateByPrimaryKeySelective(updateMember);
         }else{
-            logger.info("openid：" + openid + "在数据库中不存在，表示是个新的关注用户，需要去插入数据库");
+            logger.info("checkLogin接口openid：" + openid + "在数据库中不存在，表示是个新的关注用户，需要去插入数据库");
             updateMember.setOpenid(openid);
             updateMember.setLastLoginTime(nowTime);
             updateMember.setLastLoginIp(getRemoteAddr());

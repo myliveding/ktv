@@ -87,7 +87,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<span>
     			<img src="<%=basePath%>jsp/resources/img/g2.png">
     		</span>
-			<em><label>${cart.goods_count}</label>件</em>
+			<em><label>${cartNum}</label>件</em>
     	</a>
     	<p class = "tijiao">
     		<span>
@@ -126,7 +126,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 type: 1
             },
             success: function success(d) {
-                if (d.error_code == 0) {
+                if (d.status == 0) {
                     $('#trolley').find('label').html(d.result.goods_count);
                 } else {
                     alert(d.msg);

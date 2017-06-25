@@ -48,12 +48,14 @@ public class ScopeController {
 			 HttpSession session = ContextHolderUtils.getSession();
 			 session.setAttribute("openid", openid);
 			 session.setAttribute("appid", appid);
+             logger.info("把openid：" + openid + "，appid：" + appid + "加到sesion");
 			 boolean subscribe = weixinAPIService.IsSubscribe(appid, openid);
 			 session.setAttribute("subscribe", subscribe);
              //校验这个初次进入公众号的时候时候数据库中存在openid，不存在则加入
              String memberId = memberService.checkLogin(openid, appid);
 			if(!"".equals(memberId)){
 				session.setAttribute("memberId", memberId);
+                logger.info("memberId：" + memberId + "加到sesion");
 			}
 
 			 if(DataUtil.isNotEmpty(pram)){
