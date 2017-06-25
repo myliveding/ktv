@@ -32,7 +32,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    <div class="main" style="background: #f8f8f8;">
      <div class="writeroomnum">
        <label>请填写包房号：<a></a></label>
-       <input type="text" placeholder="如：B27">
+       <input type="text" placeholder="如：B27" id="room_num">
      </div>
      <div class="mui-content order-list"> 
         <ul id="OA_task_1" class="mui-table-view">
@@ -59,7 +59,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <div class="clear"></div>
                     </div>
                     <div class="mui-slider-right mui-disabled delete">
-                        <a class="mui-btn mui-btn-red">删除</a>
+                        <a class="mui-btn mui-btn-red" onclick="delGoods(${trolley.goods_id})">删除</a>
                     </div>
                 </li>
             </c:forEach>
@@ -130,40 +130,9 @@ function updateNum(goodsId){
     });
 }
 
-//删除
-mui.init();
-(function($) {
-    $('.mui-table-view').on('tap', '.mui-btn', function(event) {
-        var elem = this;
-
-        //var goodsId = this.parents('li').find('.good_id').val();
-        var li = elem.parentNode.parentNode;
-        var divO = li.getElementsByTagName("div")[0];
-        var divT = divO.getElementsByTagName("div")[0];
-        var imp = divT.getElementsByTagName("input")[0];
-            var usernameObj = imp.getElementById("good_id");
-            alert( usernameObj.value );
-
-        var goodsId;
-        mui.confirm('确认删除该条记录？', '', btnArray, function(e) {
-            if (e.index == 0) {
-                //调用删除
-                alert(11111)
-                delGoods(goodsId);
-                li.parentNode.removeChild(li);
-            } else {
-                setTimeout(function() {
-                  $.swipeoutClose(li);
-                }, 0);
-            }
-        });
-    });
-    var btnArray = ['确认', '取消'];
-})(mui);
-
 //删除种类
 function delGoods(goodsId){
-    alert(goodsId);
+    confirm("是否确认删除");
     $.ajax({
         'url': "${pageContext.request.contextPath}/shop/delCart.do",
         'type': 'post',
@@ -179,7 +148,7 @@ function delGoods(goodsId){
 //数量减一
 
 $('.go-pay label').click(function() {
-    var roomNum = $('.writeroomnum').find('a').val();
+    var roomNum = $('#room_num').val();
     alert(roomNum);
     return false;
     window.location.href = packageJson.JAVA_DOMAIN  + '/shop/gotoPay.do?roomNum=' + roomNum;
