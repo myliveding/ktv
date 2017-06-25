@@ -16,7 +16,7 @@ public interface MemberService {
      * @param openid
      * @return
      */
-    public void checkLogin(String openid, String appid);
+    public String checkLogin(String openid, String appid);
 
     public WechatMember getObjectByOpenid(String openid);
 

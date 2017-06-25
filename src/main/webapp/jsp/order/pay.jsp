@@ -28,6 +28,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          <h1 >我的订单</h1>
      </div> 
     <div class="main" style="background: #f2f2f4;">
+        <input type="hidden" class="type" value="${type}" />
         <input type="hidden" class="order_id" value="${orderId}" />
          <div class="pay-price">
              <img src="<%=basePath%>jsp/resources/img/p1.png" >
@@ -56,7 +57,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
              <%--</div>--%>
          </div>
          <div class="pay-submit">
-             确认支付<span>￥138.00</span>
+             确认支付<span>￥${money}</span>
          </div>
     </div>
     <jsp:include page="/jsp/layouts/foot.jsp" flush="true"/>
@@ -64,7 +65,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script src='<%=basePath%>jsp/resources/js/rem.js'></script>
 <script src='<%=basePath%>jsp/resources/js/jquery.min.js'></script>
 <script>
-    //初始化页面是选中第一个包厢类型
     $(document).ready(function(){
         $('.pay-submit span').html($('.pay-price-info h1').text());
         $('.pay-form .pay-group:eq(0)').addClass('pay-group-act');
@@ -90,7 +90,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             return false;
         } else {
             setTimeout(function () {
-                window.location.href = packageJson.JAVA_DOMAIN + "/wechat/pay/index.do?orderId=" + $('.order_id').val();
+                window.location.href = packageJson.JAVA_DOMAIN + "/wechat/pay/index.do?orderId="
+                        + $('.order_id').val() + "&type=" + $('.type').val();
             }, 1000);
         }
     })

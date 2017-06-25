@@ -56,6 +56,7 @@ public class WechatPayController {
 		logger.info("支付调用时获取的openid为：" + openid);
         if(null != openid && !"".equals(openid)){
             String orderId = req.getParameter("orderId");
+            String type = req.getParameter("type");
             logger.info("获取的订单ID为：" + orderId);
             if (StringUtils.isEmpty(orderId)) {
                 req.setAttribute("error", "订单不能为空");
@@ -69,8 +70,8 @@ public class WechatPayController {
             WechatMember member = memberService.getObjectByOpenid(openid);
             if(null != member){
                 try {
-                    String[] arr = new String[]{"member_id" + member.getId(), "order_id" + orderId};
-                    String mystr = "member_id=" + member.getId() + "&order_id=" + orderId;
+                    String[] arr = new String[]{"member_id" + member.getId(), "order_id" + orderId,"type" + type};
+                    String mystr = "member_id=" + member.getId() + "&order_id=" + orderId + "&type=" + type;
                     resultStr = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.ORDER_DETAIL, mystr, arr));
                     if(0 == resultStr.getInt("error_code")){
                         JSONObject data = JSONObject.fromObject(resultStr.get("result"));
@@ -147,7 +148,7 @@ public class WechatPayController {
                 String jsonObject = WeixinUtil.sentRequset("https://api.mch.weixin.qq.com/pay/unifiedorder", "POST", postDataXML);
                 logger.info("wechat return jsonObject：" + jsonObject);
                 Map<String, String> map = ParseXmlUtil.parseXmlText(jsonObject);
-                String prepayId=map.get("prepay_id");
+                String prepayId = map.get("prepay_id");
                 // appId
                 Map<String, String> paymap = new HashMap<String, String>();
                 String paytimeStamp=new Date().getTime()+"";

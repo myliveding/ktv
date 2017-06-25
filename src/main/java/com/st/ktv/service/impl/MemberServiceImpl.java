@@ -47,7 +47,7 @@ public class MemberServiceImpl implements MemberService {
      * @param openid
      * @return
      */
-    public void checkLogin(String openid, String appid){
+    public String checkLogin(String openid, String appid){
         Date nowTime = new Date();
         WechatMember updateMember = new WechatMember();
         String nickName = "";
@@ -63,7 +63,9 @@ public class MemberServiceImpl implements MemberService {
             logger.info("openid：" + openid + "还未关注公众号，所以获取不到头像信息");
         }
         WechatMember wechatMember = wechatMemberMapper.getObjectByOpenid(openid);
+        String memberId = "";
         if(null != wechatMember){
+            memberId = wechatMember.getId().toString();
             //判断是否存在自定义的，存在就不更新头像字段
             if(null != wechatMember.getHeadPortrait() && !"".equals(wechatMember.getHeadPortrait())){
                 if(wechatMember.getHeadPortrait().contains(Constant.NAME_START)){
@@ -81,7 +83,9 @@ public class MemberServiceImpl implements MemberService {
             updateMember.setLastLoginIp(getRemoteAddr());
             updateMember.setCreateTime(nowTime);
             wechatMemberMapper.insertSelective(updateMember);
+            memberId = updateMember.getId().toString();
         }
+        return memberId;
     }
 
     /**

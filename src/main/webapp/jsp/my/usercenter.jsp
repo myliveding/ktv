@@ -103,24 +103,24 @@
                         <img src="<%=basePath%>jsp/resources/img/u5.png">
                         <span>佣金明细</span>
                     </a>
-                </li>
+                </li> --%>
                  <li>
-                    <a href="../shop/myshoporder.jsp">
+                    <a href=${pageContext.request.contextPath}/personorder/getShopOrderList.do">
                         <img src="<%=basePath%>jsp/resources/img/u6.png">
                         <span>我的超市订单</span>
                     </a>
                 </li>
-                 <li> 
-                    <a href="javascript:void(0);">
-                        <img src="<%=basePath%>jsp/resources/img/u7.png">
-                        <span>我的抵用券</span> 
-                    </a>
-                    <div class="user-list-item">
-                        <em><i>●</i>抽奖</em>
-                        <em><i>●</i>已使用(7张)</em>
-                        <em><i>●</i>未使用(7张)</em>
-                    </div> 
-                </li> --%>
+                    <%--  <li>
+                        <a href="javascript:void(0);">
+                            <img src="<%=basePath%>jsp/resources/img/u7.png">
+                            <span>我的抵用券</span>
+                        </a>
+                        <div class="user-list-item">
+                            <em><i>●</i>抽奖</em>
+                            <em><i>●</i>已使用(7张)</em>
+                            <em><i>●</i>未使用(7张)</em>
+                        </div>
+                    </li> --%>
                  <li>
                     <a href="${pageContext.request.contextPath}/jsp/my/code.jsp">
                         <img src="<%=basePath%>jsp/resources/img/u8.png">

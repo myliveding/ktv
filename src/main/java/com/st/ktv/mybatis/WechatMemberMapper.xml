@@ -50,7 +50,7 @@
       #{status,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{deleteTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=BIT})
   </insert>
-  <insert id="insertSelective" parameterType="com.st.ktv.entity.WechatMember">
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.st.ktv.entity.WechatMember" >
     insert into member
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

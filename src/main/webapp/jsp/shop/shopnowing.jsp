@@ -72,7 +72,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <img src="${good.image_url}">
                         <p>${good.title}</p>
                         <span>${good.price}</span>
-                        <em>添加</em>
+                        <em><input type="hidden" class="good_id" value="${good.id}" />
+                            添加</em>
                     </li>
                 </c:forEach>
 	    		<div class="clear"></div>
@@ -82,11 +83,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
     <jsp:include page="/jsp/layouts/foot.jsp" flush="true"/>
     <div id="trolley">
-    	<a href="shoppingtrolley.jsp">
+    	<a href="${pageContext.request.contextPath}/shop/gotoTrolley.do">
 			<span>
     			<img src="<%=basePath%>jsp/resources/img/g2.png">
     		</span>
-			<em><label>0</label>件</em>
+			<em><label>${cartNum}</label>件</em>
     	</a>
     	<p>
     		<span>
@@ -103,15 +104,38 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         updateTrollerNum();
     });
 
+    var goodsId;
     function updateTrollerNum(){
         //购物车加一
         $('.goods li em').click(function(){
             var $num = parseFloat($('#trolley').find('label').html());
-            $('#trolley').find('label').html($num+1);
+            //$('#trolley').find('label').html($num + 1);
+            goodsId = $(this).find('.good_id').val();
+            updateNum(goodsId);
         });
     }
 
-    //选择超市分类
+    //添加商品并获取购物车里面的数量
+    function updateNum(goodsId){
+        $.ajax({
+            'url': "${pageContext.request.contextPath}/shop/addShop.do",
+            'type': 'post',
+            'dataType': 'json',
+            'data': {
+                goodsId: goodsId,
+            },
+            success: function success(d) {
+                if (d.error_code == 0) {
+                    $('#trolley').find('label').html(d.result.goods_count);
+                } else {
+                    alert(d.msg);
+                }
+            }
+        });
+    }
+
+
+    //选择超市商品分类
     $('.select-nav .select-list').click(function() {
         $('.select-nav .select-list').removeClass('select-listtab');
         $(this).addClass('select-listtab');
@@ -120,6 +144,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         getGoods(cateId);
     })
 
+	//获取分类下面的商品
 	function getGoods(cateId){
 		$.ajax({
 			'url': "${pageContext.request.contextPath}/shop/getCateGoods.do",
@@ -134,10 +159,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					var str = '';
 					if(typeof(d.result) != "undefined"){
 						for(var i=0; i< d.result.length; i++){
-							str = str + '<li><input type="hidden" class="id" value="' + d.result[i].id + '"/>'
+							str = str + '<li>'
                                     + '<img src="' + d.result[i].image_url + '">'
 									+ '<p>' + d.result[i].title + '</p><span>'
-                                    + d.result[i].price + '</span><em>添加</em></li>';
+                                    + d.result[i].price
+                                    + '</span><em><input type="hidden" class="good_id" value="' + d.result[i].id + '"/>添加</em></li>';
 						}
 						str += '<div class="clear"></div>';
 						$(".goods ul").html(str);

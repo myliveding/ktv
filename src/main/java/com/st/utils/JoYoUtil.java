@@ -99,7 +99,6 @@ public class JoYoUtil {
      */
     public static final String CREATRE_ORDER = Constant.PHP_API_URL + "/api/create_book_order";
 
-
     /**
      *  取消预订订单
      */
@@ -115,7 +114,6 @@ public class JoYoUtil {
      */
     public static final String ORDER_DETAIL = Constant.PHP_API_URL + "/api/get_order_detail";
 
-
     /**
      *  申请退款
      */
@@ -130,6 +128,64 @@ public class JoYoUtil {
      *  订单支付后的回掉函数
      */
     public static final String PAY_ORDER = Constant.PHP_API_URL + "/api/pay_book_order";
+
+    /**
+     *  获取购物车商品数量
+     */
+    public static final String SHOP_CART_COUNT = Constant.PHP_API_URL + "/api/shopping_cart_count";
+
+    /**
+     *  购物车添加
+     */
+    public static final String ADD_SHOP_CART = Constant.PHP_API_URL + "/api/add_shopping_cart";
+
+    /**
+     *  获取购物车
+     */
+    public static final String GET_SHOP_CART = Constant.PHP_API_URL + "/api/get_shopping_carts";
+
+    /**
+     *  删除购物车商品
+     */
+    public static final String DEL_SHOP_CART = Constant.PHP_API_URL + "/api/del_shopping_carts";
+
+    /**
+     *  超市结算
+     */
+    public static final String SHOP_SETTLEMENT = Constant.PHP_API_URL + "/api/settlement";
+
+    /**
+     *  超市订单支付回调
+     */
+    public static final String PAY_GOODS_ORDER = Constant.PHP_API_URL + "/api/pay_goods_order";
+
+    /**
+     *  获取商品订单列表
+     */
+    public static final String GET_GOODS_ORDERS = Constant.PHP_API_URL + "/api/get_my_goods_orders";
+
+    /**
+     *  删除商品订单
+     */
+    public static final String CANCEL_GOODS_ORDER = Constant.PHP_API_URL + "/api/cancel_goods_order";
+
+    /**
+     *  商品订单退款
+     */
+    public static final String REFUND_GOODS_ORDER = Constant.PHP_API_URL + "/api/refund_goods_order";
+
+    /**
+     *  删除商品订单
+     */
+    public static final String DEL_GOODS_ORDER = Constant.PHP_API_URL + "/api/del_goods_order";
+
+    /**
+     *  确认商品订单
+     */
+    public static final String CONFIRM_GOODS_ORDER = Constant.PHP_API_URL + "/api/confirm_goods_order";
+
+
+
 
 
 

@@ -1,5 +1,7 @@
 package com.st.ktv.controller;
 
+import com.st.core.ContextHolderUtils;
+import com.st.ktv.entity.WechatMember;
 import com.st.utils.JoYoUtil;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -49,6 +52,21 @@ public class ShopController {
             JSONObject goods = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.SHOP_GOODS, mystr, arr));
             if (0 == goods.getInt("error_code")) {
                 request.setAttribute("goods", goods.get("result"));
+            }
+
+            //获取购物车里面的数量
+            HttpSession session = ContextHolderUtils.getSession();
+            Object memberId =  session.getAttribute("memberId");
+            memberId = "4";
+            if ( !"".equals(memberId) && memberId != null) {
+                arr = new String[]{"member_id" + memberId.toString()};
+                mystr = "member_id=" + memberId.toString();
+                JSONObject cartNum = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.SHOP_CART_COUNT, mystr, arr));
+                if (0 == cartNum.getInt("error_code")) {
+                    request.setAttribute("cartNum", null != cartNum.get("result") ? cartNum.get("result") : 0);
+                }
+            }else{
+                request.setAttribute("error", "请先登录");
             }
         } catch (Exception e) {
             logger.error("获取超市商品出错:" + e.getMessage(), e);
@@ -157,5 +175,137 @@ public class ShopController {
         out.println(room);
         return null;
     }
+
+    /**
+     * 获取某类包厢的内部列表
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping("/addShop")
+    public @ResponseBody Object addShop(HttpServletRequest request, HttpServletResponse response) throws IOException{
+
+        //获取购物车里面的数量
+        HttpSession session = ContextHolderUtils.getSession();
+        Object memberId =  session.getAttribute("memberId");
+        memberId = "4";
+
+        JSONObject cart = null;
+        if ( !"".equals(memberId) && memberId != null) {
+            String goodsId = request.getParameter("goodsId");
+            try {
+                //获取某类包厢的内部列表
+                String[] arr = new String[]{"member_id" + memberId.toString(),"goods_id" + goodsId};
+                String mystr = "member_id=" + memberId.toString() + "&goods_id=" + goodsId;
+                cart = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.ADD_SHOP_CART, mystr, arr));
+            } catch (Exception e) {
+                logger.error("添加购物车出错:" + e.getMessage(), e);
+            }
+        }else{
+            request.setAttribute("error", "请在先登录");
+        }
+        response.setContentType("text/html; charset=utf-8");
+        PrintWriter out = response.getWriter();
+        out.println(cart);
+        return null;
+    }
+
+    /**
+     * 获取某类包厢的内部列表
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping("/delCart")
+    public @ResponseBody Object delCart(HttpServletRequest request, HttpServletResponse response) throws IOException{
+
+        //获取购物车里面的数量
+        HttpSession session = ContextHolderUtils.getSession();
+        Object memberId =  session.getAttribute("memberId");
+        memberId = "4";
+
+        JSONObject cart = null;
+        if ( !"".equals(memberId) && memberId != null) {
+            String goodsId = request.getParameter("goodsId");
+            String type = request.getParameter("type");//0减少 1删除
+            try {
+                String[] arr = new String[]{"member_id" + memberId.toString(),"goods_id" + goodsId};
+                String mystr = "member_id=" + memberId.toString() + "&goods_id=" + goodsId;
+                cart = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.DEL_SHOP_CART, mystr, arr));
+            } catch (Exception e) {
+                logger.error("删除购物车出错:" + e.getMessage(), e);
+            }
+        }else{
+            request.setAttribute("error", "请在先登录");
+        }
+        response.setContentType("text/html; charset=utf-8");
+        PrintWriter out = response.getWriter();
+        out.println(cart);
+        return null;
+    }
+
+    /**
+     * 进入购物车页面
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping("/gotoTrolley")
+    public String gotoTrolley(HttpServletRequest request, HttpServletResponse response) {
+
+        //获取购物车里面的数量
+        HttpSession session = ContextHolderUtils.getSession();
+        Object memberId =  session.getAttribute("memberId");
+        memberId = "4";
+        if ( !"".equals(memberId) && memberId != null) {
+            try {
+                String[] arr = new String[]{"member_id" + memberId.toString()};
+                String mystr = "member_id=" + memberId.toString();
+                JSONObject trolley = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.GET_SHOP_CART, mystr, arr));
+                if (0 == trolley.getInt("error_code")) {
+                    request.setAttribute("trolleys", trolley.get("result"));
+                }
+            } catch (Exception e) {
+                logger.error("获取超市购物车商品出错:" + e.getMessage(), e);
+            }
+        }else{
+            request.setAttribute("error", "请先登录");
+        }
+        return "shop/shoppingtrolley";
+    }
+
+    /**
+     * 去支付页面
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping("/gotoPay")
+    public String gotoPay(HttpServletRequest request, HttpServletResponse response) {
+
+        HttpSession session = ContextHolderUtils.getSession();
+        Object memberId =  session.getAttribute("memberId");
+        memberId = "4";
+        if ( !"".equals(memberId) && memberId != null) {
+            String roomNum = request.getParameter("roomNum");
+            try {
+                //创建订单并跳转到支付页面
+                String[] arr = new String[]{"member_id" + memberId.toString(), "room_num" + roomNum};
+                String mystr = "member_id=" + memberId.toString() + "&room_num=" + roomNum;
+                JSONObject packages = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.SHOP_SETTLEMENT, mystr, arr));
+                if(0 == packages.getInt("error_code")){
+                    request.setAttribute("orderId", packages.get("order_id"));
+                    request.setAttribute("money", packages.get("money"));
+                    request.setAttribute("type", 2);
+                }
+            } catch (Exception e) {
+                logger.error("去支付页面出错:" + e.getMessage(), e);
+            }
+        }else{
+            request.setAttribute("error", "请在微信中访问");
+        }
+        return "order/pay";
+    }
+
 
 }

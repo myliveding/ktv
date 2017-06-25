@@ -80,23 +80,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     })
 
     $('.go-pay label').click(function() {
-        <%--$.ajax({--%>
-            <%--'url': "${pageContext.request.contextPath}/personorder/gotoPay.do",--%>
-            <%--'type': 'post',--%>
-            <%--'dataType': 'json',--%>
-            <%--'data': {--%>
-                <%--iid: $('.iid').val(),--%>
-                <%--packageId: packageId,--%>
-            <%--},--%>
-            <%--success: function success(d) {--%>
-                <%--if (d.status == 0) {--%>
-                    window.location.href = packageJson.JAVA_DOMAIN  + '/personorder/gotoPay.do?iid='
+        window.location.href = packageJson.JAVA_DOMAIN  + '/personorder/gotoPay.do?iid='
                             + $('.iid').val() + "&packageId=" + packageId;
-//                } else {
-//                    alert(d.msg);
-//                }
-//            }
-//        });
     })
 </script>
 </html>

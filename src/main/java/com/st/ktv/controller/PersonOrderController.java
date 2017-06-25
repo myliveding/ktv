@@ -144,6 +144,7 @@ public class PersonOrderController {
                 if(0 == packages.getInt("error_code")){
                     request.setAttribute("orderId", packages.get("order_id"));
                     request.setAttribute("money", packages.get("money"));
+                    request.setAttribute("type", 1);
                 }
             } catch (Exception e) {
                 logger.error("去支付页面出错:" + e.getMessage(), e);
@@ -266,7 +267,7 @@ public class PersonOrderController {
         JSONObject order = null;
         try {
             //创建订单并跳转到支付页面
-            String[] arr = new String[]{"member_id" + memberId, "order_id" + orderId};
+            String[] arr = new String[]{"member_id" + memberId, "order_id" + orderId,};
             String mystr = "member_id=" + memberId + "&order_id=" + orderId;
             order = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.ORDER_DETAIL, mystr, arr));
         } catch (Exception e) {
@@ -361,5 +362,42 @@ public class PersonOrderController {
         out.println(resultObject);
         return null;
     }
+
+    /**
+     * 获取我的超市订单
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping("/getShopOrderList")
+    public String getShopOrderList(HttpServletRequest request, HttpServletResponse response) {
+
+        HttpSession session = ContextHolderUtils.getSession();
+        Object openidObj = session.getAttribute("openid");
+//        openidObj = "oyAM9vwa6FN6trSrUweXCdK0Jh8s";
+        if ( !"".equals(openidObj) && openidObj != null) {
+            Integer memberId = 0;
+            WechatMember member = memberService.getObjectByOpenid(openidObj.toString());
+            if(null != member){
+                memberId = member.getId();
+                request.setAttribute("memberId", memberId);
+            }
+            try {
+                //获取我的订单
+                String[] arr = new String[]{"member_id" + memberId};
+                String mystr = "member_id=" + memberId;
+                JSONObject orders = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.GET_GOODS_ORDERS, mystr, arr));
+                if(0 == orders.getInt("error_code")){
+                    request.setAttribute("orders", orders.get("result"));
+                }
+            } catch (Exception e) {
+                logger.error("获取我的订单列表出错:" + e.getMessage(), e);
+            }
+        }else{
+            request.setAttribute("error", "请在微信中访问");
+        }
+        return "order/myshoporder";
+    }
+
 
 }
