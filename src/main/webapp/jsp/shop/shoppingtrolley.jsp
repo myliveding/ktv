@@ -169,7 +169,7 @@ function delGoods(goodsId){
         'type': 'post',
         'dataType': 'json',
         'data': {
-            goodsId: goodsId1,
+            goodsId: goodsId,
             type: 1
         },
         success: function success(d) {
