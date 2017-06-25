@@ -166,7 +166,7 @@ public class PersonOrderController {
 
         HttpSession session = ContextHolderUtils.getSession();
         Object openidObj =  session.getAttribute("openid");
-//        openidObj = "11111111";
+//        openidObj = "oyAM9vwa6FN6trSrUweXCdK0Jh8s";
         if ( !"".equals(openidObj) && openidObj != null) {
             String orderId = request.getParameter("orderId");
             String type = request.getParameter("type");

@@ -105,7 +105,7 @@
                     </a>
                 </li> --%>
                  <li>
-                    <a href=${pageContext.request.contextPath}/personorder/getShopOrderList.do">
+                    <a href="${pageContext.request.contextPath}/personorder/getShopOrderList.do">
                         <img src="<%=basePath%>jsp/resources/img/u6.png">
                         <span>我的超市订单</span>
                     </a>

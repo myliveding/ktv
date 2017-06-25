@@ -46,7 +46,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <h2>
                             <p>订单编号：${order.order_code}</p>
                             <c:if test="${order.order_status == 1}">
-                                <span href="${pageContext.request.contextPath}/personorder/gotoPayForList.do?orderId=${order.order_id}&type=2" class="shop-order-go">去支付</span>
+                                <span onclick="gotoPay(${order.order_id}, 2);" class="shop-order-go">去支付</span>
                                 <span onclick="handelShopOrder(${order.order_id},2);" class="shop-order-no">取消订单</span>
                                 <span onclick="handelShopOrder(${order.order_id},3);" class="shop-order-no">删除订单</span>
                             </c:if>
@@ -64,7 +64,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </ul>
     </div>
     <jsp:include page="/jsp/layouts/foot.jsp" flush="true"/>
-</body> 
+</body>
+<script src='<%=basePath%>jsp/resources/js/jquery.min.js'></script>
 <script src='<%=basePath%>jsp/resources/js/rem.js'></script>
 <script>
 //确认订单
@@ -84,6 +85,11 @@ function handelShopOrder(orderId, type){
             }
         }
     });
+}
+
+//去支付
+function gotoPay(orderId, type){
+    window.location.href="${pageContext.request.contextPath}/personorder/gotoPayForList.do?orderId=" + orderId + "&type=" + type;
 }
 </script>
 </html>

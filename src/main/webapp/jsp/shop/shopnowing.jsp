@@ -126,7 +126,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 type: 1
             },
             success: function success(d) {
-                if (d.status == 0) {
+                if (d.error_code == 0) {
                     $('#trolley').find('label').html(d.result.goods_count);
                 } else {
                     alert(d.msg);
