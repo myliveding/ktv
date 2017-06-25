@@ -83,17 +83,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
     <jsp:include page="/jsp/layouts/foot.jsp" flush="true"/>
     <div id="trolley">
-    	<a href="${pageContext.request.contextPath}/shop/gotoTrolley.do">
+    	<a>
 			<span>
     			<img src="<%=basePath%>jsp/resources/img/g2.png">
     		</span>
-			<em><label>${cartNum}</label>件</em>
+			<em><label>${cart.goods_count}</label>件</em>
     	</a>
-    	<p>
+    	<p class = "tijiao">
     		<span>
     			<img src="<%=basePath%>jsp/resources/img/g1.png">
     		</span>
-			<i>提交</i>  
+			<i>提交</i>
     	</p>
     </div>
 </body> 
@@ -123,6 +123,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             'dataType': 'json',
             'data': {
                 goodsId: goodsId,
+                type: 1
             },
             success: function success(d) {
                 if (d.error_code == 0) {
@@ -176,5 +177,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		});
 	}
 
+    $('.tijiao').click(function() {
+        window.location.href = '${pageContext.request.contextPath}/shop/gotoTrolley.do';
+    })
 </script>
 </html>

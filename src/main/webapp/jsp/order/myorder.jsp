@@ -70,7 +70,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 <a onclick="confirmBoot(${data.order_id});" id ="boot" class="scoreorder-go">确认开机</a>
                             </c:if>
                             <c:if test="${data.order_status == 1}">
-                                <a href="${pageContext.request.contextPath}/personorder/gotoPayForList.do?orderId=${data.order_id}" class="scoreorder-go">去支付</a>
+                                <a href="${pageContext.request.contextPath}/personorder/gotoPayForList.do?orderId=${data.order_id}&type=1" class="scoreorder-go">去支付</a>
                             </c:if>
                             <a class="noact" href="${pageContext.request.contextPath}/personorder/getOrderDetail.do?orderId=${data.order_id}" >详情></a>
                         </div>

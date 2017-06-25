@@ -63,7 +63,7 @@ public class ShopController {
                 mystr = "member_id=" + memberId.toString();
                 JSONObject cartNum = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.SHOP_CART_COUNT, mystr, arr));
                 if (0 == cartNum.getInt("error_code")) {
-                    request.setAttribute("cartNum", null != cartNum.get("result") ? cartNum.get("result") : 0);
+                    request.setAttribute("cart", cartNum.get("result"));
                 }
             }else{
                 request.setAttribute("error", "请先登录");
@@ -187,16 +187,19 @@ public class ShopController {
 
         //获取购物车里面的数量
         HttpSession session = ContextHolderUtils.getSession();
+        Object openidObj =  session.getAttribute("openid");
         Object memberId =  session.getAttribute("memberId");
-        memberId = "4";
+//        memberId = "4";
+//        openidObj = "oyAM9vwa6FN6trSrUweXCdK0Jh8s";
 
         JSONObject cart = null;
-        if ( !"".equals(memberId) && memberId != null) {
+        if ( !"".equals(memberId) && memberId != null && !"".equals(openidObj) && openidObj != null) {
             String goodsId = request.getParameter("goodsId");
+            String type = request.getParameter("type");
             try {
                 //获取某类包厢的内部列表
-                String[] arr = new String[]{"member_id" + memberId.toString(),"goods_id" + goodsId};
-                String mystr = "member_id=" + memberId.toString() + "&goods_id=" + goodsId;
+                String[] arr = new String[]{"member_id" + memberId.toString(),"goods_id" + goodsId,"type" + type};
+                String mystr = "member_id=" + memberId.toString() + "&goods_id=" + goodsId + "&type=" + type;
                 cart = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.ADD_SHOP_CART, mystr, arr));
             } catch (Exception e) {
                 logger.error("添加购物车出错:" + e.getMessage(), e);
@@ -211,7 +214,7 @@ public class ShopController {
     }
 
     /**
-     * 获取某类包厢的内部列表
+     * 删除购物车里面一类产品
      * @param request
      * @param response
      * @return
@@ -221,13 +224,14 @@ public class ShopController {
 
         //获取购物车里面的数量
         HttpSession session = ContextHolderUtils.getSession();
+        Object openidObj =  session.getAttribute("openid");
         Object memberId =  session.getAttribute("memberId");
-        memberId = "4";
+//        memberId = "4";
+//        openidObj = "oyAM9vwa6FN6trSrUweXCdK0Jh8s";
 
         JSONObject cart = null;
-        if ( !"".equals(memberId) && memberId != null) {
+        if ( !"".equals(memberId) && memberId != null && !"".equals(openidObj) && openidObj != null) {
             String goodsId = request.getParameter("goodsId");
-            String type = request.getParameter("type");//0减少 1删除
             try {
                 String[] arr = new String[]{"member_id" + memberId.toString(),"goods_id" + goodsId};
                 String mystr = "member_id=" + memberId.toString() + "&goods_id=" + goodsId;
@@ -255,15 +259,19 @@ public class ShopController {
 
         //获取购物车里面的数量
         HttpSession session = ContextHolderUtils.getSession();
+        Object openidObj =  session.getAttribute("openid");
         Object memberId =  session.getAttribute("memberId");
-        memberId = "4";
-        if ( !"".equals(memberId) && memberId != null) {
+//        memberId = "4";
+//        openidObj = "oyAM9vwa6FN6trSrUweXCdK0Jh8s";
+
+        if ( !"".equals(memberId) && memberId != null && !"".equals(openidObj) && openidObj != null) {
             try {
                 String[] arr = new String[]{"member_id" + memberId.toString()};
                 String mystr = "member_id=" + memberId.toString();
                 JSONObject trolley = JSONObject.fromObject(JoYoUtil.getInterface(JoYoUtil.GET_SHOP_CART, mystr, arr));
                 if (0 == trolley.getInt("error_code")) {
                     request.setAttribute("trolleys", trolley.get("result"));
+                    request.setAttribute("allPrice", trolley.get("all_price"));
                 }
             } catch (Exception e) {
                 logger.error("获取超市购物车商品出错:" + e.getMessage(), e);
@@ -284,9 +292,12 @@ public class ShopController {
     public String gotoPay(HttpServletRequest request, HttpServletResponse response) {
 
         HttpSession session = ContextHolderUtils.getSession();
+        Object openidObj =  session.getAttribute("openid");
         Object memberId =  session.getAttribute("memberId");
-        memberId = "4";
-        if ( !"".equals(memberId) && memberId != null) {
+//        memberId = "4";
+//        openidObj = "oyAM9vwa6FN6trSrUweXCdK0Jh8s";
+
+        if ( !"".equals(memberId) && memberId != null  && !"".equals(openidObj) && openidObj != null) {
             String roomNum = request.getParameter("roomNum");
             try {
                 //创建订单并跳转到支付页面

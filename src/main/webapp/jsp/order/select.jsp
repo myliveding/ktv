@@ -64,7 +64,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script src='<%=basePath%>jsp/resources/js/jquery.min.js'></script>
 <script>
     var packageId;
-    //初始化页面是选中第一个包厢类型
     $(document).ready(function(){
         $('.select-meal li:eq(0)').addClass('act');
         $('.go-pay span i').html($('.select-meal li:eq(0)').find('.price').val());

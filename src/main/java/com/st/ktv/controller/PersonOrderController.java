@@ -169,6 +169,7 @@ public class PersonOrderController {
 //        openidObj = "11111111";
         if ( !"".equals(openidObj) && openidObj != null) {
             String orderId = request.getParameter("orderId");
+            String type = request.getParameter("type");
             Integer memberId = 0;
             WechatMember member = memberService.getObjectByOpenid(openidObj.toString());
             if(null != member){
@@ -184,6 +185,7 @@ public class PersonOrderController {
                     JSONObject data = JSONObject.fromObject(order.get("result"));
                     request.setAttribute("orderId", data.get("order_id"));
                     request.setAttribute("money", data.get("money"));
+                    request.setAttribute("type", type);
                 }
             } catch (Exception e) {
                 logger.error("去支付页面出错:" + e.getMessage(), e);
@@ -399,5 +401,49 @@ public class PersonOrderController {
         return "order/myshoporder";
     }
 
+    /**
+     * 确认订单（超市）
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping("/handelShopOrder")
+    public String handelShopOrder(HttpServletRequest request, HttpServletResponse response) throws IOException{
+
+        JSONObject resultObject = JSONObject.fromObject("{\"error_code\":0,\"msg\":\"确认成功\"}");
+        HttpSession session = ContextHolderUtils.getSession();
+        Object openidObj =  session.getAttribute("openid");
+//        openidObj = "oyAM9vwa6FN6trSrUweXCdK0Jh8s";
+        if ( !"".equals(openidObj) && openidObj != null) {
+            String orderId = request.getParameter("orderId");
+            String type = request.getParameter("type");
+            Integer memberId = 0;
+            WechatMember member = memberService.getObjectByOpenid(openidObj.toString());
+            if(null != member && null != type && !"".equals(type)){
+                memberId = member.getId();
+                //订单状态 1未支付 2已支付 3已确认消费 4取消预订 5系统取消6待退款 7已退款
+                String[] arr = new String[]{"member_id" + memberId, "order_id" + orderId};
+                String mystr = "member_id=" + memberId + "&order_id=" + orderId;
+                String url = "";
+                if(type.equals("1")){
+                    url = JoYoUtil.CONFIRM_GOODS_ORDER; //确认订单
+                }else if(type.equals("2")){
+                    url = JoYoUtil.CANCEL_GOODS_ORDER;//取消订单
+                }else if(type.equals("3")){
+                    url = JoYoUtil.DEL_GOODS_ORDER;//删除订单
+                }else if(type.equals("4")){
+                    url = JoYoUtil.REFUND_GOODS_ORDER;//订单退款申请
+                }
+                resultObject = JSONObject.fromObject(JoYoUtil.getInterface(url, mystr, arr));
+            }
+        }else{
+            request.setAttribute("error", "请在微信中访问");
+            resultObject = JSONObject.fromObject("{\"error_code\":1,\"msg\":\"请在微信中访问\"}");
+        }
+        response.setContentType("text/html; charset=utf-8");
+        PrintWriter out = response.getWriter();
+        out.println(resultObject);
+        return null;
+    }
 
 }

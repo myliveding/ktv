@@ -31,7 +31,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      </div>
    <div class="main" style="background: #f8f8f8;">
      <div class="writeroomnum">
-       <label>请填写包房号：<a></a></label>
+       <label>请填写包房号：</label>
        <input type="text" placeholder="如：B27" id="room_num">
      </div>
      <div class="mui-content order-list"> 
@@ -47,7 +47,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 <em>+</em>
                                 <div class="list-num"
                                      contenteditable="true">${trolley.num}</div>
-                                <i>-</i>
+                                <i id="lii${trolley.goods_id}">-</i>
                                 <div class="clear"></div>
                             </div>
                             <p>
@@ -67,7 +67,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
     <div class="select-meal">
      <div class="go-pay">
-         <span>￥<i>0.00</i></span>
+         <span>￥<i>${allPrice}</i></span>
          <label>结算</label>
      </div>
     </div>
@@ -79,10 +79,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script src='<%=basePath%>jsp/resources/js/mui.min.js'></script>
 <script src='<%=basePath%>jsp/resources/js/rem.js'></script>
 <script>
-
 $(function(){
-
-    $('.list-num').keyup(function(){ 
+    $('.list-num').keyup(function(){
         var re=new RegExp('^\d+$');
         var $this=$(this);
         if (re.test($this.html())) { 
@@ -96,12 +94,15 @@ $(function(){
     $('.order-num i').click(function(){
         var $listnum = $(this).parents('li').find('.list-num');
         var num = parseInt($listnum.html());
-        if (num>0) {
-            $listnum.html(num-1);
+        if (num > 1) {
+            $listnum.html(num - 1);
             //调用后台去减一
-
-        }else{
-            num=0;
+            var goodsId = $(this).parents('li').find('.good_id').val();
+            updateNum(goodsId, 2);
+            //剩余1个的时候不给后续在减少了
+            if(num == 2){
+                $('#lii' + goodsId).hide();
+            }
         }
     });
 
@@ -112,20 +113,29 @@ $(function(){
         $listnum.html(num+1);
         //调用后台去加一
         var goodsId = $(this).parents('li').find('.good_id').val();
-        updateNum(goodsId);
+        updateNum(goodsId, 1);
+        if(num == 1){
+            $('#lii' + goodsId).show();
+        }
     });
 })
 
 //添加商品并
-function updateNum(goodsId){
+function updateNum(goodsId, type){
     $.ajax({
         'url': "${pageContext.request.contextPath}/shop/addShop.do",
         'type': 'post',
         'dataType': 'json',
         'data': {
             goodsId: goodsId,
+            type: type
         },
         success: function success(d) {
+            if (d.error_code == 0) {
+                $('.go-pay span i').html(d.result.all_price);
+            }else{
+                alert(d.msg);
+            }
         }
     });
 }
@@ -141,18 +151,24 @@ function delGoods(goodsId){
             type: 1
         },
         success: function success(d) {
-            //删除成功之后隐藏操作
-            $('#li'+goodsId).hide();
+            if (d.error_code == 0) {
+                //删除成功之后隐藏操作
+                $('#li'+goodsId).hide();
+                $('.go-pay span i').html(d.result.all_price);
+            }else{
+                alert(d.msg);
+            }
         }
     });
 }
-//数量减一
 
 //结算
 $('.go-pay label').click(function() {
     var roomNum = $('#room_num').val();
-    alert(roomNum);
-    return false;
+    if(null == roomNum || "" == roomNum){
+        alert("房间号不能为空");
+        return false;
+    }
     window.location.href = packageJson.JAVA_DOMAIN  + '/shop/gotoPay.do?roomNum=' + roomNum;
 })
     

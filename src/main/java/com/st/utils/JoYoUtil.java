@@ -165,7 +165,7 @@ public class JoYoUtil {
     public static final String GET_GOODS_ORDERS = Constant.PHP_API_URL + "/api/get_my_goods_orders";
 
     /**
-     *  删除商品订单
+     *  取消商品订单
      */
     public static final String CANCEL_GOODS_ORDER = Constant.PHP_API_URL + "/api/cancel_goods_order";
 
