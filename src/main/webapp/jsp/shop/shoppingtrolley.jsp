@@ -147,6 +147,7 @@ function delGoods(goodsId){
 }
 //数量减一
 
+//结算
 $('.go-pay label').click(function() {
     var roomNum = $('#room_num').val();
     alert(roomNum);
