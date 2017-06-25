@@ -37,7 +37,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      <div class="mui-content order-list"> 
         <ul id="OA_task_1" class="mui-table-view">
             <c:forEach var = "trolley" items="${trolleys}">
-                <li class="mui-table-view-cell">
+                <li class="mui-table-view-cell" id="li${trolley.goods_id}">
                     <div class="mui-slider-handle">
                         <img src="<%=basePath%>jsp/resources/img/2.png">
                         <div class="order-num">
@@ -132,7 +132,6 @@ function updateNum(goodsId){
 
 //删除种类
 function delGoods(goodsId){
-    confirm("是否确认删除");
     $.ajax({
         'url': "${pageContext.request.contextPath}/shop/delCart.do",
         'type': 'post',
@@ -142,6 +141,8 @@ function delGoods(goodsId){
             type: 1
         },
         success: function success(d) {
+            //删除成功之后隐藏操作
+            $('#li'+goodsId).hide();
         }
     });
 }
