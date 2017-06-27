@@ -185,6 +185,15 @@ public class JoYoUtil {
     public static final String CONFIRM_GOODS_ORDER = Constant.PHP_API_URL + "/api/confirm_goods_order";
 
 
+    /**
+     *  获取积分商城
+     */
+    public static final String INTEGRAL_MALLS = Constant.PHP_API_URL + "/api/get_integral_malls";
+
+    /**
+     *  获取积分商城详情
+     */
+    public static final String INTEGRAL_MALLS_DETAIL = Constant.PHP_API_URL + "/api/get_integral_mall_detail";
 
 
 

@@ -17,37 +17,54 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>盛世欢唱ktv</title>
-    <link rel="stylesheet" href="jsp/resources/css/main.css">
+    <link rel="stylesheet" href="<%=basePath%>jsp/resources/css/main.css">
 </head>
 <body> 
      <div id="header" style="background: #fbd1c1;">
          <a href="javascript:history.go(-1);">
-             <img src="jsp/resources/img/b2.png">
+             <img src="<%=basePath%>jsp/resources/img/b2.png">
          </a>
          <h1>积分商品信息</h1>
      </div> 
      <div class="main"> 
          <div class="shop-detail">
-             <h2>小包套餐（邵武区）</h2>
-             <p>价值： <i>3888</i>元</p>
-             <span>所需积分：<i>3699</i>分</span>
-             <a href="../order/exchangeorder.jsp">立即兑换</a>
+             <h2>${info.name}</h2>
+             <p>价值： <i>${info.face_value}</i>元</p>
+             <span>所需积分：<i>${info.need_integral}</i>分</span>
+             <a onclick="exchange(${info.id})">立即兑换</a>
          </div>
          <div class="shop-detail-content">
              <套餐包含内容>
-         </div>         
-         <div class="room-img"> 
-             <span>雪津啤酒12瓶</span>
-             <span>6个小蝶</span>
-             <span>1份水果</span>
-             <span>1盒纸巾</span>
-             <span>1套消毒</span>
-             <img src="jsp/resources/img/r1.png">
-             <img src="jsp/resources/img/r2.png">
-             <img src="jsp/resources/img/r3.png">
+         </div>
+         <div class="room-img">
+             ${info.content}
+             <img src="${info.image_url}">
          </div>
      </div>
      <jsp:include page="/jsp/layouts/foot.jsp" flush="true"/>
 </body> 
-<script src='jsp/resources/js/rem.js'></script>
+<script src='<%=basePath%>jsp/resources/js/rem.js'></script>
+<script src='<%=basePath%>jsp/resources/js/jquery.min.js'></script>
+<script>
+    //兑换商品
+    function exchange(id){
+        $.ajax({
+            'url': "${pageContext.request.contextPath}/mall/getCate.do",
+            'type': 'post',
+            'dataType': 'json',
+            'data': {
+                cateId: cateId
+            },
+            success: function success(d) {
+                if (d.error_code == 0) {
+                    //兑换成功跳转
+                    window.location.href = '${pageContext.request.contextPath}/mall/gotoMallDetail.do?integralMallId=' + integralMallId;
+                } else {
+                    alert(d.msg);
+                }
+            }
+        });
+    }
+
+</script>
 </html>

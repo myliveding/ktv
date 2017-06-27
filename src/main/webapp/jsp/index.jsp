@@ -44,7 +44,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </a>
                 </li>
                 <li>
-                    <a href="exchangescore.html">
+                    <a href="${pageContext.request.contextPath}/mall/gotoMalls.do">
                         <div class="nav-item nav-item3">
                             <img src="<%=basePath%>jsp/resources/img/s3.png">
                         </div>
