@@ -196,49 +196,6 @@ public class JoYoUtil {
     public static final String INTEGRAL_MALLS_DETAIL = Constant.PHP_API_URL + "/api/get_integral_mall_detail";
 
 
-
-
-     /**
-     * 查询当前的活动URL
-     */
-    public static final String PERSONRED_DEMANDACTIVITY_URL = Constant.PHP_API_URL + "/openapi/personsocial/personred/demandactivity/client_id/social10001";
-     /**
-     * 站内信查询URL
-     */
-    public static final String STATIONLETTER_DEMAND_URL = Constant.PHP_API_URL + "/openapi/personsocial/stationletter/demand/client_id/social10001";
-    /**
-     * 站内信已读消息接口URL
-     */
-    public static final String STATIONLETTER_READ_URL = Constant.PHP_API_URL + "/openapi/personsocial/stationletter/read/client_id/social10001";
-    /**
-     * 文章类别查询URL
-     */
-    public static final String ARTICLE_TYPEDEMAND_URL = Constant.PHP_API_URL + "/openapi/personsocial/article/typedemand/client_id/social10001";
-    /**
-     * 文章类别查询URL 平级 3.51
-     */
-    public static final String ARTICLE_TYPEALL_URL = Constant.PHP_API_URL + "/openapi/personsocial/article/getalltypedemand/client_id/social10001";
-    /**
-     * 首页banner查询 3.4
-     */
-    public static final String ARTICLE_BANNERDEMAND_URL = Constant.PHP_API_URL + "/openapi/personsocial/article/advdemand/client_id/social10001";
-    /**
-     * 伪静态查询接口
-     */
-    public static final String ARTICLE_STATIC_URL = Constant.PHP_API_URL + "/openapi/personsocial/article/alltypedemand/client_id/social10001";
-    /**
-     * 文章查询URL
-     */
-    public static final String ARTICLE_DEMAND_URL = Constant.PHP_API_URL + "/openapi/personsocial/article/demand/client_id/social10001";
-    /**
-     * 文章大类搜索URL
-     */
-    public static final String ARTICLE_SEARCH_URL = Constant.PHP_API_URL + "/openapi/personsocial/article/searcharticle/client_id/social10001";
-    /**
-     * 文章详情URL
-     */
-    public static final String ARTICLE_DETAIL_URL = Constant.PHP_API_URL + "/openapi/personsocial/article/detail/client_id/social10001";
-
    /**
      *
      * @param urlPath 接口地址
