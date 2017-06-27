@@ -100,6 +100,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script src='<%=basePath%>jsp/resources/js/jquery.min.js'></script>
 <script src='<%=basePath%>jsp/resources/js/rem.js'></script>
 <script>
+    //初始化页面的时候修改购物车
+    $(document).ready(function(){
+        var num = ${cartNum};
+        if(0 == num){
+            $('#trolley').hide();
+        }
+    });
+
+
 	$(function(){
         updateTrollerNum();
     });
@@ -128,6 +137,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             success: function success(d) {
                 if (d.error_code == 0) {
                     $('#trolley').find('label').html(d.result.goods_count);
+                    $('#trolley').show();
                 } else {
                     alert(d.msg);
                 }
